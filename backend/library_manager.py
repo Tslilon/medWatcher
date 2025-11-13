@@ -291,6 +291,17 @@ class LibraryManager:
                     print(f"☁️ Updated ChromaDB in GCS")
                 else:
                     print(f"⚠️ Warning: Could not update ChromaDB in GCS")
+        
+        # Reload the search engine to pick up the deletion
+        print(f"🔄 Reloading vector store after deletion...")
+        try:
+            from hierarchical_search import get_search_engine
+            import hierarchical_search
+            hierarchical_search._search_engine = None  # Reset singleton
+            search_engine = get_search_engine()  # Create new instance
+            print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+        except Exception as e:
+            print(f"⚠️ Warning: Could not reload vector store: {e}")
     
     def _delete_note_source(self, source: Dict[str, Any]):
         """Delete a personal note"""
