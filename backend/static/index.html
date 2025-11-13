@@ -454,6 +454,9 @@
                 <button class="btn btn-voice" id="voiceBtn" title="Voice Search" style="padding: 16px 20px; font-size: 24px;">
                     🎤
                 </button>
+                <button class="btn" id="refreshBtn" title="Refresh RAG (reload latest data)" style="padding: 16px 20px; font-size: 18px; background: #4caf50; color: white;">
+                    🔄
+                </button>
                 <a href="/library" class="btn" style="padding: 16px 20px; font-size: 18px; background: #f5f5f5; color: #333; text-decoration: none; display: flex; align-items: center; gap: 8px;" title="Library">
                     <span>📚</span>
                     <span>Library</span>
@@ -503,10 +506,57 @@
             if (e.key === 'Enter') performSearch();
         });
         document.getElementById('voiceBtn').addEventListener('click', startVoiceSearch);
+        document.getElementById('refreshBtn').addEventListener('click', refreshRAG);
         document.getElementById('closeModal').addEventListener('click', closeModal);
         document.getElementById('detailModal').addEventListener('click', (e) => {
             if (e.target.id === 'detailModal') closeModal();
         });
+
+        async function refreshRAG() {
+            const refreshBtn = document.getElementById('refreshBtn');
+            const originalText = refreshBtn.innerHTML;
+            
+            try {
+                refreshBtn.disabled = true;
+                refreshBtn.innerHTML = '⏳';
+                refreshBtn.style.opacity = '0.6';
+                
+                const response = await fetch(`${API_BASE}/api/reload-from-gcs`, {
+                    method: 'POST'
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Reload failed');
+                }
+                
+                const result = await response.json();
+                
+                refreshBtn.innerHTML = '✅';
+                refreshBtn.style.background = '#4caf50';
+                
+                // Show success message
+                alert('✅ RAG refreshed! Latest data loaded from GCS.');
+                
+                setTimeout(() => {
+                    refreshBtn.innerHTML = originalText;
+                    refreshBtn.disabled = false;
+                    refreshBtn.style.opacity = '1';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Refresh error:', error);
+                refreshBtn.innerHTML = '❌';
+                refreshBtn.style.background = '#f44336';
+                alert('❌ Refresh failed. Try again or wait a few seconds for automatic sync.');
+                
+                setTimeout(() => {
+                    refreshBtn.innerHTML = originalText;
+                    refreshBtn.style.background = '#4caf50';
+                    refreshBtn.disabled = false;
+                    refreshBtn.style.opacity = '1';
+                }, 3000);
+            }
+        }
 
         async function startVoiceSearch() {
             if (isRecording) {
