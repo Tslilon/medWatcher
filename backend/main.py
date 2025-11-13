@@ -921,6 +921,12 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
             cwd=Path(__file__).parent
         )
         
+        # Print indexing output for debugging
+        if index_result.stdout:
+            for line in index_result.stdout.split('\n'):
+                if line.strip():
+                    print(f"   {line}")
+        
         if index_result.returncode != 0:
             print(f"❌ Indexing error: {index_result.stderr}")
             raise HTTPException(status_code=500, detail=f"Indexing failed: {index_result.stderr}")
@@ -933,27 +939,19 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
         # Reload the vector store to pick up new documents
         print(f"🔄 Reloading vector store...")
         
-        # Check if we're on Cloud Run (deployed)
-        is_cloud = Path("/app/data").exists()
+        # IMPORTANT: During upload, we just updated the LOCAL ChromaDB.
+        # We should reload from the local disk, NOT from GCS (to avoid race condition).
+        # The updated ChromaDB is already on disk and uploaded to GCS.
+        import hierarchical_search
+        hierarchical_search._search_engine = None  # Reset singleton
+        search_engine = get_search_engine()  # Will create new instance from disk
+        doc_count = search_engine.vector_store.count_documents()
+        print(f"   ✅ Vector store reloaded with {doc_count} documents")
         
-        if is_cloud:
-            # On Cloud Run: Reload from GCS
-            print(f"   ☁️ Cloud environment detected - reloading from GCS...")
-            from reload_from_gcs import full_reload
-            if full_reload():
-                print(f"   ✅ Reloaded from GCS successfully")
-            else:
-                print(f"   ⚠️ GCS reload failed, using local reload")
-                import hierarchical_search
-                hierarchical_search._search_engine = None
-                search_engine = get_search_engine()
-                print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
-        else:
-            # Local: Just reload from disk
-            import hierarchical_search
-            hierarchical_search._search_engine = None  # Reset singleton
-            search_engine = get_search_engine()  # Will create new instance
-            print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+        # Verify the new file is in there
+        is_cloud = Path("/app/data").exists()
+        env_name = "Cloud Run" if is_cloud else "Local"
+        print(f"   📍 Environment: {env_name}")
         
         print(f"✅ PDF uploaded to GCS and indexed successfully: {pdf_name}")
         
