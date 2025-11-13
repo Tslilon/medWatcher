@@ -221,16 +221,13 @@ class LibraryManager:
             return {"status": "error", "message": f"Error deleting source: {str(e)}"}
     
     def _delete_pdf_source(self, source: Dict[str, Any]):
-        """Delete a PDF source (locally and from GCS)"""
+        """Delete a PDF source from GCS only (keep local copy)"""
         from gcs_helper import delete_from_gcs, delete_directory_from_gcs, check_gcs_available, upload_to_gcs
         
         pdf_filename = source['filename']
         
-        # Delete PDF file locally
-        pdf_path = self.pdfs_dir / pdf_filename
-        if pdf_path.exists():
-            pdf_path.unlink()
-            print(f"🗑️ Deleted local PDF: {pdf_filename}")
+        # Note: We keep the local PDF file for backup/reference
+        # Only delete from GCS
         
         # Delete from GCS
         if check_gcs_available():
@@ -239,13 +236,13 @@ class LibraryManager:
             else:
                 print(f"⚠️ Warning: Could not delete PDF from GCS: {pdf_filename}")
         
-        # Delete chunks locally
+        # Delete chunks locally (but PDF file is kept)
         deleted_chunks = []
         for chunk_file in self.pdf_chunks_dir.glob(f"*{pdf_filename}*.json"):
             if chunk_file.name != "summary.json":
-                chunk_file.unlink()
+                chunk_file.unlink()  # Delete chunk files
                 deleted_chunks.append(chunk_file.name)
-        print(f"🗑️ Deleted {len(deleted_chunks)} local chunks")
+        print(f"🗑️ Deleted {len(deleted_chunks)} local chunks (PDF file kept as backup)")
         
         # Delete chunks from GCS
         if check_gcs_available():

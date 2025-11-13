@@ -276,8 +276,24 @@ async function confirmUpload() {
     uploadProgress.style.display = 'block';
     uploadStatus.style.display = 'block';
     uploadStatus.style.color = '#666';
-    uploadStatus.textContent = 'Uploading PDF...';
-    uploadProgressBar.style.width = '30%';
+    uploadStatus.textContent = '📤 Uploading...';
+    uploadProgressBar.style.width = '20%';
+    
+    // Simulate progress updates
+    setTimeout(() => {
+        uploadProgressBar.style.width = '35%';
+        uploadStatus.textContent = '⚙️ Indexing...';
+    }, 500);
+    
+    setTimeout(() => {
+        uploadProgressBar.style.width = '50%';
+        uploadStatus.textContent = '🔍 Processing chunks...';
+    }, 1500);
+    
+    setTimeout(() => {
+        uploadProgressBar.style.width = '70%';
+        uploadStatus.textContent = '☁️ Saving to RAG...';
+    }, 3000);
     
     try {
         // Create form data
@@ -296,14 +312,11 @@ async function confirmUpload() {
             throw new Error(error.detail || 'Upload failed');
         }
         
-        uploadProgressBar.style.width = '60%';
-        uploadStatus.textContent = 'Processing and indexing...';
-        
         const result = await response.json();
         
         uploadProgressBar.style.width = '100%';
         uploadStatus.style.color = '#4caf50';
-        uploadStatus.textContent = `✅ ${result.message}`;
+        uploadStatus.textContent = `✅ File saved on RAG!`;
         
         // Wait a bit, then close and reload
         setTimeout(async () => {
@@ -349,8 +362,18 @@ async function confirmDelete() {
     
     const modal = document.getElementById('deleteModal');
     const message = document.getElementById('deleteMessage');
+    const confirmBtn = document.getElementById('deleteConfirmBtn');
+    const cancelBtn = document.getElementById('deleteCancelBtn');
     
-    message.innerHTML = '⏳ Deleting...';
+    // Disable buttons and gray out
+    confirmBtn.disabled = true;
+    cancelBtn.disabled = true;
+    confirmBtn.style.opacity = '0.5';
+    cancelBtn.style.opacity = '0.5';
+    confirmBtn.style.cursor = 'not-allowed';
+    cancelBtn.style.cursor = 'not-allowed';
+    
+    message.innerHTML = '⏳ Deleting from GCS...';
     
     try {
         const response = await fetch(`${API_BASE}/api/library/${currentDeleteId}`, {
@@ -364,16 +387,37 @@ async function confirmDelete() {
         
         const result = await response.json();
         
-        // Close modal
-        modal.classList.remove('active');
-        currentDeleteId = null;
+        message.innerHTML = '✅ Deleted successfully!';
         
-        // Reload library
-        await loadLibrary();
+        // Wait a moment to show success, then close and reload
+        setTimeout(async () => {
+            // Re-enable buttons
+            confirmBtn.disabled = false;
+            cancelBtn.disabled = false;
+            confirmBtn.style.opacity = '1';
+            cancelBtn.style.opacity = '1';
+            confirmBtn.style.cursor = 'pointer';
+            cancelBtn.style.cursor = 'pointer';
+            
+            // Close modal
+            modal.classList.remove('active');
+            currentDeleteId = null;
+            
+            // Reload library
+            await loadLibrary();
+        }, 1000);
         
     } catch (error) {
         console.error('Delete error:', error);
         message.innerHTML = `❌ Error: ${error.message}`;
+        
+        // Re-enable buttons after error
+        confirmBtn.disabled = false;
+        cancelBtn.disabled = false;
+        confirmBtn.style.opacity = '1';
+        cancelBtn.style.opacity = '1';
+        confirmBtn.style.cursor = 'pointer';
+        cancelBtn.style.cursor = 'pointer';
         
         setTimeout(() => {
             modal.classList.remove('active');

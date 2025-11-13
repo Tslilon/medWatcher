@@ -907,6 +907,13 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
         if not upload_directory_to_gcs(str(chroma_dir), "chroma_db"):
             print("⚠️ Warning: Failed to upload ChromaDB to GCS")
         
+        # Reload the vector store to pick up new documents
+        print(f"🔄 Reloading vector store...")
+        import hierarchical_search
+        hierarchical_search._search_engine = None  # Reset singleton
+        search_engine = get_search_engine()  # Will create new instance
+        print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+        
         print(f"✅ PDF uploaded to GCS and indexed successfully: {pdf_name}")
         
         return {
