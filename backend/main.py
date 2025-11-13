@@ -5,6 +5,7 @@ Provides REST API for natural language medical queries
 from fastapi import FastAPI, HTTPException, Request, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse, HTMLResponse, StreamingResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 import time
 from typing import Optional
 import traceback
@@ -44,6 +45,9 @@ app.add_middleware(
 # Static directory path for web interface
 static_dir = Path(__file__).parent / "static"
 static_dir.mkdir(exist_ok=True)
+
+# Mount static files
+app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 # Initialize search engine on startup
 @app.on_event("startup")
