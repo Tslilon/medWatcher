@@ -295,11 +295,31 @@ class LibraryManager:
         # Reload the search engine to pick up the deletion
         print(f"🔄 Reloading vector store after deletion...")
         try:
-            from hierarchical_search import get_search_engine
-            import hierarchical_search
-            hierarchical_search._search_engine = None  # Reset singleton
-            search_engine = get_search_engine()  # Create new instance
-            print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+            from pathlib import Path
+            
+            # Check if we're on Cloud Run (deployed)
+            is_cloud = Path("/app/data").exists()
+            
+            if is_cloud:
+                # On Cloud Run: Reload from GCS
+                print(f"   ☁️ Cloud environment detected - reloading from GCS...")
+                from reload_from_gcs import full_reload
+                if full_reload():
+                    print(f"   ✅ Reloaded from GCS after deletion")
+                else:
+                    print(f"   ⚠️ GCS reload failed, using local reload")
+                    from hierarchical_search import get_search_engine
+                    import hierarchical_search
+                    hierarchical_search._search_engine = None
+                    search_engine = get_search_engine()
+                    print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+            else:
+                # Local: Just reload from disk
+                from hierarchical_search import get_search_engine
+                import hierarchical_search
+                hierarchical_search._search_engine = None  # Reset singleton
+                search_engine = get_search_engine()  # Create new instance
+                print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
         except Exception as e:
             print(f"⚠️ Warning: Could not reload vector store: {e}")
     

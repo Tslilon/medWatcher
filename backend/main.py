@@ -819,6 +819,29 @@ import shutil
 import subprocess
 from fastapi import Form
 
+@app.post("/api/reload-from-gcs", tags=["Library"])
+async def reload_from_gcs_endpoint():
+    """
+    Manually reload ChromaDB from GCS
+    
+    Useful when:
+    - Files uploaded to GCS externally
+    - Want to sync deployed server without redeploying
+    - Testing/debugging
+    """
+    try:
+        from reload_from_gcs import full_reload
+        
+        if full_reload():
+            return {
+                "status": "success",
+                "message": "ChromaDB reloaded from GCS successfully"
+            }
+        else:
+            raise HTTPException(status_code=500, detail="Failed to reload from GCS")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Reload error: {str(e)}")
+
 @app.post("/api/upload-pdf", tags=["Library"])
 async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
     """
@@ -909,10 +932,28 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
         
         # Reload the vector store to pick up new documents
         print(f"🔄 Reloading vector store...")
-        import hierarchical_search
-        hierarchical_search._search_engine = None  # Reset singleton
-        search_engine = get_search_engine()  # Will create new instance
-        print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+        
+        # Check if we're on Cloud Run (deployed)
+        is_cloud = Path("/app/data").exists()
+        
+        if is_cloud:
+            # On Cloud Run: Reload from GCS
+            print(f"   ☁️ Cloud environment detected - reloading from GCS...")
+            from reload_from_gcs import full_reload
+            if full_reload():
+                print(f"   ✅ Reloaded from GCS successfully")
+            else:
+                print(f"   ⚠️ GCS reload failed, using local reload")
+                import hierarchical_search
+                hierarchical_search._search_engine = None
+                search_engine = get_search_engine()
+                print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+        else:
+            # Local: Just reload from disk
+            import hierarchical_search
+            hierarchical_search._search_engine = None  # Reset singleton
+            search_engine = get_search_engine()  # Will create new instance
+            print(f"   ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
         
         print(f"✅ PDF uploaded to GCS and indexed successfully: {pdf_name}")
         
