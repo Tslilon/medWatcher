@@ -931,27 +931,40 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
             print(f"❌ Indexing error: {index_result.stderr}")
             raise HTTPException(status_code=500, detail=f"Indexing failed: {index_result.stderr}")
         
-        # Upload ChromaDB to GCS
+        # Upload ChromaDB to GCS (overwrite old)
         print(f"☁️ Uploading ChromaDB to GCS...")
         if not upload_directory_to_gcs(str(chroma_dir), "chroma_db"):
-            print("⚠️ Warning: Failed to upload ChromaDB to GCS")
+            raise HTTPException(status_code=500, detail="Failed to upload ChromaDB to GCS")
+        print(f"   ✅ ChromaDB uploaded to GCS")
         
-        # Reload the vector store to pick up new documents
-        print(f"🔄 Reloading vector store...")
+        # CRITICAL: GCS is the source of truth for multi-container Cloud Run
+        # Delete local ChromaDB and download fresh from GCS to ensure consistency
+        print(f"🔄 Syncing with GCS (deleting local, downloading fresh)...")
         
-        # IMPORTANT: During upload, we just updated the LOCAL ChromaDB.
-        # We should reload from the local disk, NOT from GCS (to avoid race condition).
-        # The updated ChromaDB is already on disk and uploaded to GCS.
+        import shutil
+        if chroma_dir.exists():
+            shutil.rmtree(chroma_dir)
+            print(f"   🗑️ Deleted local ChromaDB")
+        
+        # Download fresh ChromaDB from GCS
+        from gcs_helper import check_gcs_available
+        if check_gcs_available():
+            bucket = "harrisons-rag-data-flingoos"
+            cmd = ["gsutil", "-m", "cp", "-r", f"gs://{bucket}/chroma_db", str(chroma_dir.parent)]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            if result.returncode == 0:
+                print(f"   ✅ Downloaded fresh ChromaDB from GCS")
+            else:
+                raise HTTPException(status_code=500, detail="Failed to download ChromaDB from GCS")
+        
+        # Reload vector store from GCS ChromaDB
+        print(f"🔄 Reloading vector store from GCS...")
         import hierarchical_search
         hierarchical_search._search_engine = None  # Reset singleton
-        search_engine = get_search_engine()  # Will create new instance from disk
+        search_engine = get_search_engine()  # Will create new instance from GCS data
         doc_count = search_engine.vector_store.count_documents()
         print(f"   ✅ Vector store reloaded with {doc_count} documents")
-        
-        # Verify the new file is in there
-        is_cloud = Path("/app/data").exists()
-        env_name = "Cloud Run" if is_cloud else "Local"
-        print(f"   📍 Environment: {env_name}")
+        print(f"   📍 All data synced through GCS - ready for all devices!")
         
         print(f"✅ PDF uploaded to GCS and indexed successfully: {pdf_name}")
         
