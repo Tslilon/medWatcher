@@ -144,6 +144,38 @@ class IndependentPDFProcessor:
         print(f"✅ Created {len(chunks)} chunks from {self.pdf_filename}\n")
         return chunks
     
+    def save_chunks(self, chunks: List[IndependentPDFChunk], output_dir: str = None):
+        """
+        Save chunks to JSON files
+        
+        Args:
+            chunks: List of chunks to save
+            output_dir: Directory to save chunks to (auto-detects if None)
+        """
+        # Auto-detect output directory
+        if output_dir is None:
+            # Try cloud path first (for deployed app)
+            if Path("/app/data/processed/independent_chunks").exists():
+                output_dir = "/app/data/processed/independent_chunks"
+            # Then try data directory (for local development)
+            elif Path("../data/processed/independent_chunks").exists():
+                output_dir = "../data/processed/independent_chunks"
+            # Finally try relative to current directory
+            else:
+                output_dir = "../data/processed/independent_chunks"
+        
+        output_path = Path(output_dir)
+        output_path.mkdir(parents=True, exist_ok=True)
+        
+        print(f"💾 Saving {len(chunks)} chunks to {output_path}...")
+        
+        for chunk in chunks:
+            chunk_file = output_path / f"{chunk.chunk_id}.json"
+            with open(chunk_file, 'w', encoding='utf-8') as f:
+                json.dump(asdict(chunk), f, indent=2, ensure_ascii=False)
+        
+        print(f"✅ Saved {len(chunks)} chunks successfully\n")
+    
     def close(self):
         """Close the PDF document"""
         self.doc.close()
