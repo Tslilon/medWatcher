@@ -446,20 +446,24 @@
                 >
             </div>
 
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <button class="btn btn-primary" id="searchBtn" style="flex: 1; font-size: 18px; padding: 16px;">
+            <!-- First row: Search button (full width) -->
+            <div style="margin-top: 15px;">
+                <button class="btn btn-primary" id="searchBtn" style="width: 100%; font-size: 18px; padding: 16px;">
                     <span>🔍</span>
                     <span>Search</span>
                 </button>
-                <button class="btn btn-voice" id="voiceBtn" title="Voice Search" style="padding: 16px 20px; font-size: 24px;">
+            </div>
+            
+            <!-- Second row: Other buttons (compact) -->
+            <div style="display: flex; gap: 8px; margin-top: 10px;">
+                <button class="btn btn-voice" id="voiceBtn" title="Voice Search" style="flex: 1; padding: 12px; font-size: 20px;">
                     🎤
                 </button>
-                <button class="btn" id="refreshBtn" title="Refresh RAG (reload latest data)" style="padding: 16px 20px; font-size: 18px; background: #4caf50; color: white;">
+                <button class="btn" id="refreshBtn" title="Refresh RAG" style="flex: 1; padding: 12px; font-size: 20px; background: #4caf50; color: white;">
                     🔄
                 </button>
-                <a href="/library" class="btn" style="padding: 16px 20px; font-size: 18px; background: #f5f5f5; color: #333; text-decoration: none; display: flex; align-items: center; gap: 8px;" title="Library">
-                    <span>📚</span>
-                    <span>Library</span>
+                <a href="/library" class="btn" style="flex: 1; padding: 12px; font-size: 20px; background: #f5f5f5; color: #333; text-decoration: none; text-align: center;" title="Library">
+                    📚
                 </a>
             </div>
             
@@ -500,10 +504,25 @@
             console.warn('MediaRecorder not fully supported, voice button will show error on use');
         }
 
+        // Auto-search with debouncing (search 1 second after user stops typing)
+        let searchTimeout = null;
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim();
+            if (query.length >= 2) {  // Only auto-search if 2+ characters
+                searchTimeout = setTimeout(() => {
+                    performSearch();
+                }, 1000);  // Wait 1 second after user stops typing
+            }
+        });
+        
         // Event listeners
         document.getElementById('searchBtn').addEventListener('click', performSearch);
         document.getElementById('searchInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') performSearch();
+            if (e.key === 'Enter') {
+                clearTimeout(searchTimeout);  // Cancel auto-search if user presses Enter
+                performSearch();
+            }
         });
         document.getElementById('voiceBtn').addEventListener('click', startVoiceSearch);
         document.getElementById('refreshBtn').addEventListener('click', refreshRAG);

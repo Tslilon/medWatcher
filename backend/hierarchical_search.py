@@ -29,6 +29,11 @@ class HierarchicalSearch:
             return True
         return (time.time() - self.last_gcs_check) >= self.gcs_check_interval
     
+    def force_reload(self):
+        """Force an immediate reload from GCS, bypassing rate limit"""
+        self.last_gcs_check = None  # Reset rate limit
+        self._reload_from_gcs_if_needed()
+    
     def _reload_from_gcs_if_needed(self):
         """Check GCS for updates and reload if ChromaDB is newer"""
         # Only check if on Cloud Run (not local development)

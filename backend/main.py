@@ -822,7 +822,7 @@ from fastapi import Form
 @app.post("/api/reload-from-gcs", tags=["Library"])
 async def reload_from_gcs_endpoint():
     """
-    Manually reload ChromaDB from GCS
+    Manually reload ChromaDB from GCS (FORCE reload bypassing rate limit)
     
     Useful when:
     - Files uploaded to GCS externally
@@ -832,7 +832,21 @@ async def reload_from_gcs_endpoint():
     try:
         from reload_from_gcs import full_reload
         
+        print("🔄 Manual reload triggered via API")
+        
+        # Force reload from GCS
         if full_reload():
+            print("✅ ChromaDB reloaded from GCS")
+            
+            # Also force the search engine singleton to reload (bypass rate limit)
+            try:
+                search_engine = get_search_engine()
+                if hasattr(search_engine, 'force_reload'):
+                    search_engine.force_reload()
+                    print("✅ Search engine force-reloaded")
+            except Exception as e:
+                print(f"⚠️ Search engine reload warning: {e}")
+            
             return {
                 "status": "success",
                 "message": "ChromaDB reloaded from GCS successfully"
@@ -840,6 +854,7 @@ async def reload_from_gcs_endpoint():
         else:
             raise HTTPException(status_code=500, detail="Failed to reload from GCS")
     except Exception as e:
+        print(f"❌ Reload error: {e}")
         raise HTTPException(status_code=500, detail=f"Reload error: {str(e)}")
 
 @app.post("/api/upload-pdf", tags=["Library"])
