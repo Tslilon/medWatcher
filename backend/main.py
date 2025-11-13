@@ -1010,6 +1010,149 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
         raise HTTPException(status_code=500, detail=f"Upload error: {str(e)}")
 
 # Development mode run
+# ========================================================================
+# MULTIMODAL CONTENT API ENDPOINTS (Phase 2)
+# ========================================================================
+
+from fastapi import Form
+from content_processor import ContentProcessor
+from models import ContentUploadResponse
+import base64
+import json as json_lib
+
+# Initialize content processor
+content_processor = ContentProcessor()
+
+@app.post("/api/content/upload", response_model=ContentUploadResponse, tags=["Multimodal Content"])
+async def upload_content(
+    content_type: str = Form(...),
+    file: Optional[UploadFile] = File(None),
+    # Note fields
+    text_content: Optional[str] = Form(None),
+    title: Optional[str] = Form(None),
+    is_markdown: Optional[bool] = Form(False),
+    # Image fields
+    caption: Optional[str] = Form(None),
+    perform_ocr: Optional[bool] = Form(True),
+    # Audio fields
+    description: Optional[str] = Form(None),
+    transcribe: Optional[bool] = Form(True),
+    # Common fields
+    tags: Optional[str] = Form(None)  # Comma-separated
+):
+    """
+    Universal content upload endpoint
+    
+    Supports:
+    - Images (JPEG, PNG, HEIC, WEBP)
+    - Audio (WebM, M4A, AAC, CAF, WAV, MP4)
+    - Drawings (PNG)
+    - Notes (TXT, MD)
+    """
+    try:
+        print(f"\n📤 Uploading {content_type} content...")
+        
+        # Parse tags
+        tags_list = [t.strip() for t in tags.split(",")] if tags else []
+        
+        # Process based on content type
+        if content_type == "note":
+            # Process note
+            if not text_content or not title:
+                raise HTTPException(status_code=400, detail="Notes require text_content and title")
+            
+            metadata, chunks, filename = content_processor.process_note(
+                text_content=text_content,
+                title=title,
+                tags=tags_list,
+                is_markdown=is_markdown
+            )
+        
+        elif content_type == "image":
+            # Process image
+            if not file:
+                raise HTTPException(status_code=400, detail="Images require a file")
+            
+            image_data = await file.read()
+            metadata, chunks, filename = content_processor.process_image(
+                image_data=image_data,
+                filename=file.filename,
+                caption=caption,
+                tags=tags_list,
+                perform_ocr=perform_ocr
+            )
+        
+        elif content_type == "drawing":
+            # Process drawing
+            if not file:
+                raise HTTPException(status_code=400, detail="Drawings require a file")
+            
+            drawing_data = await file.read()
+            metadata, chunks, filename = content_processor.process_drawing(
+                drawing_data=drawing_data,
+                caption=caption,
+                tags=tags_list,
+                perform_ocr=False  # Drawings usually don't need OCR
+            )
+        
+        elif content_type == "audio":
+            # Process audio
+            if not file:
+                raise HTTPException(status_code=400, detail="Audio requires a file")
+            
+            audio_data = await file.read()
+            metadata, chunks, filename = content_processor.process_audio(
+                audio_data=audio_data,
+                filename=file.filename,
+                title=title,
+                description=description,
+                tags=tags_list,
+                transcribe=transcribe
+            )
+        
+        else:
+            raise HTTPException(status_code=400, detail=f"Invalid content_type: {content_type}")
+        
+        # TODO Phase 2.2: Save chunks to ChromaDB
+        # TODO Phase 2.3: Upload to GCS
+        # TODO Phase 2.4: Update version marker
+        
+        print(f"✅ {content_type.capitalize()} uploaded: {filename} ({len(chunks)} chunks)")
+        
+        return ContentUploadResponse(
+            status="success",
+            content_id=metadata['content_id'],
+            filename=filename,
+            message=f"{content_type.capitalize()} uploaded successfully",
+            chunks_created=len(chunks),
+            indexed=False  # Will be True after ChromaDB integration
+        )
+    
+    except Exception as e:
+        print(f"❌ Upload error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Upload error: {str(e)}")
+
+
+@app.get("/api/content/{content_id}", tags=["Multimodal Content"])
+async def get_content(content_id: str):
+    """
+    Get content details by ID
+    """
+    # TODO Phase 2.5: Implement content retrieval
+    raise HTTPException(status_code=501, detail="Not yet implemented")
+
+
+@app.delete("/api/content/{content_id}", tags=["Multimodal Content"])
+async def delete_content(content_id: str):
+    """
+    Delete content by ID (removes from all locations)
+    """
+    # TODO Phase 2.6: Implement content deletion
+    raise HTTPException(status_code=501, detail="Not yet implemented")
+
+
 if __name__ == "__main__":
     import uvicorn
     
