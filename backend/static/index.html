@@ -963,34 +963,34 @@
     </script>
 
     <!-- Add Content Modal -->
-    <div id="addContentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; padding: 20px; overflow-y: auto;">
-        <div style="max-width: 600px; margin: 20px auto; background: white; border-radius: 15px; padding: 20px;">
+    <div id="addContentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; padding: 20px; overflow-y: auto;">
+        <div style="max-width: 500px; margin: 60px auto; background: white; border-radius: 15px; padding: 20px; box-shadow: 0 10px 50px rgba(0,0,0,0.3);">
             <!-- Modal Header -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h2 style="margin: 0; font-size: 20px;">➕ Add Content</h2>
-                <button id="closeAddContentModal" style="background: none; border: none; font-size: 28px; cursor: pointer; padding: 0; line-height: 1;">×</button>
+                <button id="closeAddContentModal" onclick="document.getElementById('addContentModal').style.display='none';" style="background: none; border: none; font-size: 28px; cursor: pointer; padding: 0; line-height: 1;">×</button>
             </div>
 
             <!-- Content Type Selection -->
             <div id="contentTypeSelection">
                 <p style="margin: 0 0 15px 0; color: #666;">Choose content type:</p>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <button class="content-type-btn" data-type="note" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
+                    <button class="content-type-btn" data-type="note" onclick="document.getElementById('contentTypeSelection').style.display='none'; document.getElementById('noteInterface').style.display='block';" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
                         <div style="font-size: 32px; margin-bottom: 8px;">📝</div>
                         <div style="font-weight: 600;">Note</div>
                         <div style="font-size: 12px; color: #666;">Text or markdown</div>
                     </button>
-                    <button class="content-type-btn" data-type="image" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
+                    <button class="content-type-btn" data-type="image" onclick="document.getElementById('contentTypeSelection').style.display='none'; document.getElementById('imageInterface').style.display='block';" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
                         <div style="font-size: 32px; margin-bottom: 8px;">📷</div>
                         <div style="font-weight: 600;">Image</div>
                         <div style="font-size: 12px; color: #666;">Photo from gallery</div>
                     </button>
-                    <button class="content-type-btn" data-type="drawing" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
+                    <button class="content-type-btn" data-type="drawing" onclick="document.getElementById('contentTypeSelection').style.display='none'; document.getElementById('drawingInterface').style.display='block';" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
                         <div style="font-size: 32px; margin-bottom: 8px;">✏️</div>
                         <div style="font-weight: 600;">Drawing</div>
                         <div style="font-size: 12px; color: #666;">Canvas sketch</div>
                     </button>
-                    <button class="content-type-btn" data-type="audio" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
+                    <button class="content-type-btn" data-type="audio" onclick="document.getElementById('contentTypeSelection').style.display='none'; document.getElementById('audioInterface').style.display='block';" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
                         <div style="font-size: 32px; margin-bottom: 8px;">🎤</div>
                         <div style="font-weight: 600;">Audio</div>
                         <div style="font-size: 12px; color: #666;">Voice recording</div>
@@ -1000,7 +1000,7 @@
 
             <!-- Note Interface -->
             <div id="noteInterface" style="display: none;">
-                <button class="back-btn" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
+                <button class="back-btn" onclick="document.getElementById('noteInterface').style.display='none'; document.getElementById('contentTypeSelection').style.display='block';" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
                 <h3 style="margin: 0 0 15px 0;">📝 Create Note</h3>
                 <input type="text" id="noteTitle" placeholder="Title" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; box-sizing: border-box;">
                 <textarea id="noteText" placeholder="Write your note here..." style="width: 100%; height: 200px; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; font-family: inherit; resize: vertical; box-sizing: border-box;"></textarea>
@@ -1015,7 +1015,7 @@
 
             <!-- Image Interface -->
             <div id="imageInterface" style="display: none;">
-                <button class="back-btn" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
+                <button class="back-btn" onclick="document.getElementById('imageInterface').style.display='none'; document.getElementById('contentTypeSelection').style.display='block';" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
                 <h3 style="margin: 0 0 15px 0;">📷 Upload Image</h3>
                 <input type="file" id="imageFile" accept="image/*" style="display: none;">
                 <button id="selectImage" style="width: 100%; padding: 40px; border: 2px dashed #ccc; border-radius: 8px; background: #f9f9f9; cursor: pointer; margin-bottom: 10px;">
@@ -1033,7 +1033,7 @@
 
             <!-- Drawing Interface -->
             <div id="drawingInterface" style="display: none;">
-                <button class="back-btn" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
+                <button class="back-btn" onclick="document.getElementById('drawingInterface').style.display='none'; document.getElementById('contentTypeSelection').style.display='block';" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
                 <h3 style="margin: 0 0 15px 0;">✏️ Draw</h3>
                 <canvas id="drawingCanvas" width="560" height="400" style="border: 2px solid #e0e0e0; border-radius: 8px; cursor: crosshair; touch-action: none; display: block; width: 100%; height: auto;"></canvas>
                 <div style="display: flex; gap: 8px; margin: 10px 0;">
@@ -1048,7 +1048,7 @@
 
             <!-- Audio Interface -->
             <div id="audioInterface" style="display: none;">
-                <button class="back-btn" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
+                <button class="back-btn" onclick="document.getElementById('audioInterface').style.display='none'; document.getElementById('contentTypeSelection').style.display='block';" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
                 <h3 style="margin: 0 0 15px 0;">🎤 Record Audio</h3>
                 <input type="file" id="audioFile" accept="audio/*" style="display: none;">
                 <div id="audioRecorder" style="text-align: center; padding: 30px; background: #f9f9f9; border-radius: 8px; margin-bottom: 10px;">
