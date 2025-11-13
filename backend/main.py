@@ -822,18 +822,27 @@ from fastapi import Form
 @app.post("/api/upload-pdf", tags=["Library"])
 async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
     """
-    Upload a PDF, process it, and index it into the RAG
+    Upload a PDF directly to GCS, process it, and index it into the RAG
     
     Steps:
-    1. Save PDF to independant_pdfs directory
-    2. Process PDF into chunks
-    3. Index chunks into ChromaDB
-    4. Return success
+    1. Save PDF to local temp directory
+    2. Upload PDF to GCS
+    3. Process PDF into chunks (saves to local)
+    4. Upload chunks to GCS
+    5. Index chunks into ChromaDB
+    6. Upload ChromaDB to GCS
+    7. Return success
     """
     try:
+        from gcs_helper import upload_to_gcs, upload_directory_to_gcs, check_gcs_available
+        
         # Validate file type
         if not file.filename.endswith('.pdf'):
             raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+        
+        # Check if GCS is available
+        if not check_gcs_available():
+            raise HTTPException(status_code=500, detail="GCS not available. Please install Google Cloud SDK.")
         
         # Determine paths
         data_dir = Path("../data")
@@ -843,12 +852,22 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
         pdfs_dir = data_dir / "independant_pdfs"
         pdfs_dir.mkdir(parents=True, exist_ok=True)
         
-        # Save uploaded file
+        chunks_dir = data_dir / "processed" / "independent_chunks"
+        chunks_dir.mkdir(parents=True, exist_ok=True)
+        
+        chroma_dir = data_dir / "chroma_db"
+        
+        # Save uploaded file locally (temp)
         pdf_filename = file.filename
         pdf_path = pdfs_dir / pdf_filename
         
         with open(pdf_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
+        
+        # Upload PDF to GCS immediately
+        print(f"☁️ Uploading PDF to GCS: {pdf_filename}")
+        if not upload_to_gcs(str(pdf_path), f"independant_pdfs/{pdf_filename}"):
+            raise HTTPException(status_code=500, detail="Failed to upload PDF to GCS")
         
         # Process the PDF (chunk it)
         print(f"📄 Processing PDF: {pdf_filename}")
@@ -863,6 +882,11 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
             print(f"❌ Processing error: {process_result.stderr}")
             raise HTTPException(status_code=500, detail=f"PDF processing failed: {process_result.stderr}")
         
+        # Upload chunks to GCS
+        print(f"☁️ Uploading chunks to GCS...")
+        if not upload_directory_to_gcs(str(chunks_dir), "processed/independent_chunks"):
+            print("⚠️ Warning: Failed to upload chunks to GCS")
+        
         # Index the chunks
         print(f"🔍 Indexing PDF chunks...")
         index_result = subprocess.run(
@@ -876,11 +900,16 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
             print(f"❌ Indexing error: {index_result.stderr}")
             raise HTTPException(status_code=500, detail=f"Indexing failed: {index_result.stderr}")
         
-        print(f"✅ PDF uploaded and indexed successfully: {pdf_name}")
+        # Upload ChromaDB to GCS
+        print(f"☁️ Uploading ChromaDB to GCS...")
+        if not upload_directory_to_gcs(str(chroma_dir), "chroma_db"):
+            print("⚠️ Warning: Failed to upload ChromaDB to GCS")
+        
+        print(f"✅ PDF uploaded to GCS and indexed successfully: {pdf_name}")
         
         return {
             "status": "success",
-            "message": f"PDF '{pdf_name}' uploaded and indexed successfully",
+            "message": f"PDF '{pdf_name}' uploaded to GCS and indexed successfully",
             "filename": pdf_filename
         }
         

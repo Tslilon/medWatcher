@@ -221,20 +221,51 @@ class LibraryManager:
             return {"status": "error", "message": f"Error deleting source: {str(e)}"}
     
     def _delete_pdf_source(self, source: Dict[str, Any]):
-        """Delete a PDF source"""
+        """Delete a PDF source (locally and from GCS)"""
+        from gcs_helper import delete_from_gcs, delete_directory_from_gcs, check_gcs_available
+        
         pdf_filename = source['filename']
         
-        # Delete PDF file
+        # Delete PDF file locally
         pdf_path = self.pdfs_dir / pdf_filename
         if pdf_path.exists():
             pdf_path.unlink()
+            print(f"🗑️ Deleted local PDF: {pdf_filename}")
         
-        # Delete chunks
+        # Delete from GCS
+        if check_gcs_available():
+            if delete_from_gcs(f"independant_pdfs/{pdf_filename}"):
+                print(f"☁️ Deleted PDF from GCS: {pdf_filename}")
+            else:
+                print(f"⚠️ Warning: Could not delete PDF from GCS: {pdf_filename}")
+        
+        # Delete chunks locally
+        deleted_chunks = []
         for chunk_file in self.pdf_chunks_dir.glob(f"*{pdf_filename}*.json"):
             chunk_file.unlink()
+            deleted_chunks.append(chunk_file.name)
+        print(f"🗑️ Deleted {len(deleted_chunks)} local chunks")
+        
+        # Delete chunks from GCS
+        if check_gcs_available():
+            # Delete all chunks matching this PDF
+            for chunk_name in deleted_chunks:
+                delete_from_gcs(f"processed/independent_chunks/{chunk_name}")
+            print(f"☁️ Deleted chunks from GCS")
         
         # Remove from vector store
         self.vector_store.delete_by_metadata('pdf_filename', pdf_filename)
+        print(f"🗑️ Removed from vector store")
+        
+        # Update ChromaDB in GCS
+        if check_gcs_available():
+            from gcs_helper import upload_directory_to_gcs
+            chroma_dir = self.data_dir / "chroma_db"
+            if chroma_dir.exists():
+                if upload_directory_to_gcs(str(chroma_dir), "chroma_db"):
+                    print(f"☁️ Updated ChromaDB in GCS")
+                else:
+                    print(f"⚠️ Warning: Could not update ChromaDB in GCS")
     
     def _delete_note_source(self, source: Dict[str, Any]):
         """Delete a personal note"""
