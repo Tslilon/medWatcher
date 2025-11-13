@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="/static/manifest.json">
+    <title>HARRISON'S</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 15px;
+            padding-top: 10px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .search-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.95);
+        }
+
+        .btn-voice {
+            background: #f0f0f0;
+            padding: 12px;
+            min-width: 48px;
+        }
+
+        .btn-voice:active {
+            background: #e0e0e0;
+        }
+
+        .btn-voice.listening {
+            background: #ff4444;
+            color: white;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .status {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .result-card:active {
+            transform: scale(0.98);
+            border-color: #667eea;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .result-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .result-score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 8px;
+        }
+
+        .result-hierarchy {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .result-pages {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 6px;
+        }
+
+        .result-preview {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+
+        .result-meta {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .meta-tag {
+            font-size: 10px;
+            background: #e8f0fe;
+            color: #1967d2;
+            padding: 3px 6px;
+            border-radius: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f0f0f0;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-right: 40px;
+        }
+
+        .modal-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .modal-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .page-display {
+            display: flex;
+            justify-content: space-around;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .page-number {
+            text-align: center;
+        }
+
+        .page-number .label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .page-number .number {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Apple Watch optimizations */
+        @media (max-width: 250px) {
+            body {
+                padding: 5px;
+            }
+
+            .header h1 {
+                font-size: 14px;
+                margin-bottom: 2px;
+            }
+
+            .header p {
+                font-size: 9px;
+            }
+
+            .search-card {
+                padding: 8px;
+                border-radius: 8px;
+            }
+
+            .search-box {
+                gap: 5px;
+            }
+
+            #searchInput {
+                padding: 8px;
+                font-size: 12px;
+                border-radius: 6px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 13px;
+                border-radius: 6px;
+            }
+
+            .btn-voice {
+                padding: 8px 10px;
+                font-size: 18px;
+                min-width: 40px;
+            }
+
+            .result-card {
+                padding: 8px;
+                border-radius: 8px;
+            }
+
+            .result-title {
+                font-size: 12px;
+            }
+
+            .result-preview {
+                font-size: 10px;
+            }
+
+            .result-metadata {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .search-card {
+                padding: 20px;
+            }
+
+            .result-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>HARRISON'S</h1>
+            <p>21st Edition • 550 Topics Indexed</p>
+        </div>
+
+        <div class="search-card">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Ask about any medical topic..."
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                >
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn btn-primary" id="searchBtn" style="flex: 1; font-size: 18px; padding: 16px;">
+                    <span>🔍</span>
+                    <span>Search</span>
+                </button>
+                <button class="btn btn-voice" id="voiceBtn" title="Voice Search" style="padding: 16px 20px; font-size: 24px;">
+                    🎤
+                </button>
+            </div>
+            
+            <!-- Viewer mode selector -->
+            <div style="margin-top: 15px; padding: 8px 12px; display: flex; gap: 15px;">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="checkbox" id="watchModeToggle" style="width: 20px; height: 20px;">
+                    <span style="font-size: 14px; font-weight: 600; color: #333;">⌚ Watch Viewer</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="checkbox" id="compactModeToggle" style="width: 20px; height: 20px;">
+                    <span style="font-size: 14px; font-weight: 600; color: #333;">📱 Compact Viewer</span>
+                </label>
+            </div>
+        </div>
+
+        <div id="statusArea"></div>
+        <div id="resultsArea" class="results"></div>
+    </div>
+
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">×</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+
+        // Check for MediaRecorder support (for Whisper recording)
+        // Keep button visible on Watch - show error message if not supported when clicked
+        const hasMediaRecorder = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+        if (!hasMediaRecorder) {
+            console.warn('MediaRecorder not fully supported, voice button will show error on use');
+        }
+
+        // Event listeners
+        document.getElementById('searchBtn').addEventListener('click', performSearch);
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+        document.getElementById('voiceBtn').addEventListener('click', startVoiceSearch);
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.getElementById('detailModal').addEventListener('click', (e) => {
+            if (e.target.id === 'detailModal') closeModal();
+        });
+
+        async function startVoiceSearch() {
+            if (isRecording) {
+                // Stop recording
+                stopRecording();
+            } else {
+                // Start recording
+                startRecording();
+            }
+        }
+
+        async function startRecording() {
+            // Check if MediaRecorder is supported
+            if (!hasMediaRecorder) {
+                // Check if it's Apple Watch
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isWatch = userAgent.includes('watch') || screen.width <= 250;
+                
+                if (isWatch) {
+                    showStatus('⌚ Voice recording not available on Apple Watch. Please use Siri dictation in the text field, or type your query.', 'error');
+                } else {
+                    showStatus('❌ Voice recording not supported on this device. Please type your query.', 'error');
+                }
+                return;
+            }
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                
+                // Use webm with opus codec (widely supported)
+                const options = { mimeType: 'audio/webm' };
+                if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                    options.mimeType = 'audio/mp4';
+                    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                        options.mimeType = '';
+                    }
+                }
+                
+                mediaRecorder = new MediaRecorder(stream, options);
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    await transcribeAudio(audioBlob);
+                    
+                    // Stop all tracks
+                    stream.getTracks().forEach(track => track.stop());
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                
+                document.getElementById('voiceBtn').classList.add('listening');
+                showStatus('🎤 Recording... Tap microphone when done', 'loading');
+                
+            } catch (error) {
+                console.error('Microphone access error:', error);
+                showStatus('Microphone access denied. Please allow microphone.', 'error');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                document.getElementById('voiceBtn').classList.remove('listening');
+                showStatus('🔄 Transcribing with Whisper AI...', 'loading');
+            }
+        }
+
+        async function transcribeAudio(audioBlob) {
+            try {
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.webm');
+                
+                const response = await fetch(`${API_BASE}/api/transcribe`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Transcription failed: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.text) {
+                    document.getElementById('searchInput').value = data.text;
+                    showStatus(`✅ Heard: "${data.text}"`, 'success');
+                    
+                    // Auto-search after 1 second
+                    setTimeout(() => {
+                        performSearch();
+                    }, 1000);
+                } else {
+                    showStatus('No speech detected. Try again.', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Transcription error:', error);
+                showStatus('Transcription failed. Please try typing.', 'error');
+            }
+        }
+
+        async function performSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) {
+                showStatus('Please enter a search query', 'error');
+                return;
+            }
+
+            showStatus('Searching Harrison\'s...', 'loading');
+            document.getElementById('resultsArea').innerHTML = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/search`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        max_results: 5
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayResults(data);
+                
+                if (data.results.length > 0) {
+                    showStatus(`Found ${data.results.length} results in ${data.search_time_ms}ms`, 'success');
+                    setTimeout(() => {
+                        document.getElementById('statusArea').innerHTML = '';
+                    }, 3000);
+                } else {
+                    showStatus('No results found. Try a different query.', 'error');
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                showStatus(`Connection error: ${error.message}. Make sure API is running.`, 'error');
+            }
+        }
+
+        function displayResults(data) {
+            const resultsArea = document.getElementById('resultsArea');
+            
+            if (data.results.length === 0) {
+                resultsArea.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔍</div>
+                        <p>No results found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            resultsArea.innerHTML = data.results.map(result => {
+                const relevancePercent = Math.round(result.relevance_score * 100);
+                const metaTags = [];
+                
+                if (result.tables && result.tables.length > 0) {
+                    metaTags.push(`📊 ${result.tables.length} table${result.tables.length > 1 ? 's' : ''}`);
+                }
+                if (result.figures && result.figures.length > 0) {
+                    metaTags.push(`📈 ${result.figures.length} figure${result.figures.length > 1 ? 's' : ''}`);
+                }
+
+                // Parse page range for direct viewer link
+                const pageMatch = result.pages.match(/(\d+)-(\d+)/);
+                const startPage = pageMatch ? pageMatch[1] : '1';
+                const endPage = pageMatch ? pageMatch[2] : '1';
+                
+                // Check if this is an independent PDF or Harrison's
+                const isIndependent = result.pdf_source === 'independent';
+                
+                let viewerUrl;
+                if (isIndependent) {
+                    // Independent PDF: always use independent viewer (100% zoom)
+                    const pdfFilename = result.pdf_filename || '';
+                    viewerUrl = `/viewer/independent?start=${startPage}&end=${endPage}&pdf=${encodeURIComponent(pdfFilename)}`;
+                } else {
+                    // Harrison's: check viewer mode preference
+                    const viewerMode = localStorage.getItem('viewerMode');
+                    if (viewerMode === 'watch') {
+                        viewerUrl = `/viewer/watch-simple?start=${startPage}&end=${endPage}&topic=${encodeURIComponent(result.topic_name)}`;
+                    } else if (viewerMode === 'compact') {
+                        viewerUrl = `/viewer/compact?start=${startPage}&end=${endPage}&topic=${encodeURIComponent(result.topic_name)}`;
+                    } else {
+                        viewerUrl = `/viewer?start=${startPage}&end=${endPage}&topic=${encodeURIComponent(result.topic_name)}`;
+                    }
+                }
+                
+                return `
+                    <div class="result-card" onclick="window.location.href='${viewerUrl}'">
+                        <div class="result-header">
+                            <div class="result-title">${result.topic_name}</div>
+                            <div class="result-score">${relevancePercent}%</div>
+                        </div>
+                        <div class="result-hierarchy">
+                            📂 ${result.hierarchy}
+                        </div>
+                        <div class="result-pages">
+                            📖 Pages ${result.pages}
+                        </div>
+                        <div class="result-preview">
+                            ${result.preview.substring(0, 150)}${result.preview.length > 150 ? '...' : ''}
+                        </div>
+                        ${metaTags.length > 0 ? `
+                            <div class="result-meta">
+                                ${metaTags.map(tag => `<span class="meta-tag">${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function showDetails(topicId) {
+            showStatus('Loading details...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/topic/${topicId}`);
+                if (!response.ok) throw new Error('Failed to load details');
+                
+                const topic = await response.json();
+                
+                const modalBody = document.getElementById('modalBody');
+                modalBody.innerHTML = `
+                    <h2 class="modal-title">${topic.topic_name}</h2>
+                    
+                    <div class="modal-section">
+                        <h3>📂 Location</h3>
+                        <p>${topic.hierarchy}</p>
+                    </div>
+
+                    <div class="page-display">
+                        <div class="page-number">
+                            <div class="label">Start Page</div>
+                            <div class="number">${topic.start_page}</div>
+                        </div>
+                        <div style="font-size: 24px; align-self: center;">→</div>
+                        <div class="page-number">
+                            <div class="label">End Page</div>
+                            <div class="number">${topic.end_page}</div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3>📄 Summary</h3>
+                        <p>${topic.preview}</p>
+                    </div>
+
+                    ${topic.tables && topic.tables.length > 0 ? `
+                        <div class="modal-section">
+                            <h3>📊 Tables (${topic.tables.length})</h3>
+                            <ul>
+                                ${topic.tables.map(t => `<li>${t}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    ${topic.figures && topic.figures.length > 0 ? `
+                        <div class="modal-section">
+                            <h3>📈 Figures (${topic.figures.length})</h3>
+                            <ul>
+                                ${topic.figures.map(f => `<li>${f}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    <div class="modal-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <h3 style="color: white;">📖 View in Harrison's PDF</h3>
+                        <p style="margin-bottom: 15px;">Click to open the textbook at pages ${topic.start_page}-${topic.end_page}</p>
+                        <a href="/viewer?start=${topic.start_page}&end=${topic.end_page}&topic=${encodeURIComponent(topic.topic_name)}" 
+                           style="display: inline-block; padding: 14px 28px; background: white; color: #667eea; 
+                                  text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 16px;
+                                  box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s;">
+                            📄 Open PDF at Page ${topic.start_page}
+                        </a>
+                    </div>
+                `;
+
+                document.getElementById('detailModal').classList.add('active');
+                document.getElementById('statusArea').innerHTML = '';
+            } catch (error) {
+                showStatus('Error loading details', 'error');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        function showStatus(message, type) {
+            const statusArea = document.getElementById('statusArea');
+            statusArea.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        // Viewer mode toggles - mutually exclusive
+        const watchModeToggle = document.getElementById('watchModeToggle');
+        const compactModeToggle = document.getElementById('compactModeToggle');
+        
+        // Load saved preference
+        const savedMode = localStorage.getItem('viewerMode'); // 'watch', 'compact', or null
+        if (savedMode === 'watch') {
+            watchModeToggle.checked = true;
+        } else if (savedMode === 'compact') {
+            compactModeToggle.checked = true;
+        }
+        
+        // Watch mode toggle - mutually exclusive with compact
+        watchModeToggle.addEventListener('change', () => {
+            if (watchModeToggle.checked) {
+                compactModeToggle.checked = false;
+                localStorage.setItem('viewerMode', 'watch');
+                showStatus('✅ Watch mode enabled! Results will open in Watch viewer (130% zoom).', 'success');
+            } else {
+                localStorage.removeItem('viewerMode');
+                showStatus('✅ Watch mode disabled. Using standard PDF viewer.', 'success');
+            }
+            setTimeout(() => {
+                document.getElementById('statusArea').innerHTML = '';
+            }, 3000);
+        });
+        
+        // Compact mode toggle - mutually exclusive with watch
+        compactModeToggle.addEventListener('change', () => {
+            if (compactModeToggle.checked) {
+                watchModeToggle.checked = false;
+                localStorage.setItem('viewerMode', 'compact');
+                showStatus('✅ Compact mode enabled! Results will open in Compact viewer (115% zoom).', 'success');
+            } else {
+                localStorage.removeItem('viewerMode');
+                showStatus('✅ Compact mode disabled. Using standard PDF viewer.', 'success');
+            }
+            setTimeout(() => {
+                document.getElementById('statusArea').innerHTML = '';
+            }, 3000);
+        });
+
+        // Test connection on load
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                if (response.ok) {
+                    console.log('✅ Connected to Harrison\'s API');
+                }
+            } catch (error) {
+                showStatus('⚠️ Cannot connect to API. Make sure server is running.', 'error');
+            }
+            
+            // Register service worker for offline support
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.register('/static/sw.js');
+                    console.log('✅ Service Worker registered for offline support');
+                    
+                    // Update service worker if new version available
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                console.log('🔄 New version available - reload to update');
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.log('Service Worker registration failed:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,2910 @@
+{
+  "metadata": {
+    "source_pdf": "../Harrison's Principles of Internal Medicine 2022, 21st Edition - Screen.pdf",
+    "total_pages": 15164,
+    "toc_entries": 580,
+    "extraction_date": "1762946474.9765232"
+  },
+  "entries": [
+    {
+      "level": 1,
+      "title": "Cover",
+      "page": 15164
+    },
+    {
+      "level": 1,
+      "title": "Nav",
+      "page": 2
+    },
+    {
+      "level": 1,
+      "title": "Cover",
+      "page": 21
+    },
+    {
+      "level": 1,
+      "title": "Title Page",
+      "page": 25
+    },
+    {
+      "level": 1,
+      "title": "Copyright Page",
+      "page": 26
+    },
+    {
+      "level": 1,
+      "title": "Contents",
+      "page": 30
+    },
+    {
+      "level": 1,
+      "title": "Contributors",
+      "page": 77
+    },
+    {
+      "level": 1,
+      "title": "Preface",
+      "page": 163
+    },
+    {
+      "level": 1,
+      "title": "Harrison’s Related Resources",
+      "page": 167
+    },
+    {
+      "level": 1,
+      "title": "PART 1 The Profession of Medicine",
+      "page": 169
+    },
+    {
+      "level": 2,
+      "title": "1 The Practice of Medicine",
+      "page": 170
+    },
+    {
+      "level": 2,
+      "title": "2 Promoting Good Health",
+      "page": 199
+    },
+    {
+      "level": 2,
+      "title": "3 Vaccine Opposition and Hesitancy",
+      "page": 218
+    },
+    {
+      "level": 2,
+      "title": "4 Decision-Making in Clinical Medicine",
+      "page": 242
+    },
+    {
+      "level": 2,
+      "title": "5 Precision Medicine and Clinical Care",
+      "page": 278
+    },
+    {
+      "level": 2,
+      "title": "6 Screening and Prevention of Disease",
+      "page": 300
+    },
+    {
+      "level": 2,
+      "title": "7 Global Diversity of Health System Financing and Delivery",
+      "page": 315
+    },
+    {
+      "level": 2,
+      "title": "8 The Safety and Quality of Health Care",
+      "page": 349
+    },
+    {
+      "level": 2,
+      "title": "9 Diagnosis: Reducing Errors and Improving Quality",
+      "page": 365
+    },
+    {
+      "level": 2,
+      "title": "10 Racial and Ethnic Disparities in Health Care",
+      "page": 383
+    },
+    {
+      "level": 2,
+      "title": "11 Ethical Issues in Clinical Medicine",
+      "page": 412
+    },
+    {
+      "level": 2,
+      "title": "12 Palliative and End-of-Life Care",
+      "page": 432
+    },
+    {
+      "level": 1,
+      "title": "PART 2 Cardinal Manifestations and Presentation of Diseases",
+      "page": 491
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Pain",
+      "page": 491
+    },
+    {
+      "level": 3,
+      "title": "13 Pain: Pathophysiology and Management",
+      "page": 492
+    },
+    {
+      "level": 3,
+      "title": "14 Chest Discomfort",
+      "page": 525
+    },
+    {
+      "level": 3,
+      "title": "15 Abdominal Pain",
+      "page": 554
+    },
+    {
+      "level": 3,
+      "title": "16 Headache",
+      "page": 570
+    },
+    {
+      "level": 3,
+      "title": "17 Back and Neck Pain",
+      "page": 588
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Alterations in Body Temperature",
+      "page": 634
+    },
+    {
+      "level": 3,
+      "title": "18 Fever",
+      "page": 635
+    },
+    {
+      "level": 3,
+      "title": "19 Fever and Rash",
+      "page": 649
+    },
+    {
+      "level": 3,
+      "title": "20 Fever of Unknown Origin",
+      "page": 674
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Nervous System Dysfunction",
+      "page": 694
+    },
+    {
+      "level": 3,
+      "title": "21 Syncope",
+      "page": 695
+    },
+    {
+      "level": 3,
+      "title": "22 Dizziness and Vertigo",
+      "page": 718
+    },
+    {
+      "level": 3,
+      "title": "23 Fatigue",
+      "page": 732
+    },
+    {
+      "level": 3,
+      "title": "24 Neurologic Causes of Weakness and Paralysis",
+      "page": 742
+    },
+    {
+      "level": 3,
+      "title": "25 Numbness, Tingling, and Sensory Loss",
+      "page": 756
+    },
+    {
+      "level": 3,
+      "title": "26 Gait Disorders, Imbalance, and Falls",
+      "page": 772
+    },
+    {
+      "level": 3,
+      "title": "27 Confusion and Delirium",
+      "page": 789
+    },
+    {
+      "level": 3,
+      "title": "28 Coma",
+      "page": 809
+    },
+    {
+      "level": 3,
+      "title": "29 Dementia",
+      "page": 833
+    },
+    {
+      "level": 3,
+      "title": "30 Aphasia, Memory Loss, and Other Cognitive Disorders",
+      "page": 856
+    },
+    {
+      "level": 3,
+      "title": "31 Sleep Disorders",
+      "page": 890
+    },
+    {
+      "level": 2,
+      "title": "SECTION 4 Disorders of Eyes, Ears, Nose, and Throat",
+      "page": 929
+    },
+    {
+      "level": 3,
+      "title": "32 Disorders of the Eye",
+      "page": 931
+    },
+    {
+      "level": 3,
+      "title": "33 Disorders of Smell and Taste",
+      "page": 996
+    },
+    {
+      "level": 3,
+      "title": "34 Disorders of Hearing",
+      "page": 1019
+    },
+    {
+      "level": 3,
+      "title": "35 Upper Respiratory Symptoms, Including Earache, Sinus Symptoms, and Sore Throat",
+      "page": 1050
+    },
+    {
+      "level": 3,
+      "title": "36 Oral Manifestations of Disease",
+      "page": 1082
+    },
+    {
+      "level": 2,
+      "title": "SECTION 5 Alterations in Circulatory and Respiratory Functions",
+      "page": 1103
+    },
+    {
+      "level": 3,
+      "title": "37 Dyspnea",
+      "page": 1104
+    },
+    {
+      "level": 3,
+      "title": "38 Cough",
+      "page": 1119
+    },
+    {
+      "level": 3,
+      "title": "39 Hemoptysis",
+      "page": 1130
+    },
+    {
+      "level": 3,
+      "title": "40 Hypoxia and Cyanosis",
+      "page": 1139
+    },
+    {
+      "level": 3,
+      "title": "41 Edema",
+      "page": 1151
+    },
+    {
+      "level": 3,
+      "title": "42 Approach to the Patient with a Heart Murmur",
+      "page": 1164
+    },
+    {
+      "level": 3,
+      "title": "43 Palpitations",
+      "page": 1196
+    },
+    {
+      "level": 2,
+      "title": "SECTION 6 Alterations in Gastrointestinal Function",
+      "page": 1199
+    },
+    {
+      "level": 3,
+      "title": "44 Dysphagia",
+      "page": 1200
+    },
+    {
+      "level": 3,
+      "title": "45 Nausea, Vomiting, and Indigestion",
+      "page": 1212
+    },
+    {
+      "level": 3,
+      "title": "46 Diarrhea and Constipation",
+      "page": 1235
+    },
+    {
+      "level": 3,
+      "title": "47 Unintentional Weight Loss",
+      "page": 1277
+    },
+    {
+      "level": 3,
+      "title": "48 Gastrointestinal Bleeding",
+      "page": 1285
+    },
+    {
+      "level": 3,
+      "title": "49 Jaundice",
+      "page": 1298
+    },
+    {
+      "level": 3,
+      "title": "50 Abdominal Swelling and Ascites",
+      "page": 1320
+    },
+    {
+      "level": 2,
+      "title": "SECTION 7 Alterations in Renal and Urinary Tract Function",
+      "page": 1334
+    },
+    {
+      "level": 3,
+      "title": "51 Interstitial Cystitis/Bladder Pain Syndrome",
+      "page": 1335
+    },
+    {
+      "level": 3,
+      "title": "52 Azotemia and Urinary Abnormalities",
+      "page": 1359
+    },
+    {
+      "level": 3,
+      "title": "53 Fluid and Electrolyte Disturbances",
+      "page": 1383
+    },
+    {
+      "level": 3,
+      "title": "54 Hypercalcemia and Hypocalcemia",
+      "page": 1449
+    },
+    {
+      "level": 3,
+      "title": "55 Acidosis and Alkalosis",
+      "page": 1461
+    },
+    {
+      "level": 2,
+      "title": "SECTION 8 Alterations in the Skin",
+      "page": 1501
+    },
+    {
+      "level": 3,
+      "title": "56 Approach to the Patient with a Skin Disorder",
+      "page": 1502
+    },
+    {
+      "level": 3,
+      "title": "57 Eczema, Psoriasis, Cutaneous Infections, Acne, and Other Common Skin Disorders",
+      "page": 1520
+    },
+    {
+      "level": 3,
+      "title": "58 Skin Manifestations of Internal Disease",
+      "page": 1553
+    },
+    {
+      "level": 3,
+      "title": "59 Immunologically Mediated Skin Diseases",
+      "page": 1619
+    },
+    {
+      "level": 3,
+      "title": "60 Cutaneous Drug Reactions",
+      "page": 1646
+    },
+    {
+      "level": 3,
+      "title": "61 Photosensitivity and Other Reactions to Sunlight",
+      "page": 1685
+    },
+    {
+      "level": 2,
+      "title": "SECTION 9 Hematologic Alterations",
+      "page": 1713
+    },
+    {
+      "level": 3,
+      "title": "62 Interpreting Peripheral Blood Smears",
+      "page": 1714
+    },
+    {
+      "level": 3,
+      "title": "63 Anemia and Polycythemia",
+      "page": 1744
+    },
+    {
+      "level": 3,
+      "title": "64 Disorders of Granulocytes and Monocytes",
+      "page": 1785
+    },
+    {
+      "level": 3,
+      "title": "65 Bleeding and Thrombosis",
+      "page": 1825
+    },
+    {
+      "level": 3,
+      "title": "66 Enlargement of Lymph Nodes and Spleen",
+      "page": 1854
+    },
+    {
+      "level": 1,
+      "title": "PART 3 Pharmacology",
+      "page": 1879
+    },
+    {
+      "level": 2,
+      "title": "67 Principles of Clinical Pharmacology",
+      "page": 1880
+    },
+    {
+      "level": 2,
+      "title": "68 Pharmacogenomics",
+      "page": 1921
+    },
+    {
+      "level": 1,
+      "title": "PART 4 Oncology and Hematology",
+      "page": 1939
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Neoplastic Disorders",
+      "page": 1939
+    },
+    {
+      "level": 3,
+      "title": "69 Approach to the Patient with Cancer",
+      "page": 1940
+    },
+    {
+      "level": 3,
+      "title": "70 Prevention and Early Detection of Cancer",
+      "page": 1971
+    },
+    {
+      "level": 3,
+      "title": "71 Cancer Genetics",
+      "page": 2001
+    },
+    {
+      "level": 3,
+      "title": "72 Cancer Cell Biology",
+      "page": 2035
+    },
+    {
+      "level": 3,
+      "title": "73 Principles of Cancer Treatment",
+      "page": 2102
+    },
+    {
+      "level": 3,
+      "title": "74 Infections in Patients with Cancer",
+      "page": 2180
+    },
+    {
+      "level": 3,
+      "title": "75 Oncologic Emergencies",
+      "page": 2216
+    },
+    {
+      "level": 3,
+      "title": "76 Cancer of the Skin",
+      "page": 2266
+    },
+    {
+      "level": 3,
+      "title": "77 Head and Neck Cancer",
+      "page": 2305
+    },
+    {
+      "level": 3,
+      "title": "78 Neoplasms of the Lung",
+      "page": 2320
+    },
+    {
+      "level": 3,
+      "title": "79 Breast Cancer",
+      "page": 2382
+    },
+    {
+      "level": 3,
+      "title": "80 Upper Gastrointestinal Tract Cancers",
+      "page": 2434
+    },
+    {
+      "level": 3,
+      "title": "81 Lower Gastrointestinal Cancers",
+      "page": 2470
+    },
+    {
+      "level": 3,
+      "title": "82 Tumors of the Liver and Biliary Tree",
+      "page": 2496
+    },
+    {
+      "level": 3,
+      "title": "83 Pancreatic Cancer",
+      "page": 2540
+    },
+    {
+      "level": 3,
+      "title": "84 Gastrointestinal Neuroendocrine Tumors",
+      "page": 2558
+    },
+    {
+      "level": 3,
+      "title": "85 Renal Cell Carcinoma",
+      "page": 2598
+    },
+    {
+      "level": 3,
+      "title": "86 Cancer of the Bladder and Urinary Tract",
+      "page": 2608
+    },
+    {
+      "level": 3,
+      "title": "87 Benign and Malignant Diseases of the Prostate",
+      "page": 2623
+    },
+    {
+      "level": 3,
+      "title": "88 Testicular Cancer",
+      "page": 2656
+    },
+    {
+      "level": 3,
+      "title": "89 Gynecologic Malignancies",
+      "page": 2675
+    },
+    {
+      "level": 3,
+      "title": "90 Primary and Metastatic Tumors of the Nervous System",
+      "page": 2698
+    },
+    {
+      "level": 3,
+      "title": "91 Soft Tissue and Bone Sarcomas and Bone Metastases",
+      "page": 2744
+    },
+    {
+      "level": 3,
+      "title": "92 Carcinoma of Unknown Primary",
+      "page": 2761
+    },
+    {
+      "level": 3,
+      "title": "93 Paraneoplastic Syndromes: Endocrinologic/Hematologic",
+      "page": 2779
+    },
+    {
+      "level": 3,
+      "title": "94 Paraneoplastic Neurologic Syndromes and Autoimmune Encephalitis",
+      "page": 2803
+    },
+    {
+      "level": 3,
+      "title": "95 Cancer Survivorship and the Long-Term Impact of Cancer and Its Treatment",
+      "page": 2833
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Hematopoietic Disorders",
+      "page": 2858
+    },
+    {
+      "level": 3,
+      "title": "96 Hematopoietic Stem Cells",
+      "page": 2859
+    },
+    {
+      "level": 3,
+      "title": "97 Iron Deficiency and Other Hypoproliferative Anemias",
+      "page": 2875
+    },
+    {
+      "level": 3,
+      "title": "98 Disorders of Hemoglobin",
+      "page": 2903
+    },
+    {
+      "level": 3,
+      "title": "99 Megaloblastic Anemias",
+      "page": 2941
+    },
+    {
+      "level": 3,
+      "title": "100 Hemolytic Anemias",
+      "page": 2979
+    },
+    {
+      "level": 3,
+      "title": "101 Anemia Due to Acute Blood Loss",
+      "page": 3032
+    },
+    {
+      "level": 3,
+      "title": "102 Bone Marrow Failure Syndromes Including Aplastic Anemia and Myelodysplasia",
+      "page": 3035
+    },
+    {
+      "level": 3,
+      "title": "103 Polycythemia Vera and Other Myeloproliferative Neoplasms",
+      "page": 3074
+    },
+    {
+      "level": 3,
+      "title": "104 Acute Myeloid Leukemia",
+      "page": 3100
+    },
+    {
+      "level": 3,
+      "title": "105 Chronic Myeloid Leukemia",
+      "page": 3139
+    },
+    {
+      "level": 3,
+      "title": "106 Acute Lymphoid Leukemia",
+      "page": 3174
+    },
+    {
+      "level": 3,
+      "title": "107 Chronic Lymphocytic Leukemia",
+      "page": 3194
+    },
+    {
+      "level": 3,
+      "title": "108 Non-Hodgkin’s Lymphoma",
+      "page": 3220
+    },
+    {
+      "level": 3,
+      "title": "109 Hodgkin’s Lymphoma",
+      "page": 3263
+    },
+    {
+      "level": 3,
+      "title": "110 Less Common Lymphoid and Myeloid Malignancies",
+      "page": 3276
+    },
+    {
+      "level": 3,
+      "title": "111 Plasma Cell Disorders",
+      "page": 3317
+    },
+    {
+      "level": 3,
+      "title": "112 Amyloidosis",
+      "page": 3356
+    },
+    {
+      "level": 3,
+      "title": "113 Transfusion Therapy and Biology",
+      "page": 3376
+    },
+    {
+      "level": 3,
+      "title": "114 Hematopoietic Cell Transplantation",
+      "page": 3405
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Disorders of Hemostasis",
+      "page": 3431
+    },
+    {
+      "level": 3,
+      "title": "115 Disorders of Platelets and Vessel Wall",
+      "page": 3432
+    },
+    {
+      "level": 3,
+      "title": "116 Coagulation Disorders",
+      "page": 3459
+    },
+    {
+      "level": 3,
+      "title": "117 Arterial and Venous Thrombosis",
+      "page": 3491
+    },
+    {
+      "level": 3,
+      "title": "118 Antiplatelet, Anticoagulant, and Fibrinolytic Drugs",
+      "page": 3510
+    },
+    {
+      "level": 1,
+      "title": "PART 5 Infectious Diseases",
+      "page": 3568
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Basic Considerations in Infectious Diseases",
+      "page": 3568
+    },
+    {
+      "level": 3,
+      "title": "119 Approach to the Patient with an Infectious Disease",
+      "page": 3569
+    },
+    {
+      "level": 3,
+      "title": "120 Molecular Mechanisms of Microbial Pathogenesis",
+      "page": 3591
+    },
+    {
+      "level": 3,
+      "title": "121 Microbial Genomics and Infectious Disease",
+      "page": 3633
+    },
+    {
+      "level": 3,
+      "title": "122 Approach to the Acutely Ill Infected Febrile Patient",
+      "page": 3682
+    },
+    {
+      "level": 3,
+      "title": "123 Immunization Principles and Vaccine Use",
+      "page": 3708
+    },
+    {
+      "level": 3,
+      "title": "124 Health Recommendations for International Travel",
+      "page": 3735
+    },
+    {
+      "level": 3,
+      "title": "125 Climate Change and Infectious Disease",
+      "page": 3770
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Clinical Syndromes: Community-Acquired Infections",
+      "page": 3795
+    },
+    {
+      "level": 3,
+      "title": "126 Pneumonia",
+      "page": 3796
+    },
+    {
+      "level": 3,
+      "title": "127 Lung Abscess",
+      "page": 3840
+    },
+    {
+      "level": 3,
+      "title": "128 Infective Endocarditis",
+      "page": 3850
+    },
+    {
+      "level": 3,
+      "title": "129 Infections of the Skin, Muscles, and Soft Tissues",
+      "page": 3891
+    },
+    {
+      "level": 3,
+      "title": "130 Infectious Arthritis",
+      "page": 3910
+    },
+    {
+      "level": 3,
+      "title": "131 Osteomyelitis",
+      "page": 3933
+    },
+    {
+      "level": 3,
+      "title": "132 Intraabdominal Infections and Abscesses",
+      "page": 3962
+    },
+    {
+      "level": 3,
+      "title": "133 Acute Infectious Diarrheal Diseases and Bacterial Food Poisoning",
+      "page": 3989
+    },
+    {
+      "level": 3,
+      "title": "134 Clostridioides difficile Infection, Including Pseudomembranous Colitis",
+      "page": 4013
+    },
+    {
+      "level": 3,
+      "title": "135 Urinary Tract Infections, Pyelonephritis, and Prostatitis",
+      "page": 4027
+    },
+    {
+      "level": 3,
+      "title": "136 Sexually Transmitted Infections: Overview and Clinical Approach",
+      "page": 4058
+    },
+    {
+      "level": 3,
+      "title": "137 Encephalitis",
+      "page": 4118
+    },
+    {
+      "level": 3,
+      "title": "138 Acute Meningitis",
+      "page": 4145
+    },
+    {
+      "level": 3,
+      "title": "139 Chronic and Recurrent Meningitis",
+      "page": 4182
+    },
+    {
+      "level": 3,
+      "title": "140 Brain Abscess and Empyema",
+      "page": 4200
+    },
+    {
+      "level": 3,
+      "title": "141 Infectious Complications of Bites",
+      "page": 4225
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Clinical Syndromes: Health Care–Associated Infections",
+      "page": 4237
+    },
+    {
+      "level": 3,
+      "title": "142 Infections Acquired in Health Care Facilities",
+      "page": 4238
+    },
+    {
+      "level": 3,
+      "title": "143 Infections in Transplant Recipients",
+      "page": 4270
+    },
+    {
+      "level": 2,
+      "title": "SECTION 4 Therapy for Bacterial Diseases",
+      "page": 4313
+    },
+    {
+      "level": 3,
+      "title": "144 Treatment and Prophylaxis of Bacterial Infections",
+      "page": 4314
+    },
+    {
+      "level": 3,
+      "title": "145 Bacterial Resistance to Antimicrobial Agents",
+      "page": 4360
+    },
+    {
+      "level": 2,
+      "title": "SECTION 5 Diseases Caused by Gram-Positive Bacteria",
+      "page": 4380
+    },
+    {
+      "level": 3,
+      "title": "146 Pneumococcal Infections",
+      "page": 4381
+    },
+    {
+      "level": 3,
+      "title": "147 Staphylococcal Infections",
+      "page": 4414
+    },
+    {
+      "level": 3,
+      "title": "148 Streptococcal Infections",
+      "page": 4453
+    },
+    {
+      "level": 3,
+      "title": "149 Enterococcal Infections",
+      "page": 4486
+    },
+    {
+      "level": 3,
+      "title": "150 Diphtheria and Other Corynebacterial Infections",
+      "page": 4513
+    },
+    {
+      "level": 3,
+      "title": "151 Listeria monocytogenes Infections",
+      "page": 4533
+    },
+    {
+      "level": 3,
+      "title": "152 Tetanus",
+      "page": 4544
+    },
+    {
+      "level": 3,
+      "title": "153 Botulism",
+      "page": 4556
+    },
+    {
+      "level": 3,
+      "title": "154 Gas Gangrene and Other Clostridial Infections",
+      "page": 4577
+    },
+    {
+      "level": 2,
+      "title": "SECTION 6 Diseases Caused by Gram-Negative Bacteria",
+      "page": 4598
+    },
+    {
+      "level": 3,
+      "title": "155 Meningococcal Infections",
+      "page": 4599
+    },
+    {
+      "level": 3,
+      "title": "156 Gonococcal Infections",
+      "page": 4631
+    },
+    {
+      "level": 3,
+      "title": "157 Haemophilus and Moraxella Infections",
+      "page": 4658
+    },
+    {
+      "level": 3,
+      "title": "158 Infections Due to the HACEK Group and Miscellaneous Gram-Negative Bacteria",
+      "page": 4678
+    },
+    {
+      "level": 3,
+      "title": "159 Legionella Infections",
+      "page": 4692
+    },
+    {
+      "level": 3,
+      "title": "160 Pertussis and Other Bordetella Infections",
+      "page": 4719
+    },
+    {
+      "level": 3,
+      "title": "161 Diseases Caused by Gram-Negative Enteric Bacilli",
+      "page": 4735
+    },
+    {
+      "level": 3,
+      "title": "162 Acinetobacter Infections",
+      "page": 4790
+    },
+    {
+      "level": 3,
+      "title": "163 Helicobacter pylori Infections",
+      "page": 4804
+    },
+    {
+      "level": 3,
+      "title": "164 Infections Due to Pseudomonas, Burkholderia, and Stenotrophomonas Species",
+      "page": 4823
+    },
+    {
+      "level": 3,
+      "title": "165 Salmonellosis",
+      "page": 4850
+    },
+    {
+      "level": 3,
+      "title": "166 Shigellosis",
+      "page": 4877
+    },
+    {
+      "level": 3,
+      "title": "167 Infections Due to Campylobacter and Related Organisms",
+      "page": 4893
+    },
+    {
+      "level": 3,
+      "title": "168 Cholera and Other Vibrioses",
+      "page": 4904
+    },
+    {
+      "level": 3,
+      "title": "169 Brucellosis",
+      "page": 4924
+    },
+    {
+      "level": 3,
+      "title": "170 Tularemia",
+      "page": 4940
+    },
+    {
+      "level": 3,
+      "title": "171 Plague and Other Yersinia Infections",
+      "page": 4961
+    },
+    {
+      "level": 3,
+      "title": "172 Bartonella Infections, Including Cat-Scratch Disease",
+      "page": 4994
+    },
+    {
+      "level": 3,
+      "title": "173 Donovanosis",
+      "page": 5012
+    },
+    {
+      "level": 2,
+      "title": "SECTION 7 Miscellaneous Bacterial Infections",
+      "page": 5018
+    },
+    {
+      "level": 3,
+      "title": "174 Nocardiosis",
+      "page": 5019
+    },
+    {
+      "level": 3,
+      "title": "175 Actinomycosis",
+      "page": 5037
+    },
+    {
+      "level": 3,
+      "title": "176 Whipple’s Disease",
+      "page": 5053
+    },
+    {
+      "level": 3,
+      "title": "177 Infections Due to Mixed Anaerobic Organisms",
+      "page": 5068
+    },
+    {
+      "level": 2,
+      "title": "SECTION 8 Mycobacterial Diseases",
+      "page": 5103
+    },
+    {
+      "level": 3,
+      "title": "178 Tuberculosis",
+      "page": 5104
+    },
+    {
+      "level": 3,
+      "title": "179 Leprosy",
+      "page": 5201
+    },
+    {
+      "level": 3,
+      "title": "180 Nontuberculous Mycobacterial Infections",
+      "page": 5242
+    },
+    {
+      "level": 3,
+      "title": "181 Antimycobacterial Agents",
+      "page": 5259
+    },
+    {
+      "level": 2,
+      "title": "SECTION 9 Spirochetal Diseases",
+      "page": 5293
+    },
+    {
+      "level": 3,
+      "title": "182 Syphilis",
+      "page": 5294
+    },
+    {
+      "level": 3,
+      "title": "183 Endemic Treponematoses",
+      "page": 5323
+    },
+    {
+      "level": 3,
+      "title": "184 Leptospirosis",
+      "page": 5334
+    },
+    {
+      "level": 3,
+      "title": "185 Relapsing Fever and Borrelia miyamotoi Disease",
+      "page": 5353
+    },
+    {
+      "level": 3,
+      "title": "186 Lyme Borreliosis",
+      "page": 5368
+    },
+    {
+      "level": 2,
+      "title": "SECTION 10 Diseases Caused by Rickettsiae, Mycoplasmas, and Chlamydiae",
+      "page": 5389
+    },
+    {
+      "level": 3,
+      "title": "187 Rickettsial Diseases",
+      "page": 5390
+    },
+    {
+      "level": 3,
+      "title": "188 Infections Due to Mycoplasmas",
+      "page": 5430
+    },
+    {
+      "level": 3,
+      "title": "189 Chlamydial Infections",
+      "page": 5442
+    },
+    {
+      "level": 2,
+      "title": "SECTION 11 Viral Diseases: General Considerations",
+      "page": 5475
+    },
+    {
+      "level": 3,
+      "title": "190 Principles of Medical Virology",
+      "page": 5476
+    },
+    {
+      "level": 3,
+      "title": "191 Antiviral Chemotherapy, Excluding Antiretroviral Drugs",
+      "page": 5500
+    },
+    {
+      "level": 2,
+      "title": "SECTION 12 Infections Due to DNA Viruses",
+      "page": 5533
+    },
+    {
+      "level": 3,
+      "title": "192 Herpes Simplex Virus Infections",
+      "page": 5534
+    },
+    {
+      "level": 3,
+      "title": "193 Varicella-Zoster Virus Infections",
+      "page": 5567
+    },
+    {
+      "level": 3,
+      "title": "194 Epstein-Barr Virus Infections, Including Infectious Mononucleosis",
+      "page": 5582
+    },
+    {
+      "level": 3,
+      "title": "195 Cytomegalovirus and Human Herpesvirus Types 6, 7, and 8",
+      "page": 5597
+    },
+    {
+      "level": 3,
+      "title": "196 Molluscum Contagiosum, Monkeypox, and Other Poxvirus Infections",
+      "page": 5615
+    },
+    {
+      "level": 3,
+      "title": "197 Parvovirus Infections",
+      "page": 5628
+    },
+    {
+      "level": 3,
+      "title": "198 Human Papillomavirus Infections",
+      "page": 5639
+    },
+    {
+      "level": 2,
+      "title": "SECTION 13 Infections Due to DNA and RNA Respiratory Viruses",
+      "page": 5662
+    },
+    {
+      "level": 3,
+      "title": "199 Common Viral Respiratory Infections, Including COVID-19",
+      "page": 5663
+    },
+    {
+      "level": 3,
+      "title": "200 Influenza",
+      "page": 5706
+    },
+    {
+      "level": 2,
+      "title": "SECTION 14 Infections Due to Human Immunodeficiency Virus and Other Human Retroviruses",
+      "page": 5716
+    },
+    {
+      "level": 3,
+      "title": "201 The Human Retroviruses",
+      "page": 5731
+    },
+    {
+      "level": 3,
+      "title": "202 Human Immunodeficiency Virus Disease: AIDS and Related Disorders",
+      "page": 5751
+    },
+    {
+      "level": 2,
+      "title": "SECTION 15 Infections Due to RNA Viruses",
+      "page": 5986
+    },
+    {
+      "level": 3,
+      "title": "203 Viral Gastroenteritis",
+      "page": 5987
+    },
+    {
+      "level": 3,
+      "title": "204 Enterovirus, Parechovirus, and Reovirus Infections",
+      "page": 6002
+    },
+    {
+      "level": 3,
+      "title": "205 Measles (Rubeola)",
+      "page": 6026
+    },
+    {
+      "level": 3,
+      "title": "206 Rubella (German Measles)",
+      "page": 6043
+    },
+    {
+      "level": 3,
+      "title": "207 Mumps",
+      "page": 6055
+    },
+    {
+      "level": 3,
+      "title": "208 Rabies and Other Rhabdovirus Infections",
+      "page": 6068
+    },
+    {
+      "level": 3,
+      "title": "209 Arthropod-Borne and Rodent-Borne Virus Infections",
+      "page": 6089
+    },
+    {
+      "level": 3,
+      "title": "210 Ebolavirus and Marburgvirus Infections",
+      "page": 6152
+    },
+    {
+      "level": 2,
+      "title": "SECTION 16 Fungal Infections",
+      "page": 6172
+    },
+    {
+      "level": 3,
+      "title": "211 Pathogenesis, Diagnosis, and Treatment of Fungal Infections",
+      "page": 6173
+    },
+    {
+      "level": 3,
+      "title": "212 Histoplasmosis",
+      "page": 6189
+    },
+    {
+      "level": 3,
+      "title": "213 Coccidioidomycosis",
+      "page": 6202
+    },
+    {
+      "level": 3,
+      "title": "214 Blastomycosis",
+      "page": 6214
+    },
+    {
+      "level": 3,
+      "title": "215 Cryptococcosis",
+      "page": 6229
+    },
+    {
+      "level": 3,
+      "title": "216 Candidiasis",
+      "page": 6241
+    },
+    {
+      "level": 3,
+      "title": "217 Aspergillosis",
+      "page": 6261
+    },
+    {
+      "level": 3,
+      "title": "218 Mucormycosis",
+      "page": 6280
+    },
+    {
+      "level": 3,
+      "title": "219 Less Common Systemic Mycoses and Superficial Mycoses",
+      "page": 6297
+    },
+    {
+      "level": 3,
+      "title": "220 Pneumocystis Infections",
+      "page": 6317
+    },
+    {
+      "level": 2,
+      "title": "SECTION 17 Protozoal and Helminthic Infections: General Considerations",
+      "page": 6332
+    },
+    {
+      "level": 3,
+      "title": "221 Introduction to Parasitic Infections",
+      "page": 6333
+    },
+    {
+      "level": 3,
+      "title": "222 Agents Used to Treat Parasitic Infections",
+      "page": 6348
+    },
+    {
+      "level": 2,
+      "title": "SECTION 18 Protozoal Infections",
+      "page": 6384
+    },
+    {
+      "level": 3,
+      "title": "223 Amebiasis and Infection with Free-Living Amebae",
+      "page": 6385
+    },
+    {
+      "level": 3,
+      "title": "224 Malaria",
+      "page": 6411
+    },
+    {
+      "level": 3,
+      "title": "225 Babesiosis",
+      "page": 6462
+    },
+    {
+      "level": 3,
+      "title": "226 Leishmaniasis",
+      "page": 6482
+    },
+    {
+      "level": 3,
+      "title": "227 Chagas Disease and African Trypanosomiasis",
+      "page": 6507
+    },
+    {
+      "level": 3,
+      "title": "228 Toxoplasma Infections",
+      "page": 6535
+    },
+    {
+      "level": 3,
+      "title": "229 Protozoal Intestinal Infections and Trichomoniasis",
+      "page": 6562
+    },
+    {
+      "level": 2,
+      "title": "SECTION 19 Helminthic Infections",
+      "page": 6579
+    },
+    {
+      "level": 3,
+      "title": "230 Introduction to Helminthic Infections",
+      "page": 6580
+    },
+    {
+      "level": 3,
+      "title": "231 Trichinellosis and Other Tissue Nematode Infections",
+      "page": 6585
+    },
+    {
+      "level": 3,
+      "title": "232 Intestinal Nematode Infections",
+      "page": 6598
+    },
+    {
+      "level": 3,
+      "title": "233 Filarial and Related Infections",
+      "page": 6615
+    },
+    {
+      "level": 3,
+      "title": "234 Schistosomiasis and Other Trematode Infections",
+      "page": 6639
+    },
+    {
+      "level": 3,
+      "title": "235 Cestode Infections",
+      "page": 6662
+    },
+    {
+      "level": 1,
+      "title": "PART 6 Disorders of the Cardiovascular System",
+      "page": 6684
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Introduction to Cardiovascular Disorders",
+      "page": 6684
+    },
+    {
+      "level": 3,
+      "title": "236 Approach to the Patient with Possible Cardiovascular Disease",
+      "page": 6685
+    },
+    {
+      "level": 3,
+      "title": "237 Basic Biology of the Cardiovascular System",
+      "page": 6696
+    },
+    {
+      "level": 3,
+      "title": "238 Epidemiology of Cardiovascular Disease",
+      "page": 6735
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Diagnosis of Cardiovascular Disorders",
+      "page": 6751
+    },
+    {
+      "level": 3,
+      "title": "239 Physical Examination of the Cardiovascular System",
+      "page": 6752
+    },
+    {
+      "level": 3,
+      "title": "240 Electrocardiography",
+      "page": 6786
+    },
+    {
+      "level": 3,
+      "title": "241 Noninvasive Cardiac Imaging: Echocardiography, Nuclear Cardiology, and Magnetic Resonance/Computed Tomography Imaging",
+      "page": 6814
+    },
+    {
+      "level": 3,
+      "title": "242 Diagnostic Cardiac Catheterization and Coronary Angiography",
+      "page": 6895
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Disorders of Rhythm",
+      "page": 6920
+    },
+    {
+      "level": 3,
+      "title": "243 Principles of Clinical Cardiac Electrophysiology",
+      "page": 6921
+    },
+    {
+      "level": 3,
+      "title": "244 The Bradyarrhythmias: Disorders of the Sinoatrial Node",
+      "page": 6946
+    },
+    {
+      "level": 3,
+      "title": "245 The Bradyarrhythmias: Disorders of the Atrioventricular Node",
+      "page": 6966
+    },
+    {
+      "level": 3,
+      "title": "246 Approach to Supraventricular Tachyarrhythmias",
+      "page": 6990
+    },
+    {
+      "level": 3,
+      "title": "247 Physiologic and Nonphysiologic Sinus Tachycardia",
+      "page": 6998
+    },
+    {
+      "level": 3,
+      "title": "248 Focal Atrial Tachycardia",
+      "page": 7005
+    },
+    {
+      "level": 3,
+      "title": "249 Paroxysmal Supraventricular Tachycardias",
+      "page": 7011
+    },
+    {
+      "level": 3,
+      "title": "250 Common Atrial Flutter and Macroreentrant and Multifocal Atrial Tachycardias",
+      "page": 7027
+    },
+    {
+      "level": 3,
+      "title": "251 Atrial Fibrillation",
+      "page": 7035
+    },
+    {
+      "level": 3,
+      "title": "252 Approach to Ventricular Arrhythmias",
+      "page": 7057
+    },
+    {
+      "level": 3,
+      "title": "253 Premature Ventricular Contractions, Nonsustained Ventricular Tachycardia, and Accelerated Idioventricular Rhythm",
+      "page": 7076
+    },
+    {
+      "level": 3,
+      "title": "254 Sustained Ventricular Tachycardia",
+      "page": 7086
+    },
+    {
+      "level": 3,
+      "title": "255 Polymorphic Ventricular Tachycardia and Ventricular Fibrillation",
+      "page": 7102
+    },
+    {
+      "level": 3,
+      "title": "256 Electrical Storm and Incessant Ventricular Tachycardia",
+      "page": 7113
+    },
+    {
+      "level": 2,
+      "title": "SECTION 4 Disorders of the Heart, Muscles, Valves, and Pericardium",
+      "page": 7122
+    },
+    {
+      "level": 3,
+      "title": "257 Heart Failure: Pathophysiology and Diagnosis",
+      "page": 7123
+    },
+    {
+      "level": 3,
+      "title": "258 Heart Failure: Management",
+      "page": 7163
+    },
+    {
+      "level": 3,
+      "title": "259 Cardiomyopathy and Myocarditis",
+      "page": 7208
+    },
+    {
+      "level": 3,
+      "title": "260 Cardiac Transplantation and Prolonged Assisted Circulation",
+      "page": 7280
+    },
+    {
+      "level": 3,
+      "title": "261 Aortic Stenosis",
+      "page": 7297
+    },
+    {
+      "level": 3,
+      "title": "262 Aortic Regurgitation",
+      "page": 7324
+    },
+    {
+      "level": 3,
+      "title": "263 Mitral Stenosis",
+      "page": 7341
+    },
+    {
+      "level": 3,
+      "title": "264 Mitral Regurgitation",
+      "page": 7356
+    },
+    {
+      "level": 3,
+      "title": "265 Mitral Valve Prolapse",
+      "page": 7372
+    },
+    {
+      "level": 3,
+      "title": "266 Tricuspid Valve Disease",
+      "page": 7380
+    },
+    {
+      "level": 3,
+      "title": "267 Pulmonic Valve Disease",
+      "page": 7390
+    },
+    {
+      "level": 3,
+      "title": "268 Multiple and Mixed Valvular Heart Disease",
+      "page": 7396
+    },
+    {
+      "level": 3,
+      "title": "269 Congenital Heart Disease in the Adult",
+      "page": 7406
+    },
+    {
+      "level": 3,
+      "title": "270 Pericardial Disease",
+      "page": 7439
+    },
+    {
+      "level": 3,
+      "title": "271 Atrial Myxoma and Other Cardiac Tumors",
+      "page": 7461
+    },
+    {
+      "level": 3,
+      "title": "272 Cardiac Trauma",
+      "page": 7473
+    },
+    {
+      "level": 2,
+      "title": "SECTION 5 Coronary and Peripheral Vascular Disease",
+      "page": 7480
+    },
+    {
+      "level": 3,
+      "title": "273 Ischemic Heart Disease",
+      "page": 7481
+    },
+    {
+      "level": 3,
+      "title": "274 Non-ST-Segment Elevation Acute Coronary Syndrome (Non-ST-Segment Elevation Myocardial Infarction and Unstable Angina)",
+      "page": 7537
+    },
+    {
+      "level": 3,
+      "title": "275 ST-Segment Elevation Myocardial Infarction",
+      "page": 7562
+    },
+    {
+      "level": 3,
+      "title": "276 Percutaneous Coronary Interventions and Other Interventional Procedures",
+      "page": 7610
+    },
+    {
+      "level": 3,
+      "title": "277 Hypertension",
+      "page": 7631
+    },
+    {
+      "level": 3,
+      "title": "278 Renovascular Disease",
+      "page": 7690
+    },
+    {
+      "level": 3,
+      "title": "279 Deep-Venous Thrombosis and Pulmonary Thromboembolism",
+      "page": 7703
+    },
+    {
+      "level": 3,
+      "title": "280 Diseases of the Aorta",
+      "page": 7739
+    },
+    {
+      "level": 3,
+      "title": "281 Arterial Diseases of the Extremities",
+      "page": 7764
+    },
+    {
+      "level": 3,
+      "title": "282 Chronic Venous Disease and Lymphedema",
+      "page": 7792
+    },
+    {
+      "level": 3,
+      "title": "283 Pulmonary Hypertension",
+      "page": 7815
+    },
+    {
+      "level": 1,
+      "title": "PART 7 Disorders of the Respiratory System",
+      "page": 7842
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Diagnosis of Respiratory Disorders",
+      "page": 7842
+    },
+    {
+      "level": 3,
+      "title": "284 Approach to the Patient with Disease of the Respiratory System",
+      "page": 7843
+    },
+    {
+      "level": 3,
+      "title": "285 Disturbances of Respiratory Function",
+      "page": 7853
+    },
+    {
+      "level": 3,
+      "title": "286 Diagnostic Procedures in Respiratory Disease",
+      "page": 7875
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Diseases of the Respiratory System",
+      "page": 7900
+    },
+    {
+      "level": 3,
+      "title": "287 Asthma",
+      "page": 7901
+    },
+    {
+      "level": 3,
+      "title": "288 Hypersensitivity Pneumonitis and Pulmonary Infiltrates with Eosinophilia",
+      "page": 7944
+    },
+    {
+      "level": 3,
+      "title": "289 Occupational and Environmental Lung Disease",
+      "page": 7970
+    },
+    {
+      "level": 3,
+      "title": "290 Bronchiectasis",
+      "page": 7995
+    },
+    {
+      "level": 3,
+      "title": "291 Cystic Fibrosis",
+      "page": 8006
+    },
+    {
+      "level": 3,
+      "title": "292 Chronic Obstructive Pulmonary Disease",
+      "page": 8024
+    },
+    {
+      "level": 3,
+      "title": "293 Interstitial Lung Disease",
+      "page": 8059
+    },
+    {
+      "level": 3,
+      "title": "294 Disorders of the Pleura",
+      "page": 8084
+    },
+    {
+      "level": 3,
+      "title": "295 Disorders of the Mediastinum",
+      "page": 8099
+    },
+    {
+      "level": 3,
+      "title": "296 Disorders of Ventilation",
+      "page": 8103
+    },
+    {
+      "level": 3,
+      "title": "297 Sleep Apnea",
+      "page": 8116
+    },
+    {
+      "level": 3,
+      "title": "298 Lung Transplantation",
+      "page": 8135
+    },
+    {
+      "level": 3,
+      "title": "299 Interventional Pulmonary Medicine",
+      "page": 8154
+    },
+    {
+      "level": 1,
+      "title": "PART 8 Critical Care Medicine",
+      "page": 8163
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Respiratory Critical Care",
+      "page": 8163
+    },
+    {
+      "level": 3,
+      "title": "300 Approach to the Patient with Critical Illness",
+      "page": 8164
+    },
+    {
+      "level": 3,
+      "title": "301 Acute Respiratory Distress Syndrome",
+      "page": 8195
+    },
+    {
+      "level": 3,
+      "title": "302 Mechanical Ventilatory Support",
+      "page": 8212
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Shock and Cardiac Arrest",
+      "page": 8231
+    },
+    {
+      "level": 3,
+      "title": "303 Approach to the Patient with Shock",
+      "page": 8232
+    },
+    {
+      "level": 3,
+      "title": "304 Sepsis and Septic Shock",
+      "page": 8256
+    },
+    {
+      "level": 3,
+      "title": "305 Cardiogenic Shock and Pulmonary Edema",
+      "page": 8284
+    },
+    {
+      "level": 3,
+      "title": "306 Cardiovascular Collapse, Cardiac Arrest, and Sudden Cardiac Death",
+      "page": 8309
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Neurologic Critical Care",
+      "page": 8339
+    },
+    {
+      "level": 3,
+      "title": "307 Nervous System Disorders in Critical Care",
+      "page": 8340
+    },
+    {
+      "level": 1,
+      "title": "Part 9 Disorders of the Kidney and Urinary Tract",
+      "page": 8377
+    },
+    {
+      "level": 2,
+      "title": "308 Approach to the Patient with Renal Disease or Urinary Tract Disease",
+      "page": 8378
+    },
+    {
+      "level": 2,
+      "title": "309 Cell Biology and Physiology of the Kidney",
+      "page": 8408
+    },
+    {
+      "level": 2,
+      "title": "310 Acute Kidney Injury",
+      "page": 8434
+    },
+    {
+      "level": 2,
+      "title": "311 Chronic Kidney Disease",
+      "page": 8476
+    },
+    {
+      "level": 2,
+      "title": "312 Dialysis in the Treatment of Kidney Failure",
+      "page": 8519
+    },
+    {
+      "level": 2,
+      "title": "313 Transplantation in the Treatment of Renal Failure",
+      "page": 8535
+    },
+    {
+      "level": 2,
+      "title": "314 Glomerular Diseases",
+      "page": 8559
+    },
+    {
+      "level": 2,
+      "title": "315 Polycystic Kidney Disease and Other Inherited Disorders of Tubule Growth and Development",
+      "page": 8624
+    },
+    {
+      "level": 2,
+      "title": "316 Tubulointerstitial Diseases of the Kidney",
+      "page": 8649
+    },
+    {
+      "level": 2,
+      "title": "317 Vascular Injury to the Kidney",
+      "page": 8676
+    },
+    {
+      "level": 2,
+      "title": "318 Nephrolithiasis",
+      "page": 8691
+    },
+    {
+      "level": 2,
+      "title": "319 Urinary Tract Obstruction",
+      "page": 8711
+    },
+    {
+      "level": 2,
+      "title": "320 Interventional Nephrology",
+      "page": 8724
+    },
+    {
+      "level": 1,
+      "title": "PART 10 Disorders of the Gastrointestinal System",
+      "page": 8734
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Disorders of the Alimentary Tract",
+      "page": 8734
+    },
+    {
+      "level": 3,
+      "title": "321 Approach to the Patient with Gastrointestinal Disease",
+      "page": 8735
+    },
+    {
+      "level": 3,
+      "title": "322 Gastrointestinal Endoscopy",
+      "page": 8757
+    },
+    {
+      "level": 3,
+      "title": "323 Diseases of the Esophagus",
+      "page": 8847
+    },
+    {
+      "level": 3,
+      "title": "324 Peptic Ulcer Disease and Related Disorders",
+      "page": 8888
+    },
+    {
+      "level": 3,
+      "title": "325 Disorders of Absorption",
+      "page": 8979
+    },
+    {
+      "level": 3,
+      "title": "326 Inflammatory Bowel Disease",
+      "page": 9021
+    },
+    {
+      "level": 3,
+      "title": "327 Irritable Bowel Syndrome",
+      "page": 9094
+    },
+    {
+      "level": 3,
+      "title": "328 Diverticular Disease and Common Anorectal Disorders",
+      "page": 9120
+    },
+    {
+      "level": 3,
+      "title": "329 Mesenteric Vascular Insufficiency",
+      "page": 9154
+    },
+    {
+      "level": 3,
+      "title": "330 Acute Intestinal Obstruction",
+      "page": 9163
+    },
+    {
+      "level": 3,
+      "title": "331 Acute Appendicitis and Peritonitis",
+      "page": 9180
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Nutrition",
+      "page": 9196
+    },
+    {
+      "level": 3,
+      "title": "332 Nutrient Requirements and Dietary Assessment",
+      "page": 9197
+    },
+    {
+      "level": 3,
+      "title": "333 Vitamin and Trace Mineral Deficiency and Excess",
+      "page": 9218
+    },
+    {
+      "level": 3,
+      "title": "334 Malnutrition and Nutritional Assessment",
+      "page": 9255
+    },
+    {
+      "level": 3,
+      "title": "335 Enteral and Parenteral Nutrition",
+      "page": 9268
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Liver and Biliary Tract Disease",
+      "page": 9296
+    },
+    {
+      "level": 3,
+      "title": "336 Approach to the Patient with Liver Disease",
+      "page": 9297
+    },
+    {
+      "level": 3,
+      "title": "337 Evaluation of Liver Function",
+      "page": 9323
+    },
+    {
+      "level": 3,
+      "title": "338 The Hyperbilirubinemias",
+      "page": 9336
+    },
+    {
+      "level": 3,
+      "title": "339 Acute Viral Hepatitis",
+      "page": 9355
+    },
+    {
+      "level": 3,
+      "title": "340 Toxic and Drug-Induced Hepatitis",
+      "page": 9435
+    },
+    {
+      "level": 3,
+      "title": "341 Chronic Hepatitis",
+      "page": 9462
+    },
+    {
+      "level": 3,
+      "title": "342 Alcohol-Associated Liver Disease",
+      "page": 9552
+    },
+    {
+      "level": 3,
+      "title": "343 Nonalcoholic Fatty Liver Diseases and Nonalcoholic Steatohepatitis",
+      "page": 9562
+    },
+    {
+      "level": 3,
+      "title": "344 Cirrhosis and Its Complications",
+      "page": 9581
+    },
+    {
+      "level": 3,
+      "title": "345 Liver Transplantation",
+      "page": 9620
+    },
+    {
+      "level": 3,
+      "title": "346 Diseases of the Gallbladder and Bile Ducts",
+      "page": 9653
+    },
+    {
+      "level": 2,
+      "title": "SECTION 4 Disorders of the Pancreas",
+      "page": 9695
+    },
+    {
+      "level": 3,
+      "title": "347 Approach to the Patient with Pancreatic Disease",
+      "page": 9697
+    },
+    {
+      "level": 3,
+      "title": "348 Acute and Chronic Pancreatitis",
+      "page": 9712
+    },
+    {
+      "level": 1,
+      "title": "PART 11 Immune-Mediated, Inflammatory, and Rheumatologic Disorders",
+      "page": 9757
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 The Immune System in Health and Disease",
+      "page": 9757
+    },
+    {
+      "level": 3,
+      "title": "349 Introduction to the Immune System",
+      "page": 9758
+    },
+    {
+      "level": 3,
+      "title": "350 Mechanisms of Regulation and Dysregulation of the Immune System",
+      "page": 9837
+    },
+    {
+      "level": 3,
+      "title": "351 Primary Immune Deficiency Diseases",
+      "page": 9856
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Disorders of Immune-Mediated Injury",
+      "page": 9894
+    },
+    {
+      "level": 3,
+      "title": "352 Urticaria, Angioedema, and Allergic Rhinitis",
+      "page": 9895
+    },
+    {
+      "level": 3,
+      "title": "353 Anaphylaxis",
+      "page": 9922
+    },
+    {
+      "level": 3,
+      "title": "354 Mastocytosis",
+      "page": 9931
+    },
+    {
+      "level": 3,
+      "title": "355 Autoimmunity and Autoimmune Diseases",
+      "page": 9940
+    },
+    {
+      "level": 3,
+      "title": "356 Systemic Lupus Erythematosus",
+      "page": 9961
+    },
+    {
+      "level": 3,
+      "title": "357 Antiphospholipid Syndrome",
+      "page": 10003
+    },
+    {
+      "level": 3,
+      "title": "358 Rheumatoid Arthritis",
+      "page": 10012
+    },
+    {
+      "level": 3,
+      "title": "359 Acute Rheumatic Fever",
+      "page": 10063
+    },
+    {
+      "level": 3,
+      "title": "360 Systemic Sclerosis (Scleroderma) and Related Disorders",
+      "page": 10084
+    },
+    {
+      "level": 3,
+      "title": "361 Sjögren’s Syndrome",
+      "page": 10147
+    },
+    {
+      "level": 3,
+      "title": "362 Spondyloarthritis",
+      "page": 10158
+    },
+    {
+      "level": 3,
+      "title": "363 The Vasculitis Syndromes",
+      "page": 10201
+    },
+    {
+      "level": 3,
+      "title": "364 Behçet Syndrome",
+      "page": 10262
+    },
+    {
+      "level": 3,
+      "title": "365 Inflammatory Myopathies",
+      "page": 10268
+    },
+    {
+      "level": 3,
+      "title": "366 Relapsing Polychondritis",
+      "page": 10292
+    },
+    {
+      "level": 3,
+      "title": "367 Sarcoidosis",
+      "page": 10305
+    },
+    {
+      "level": 3,
+      "title": "368 IgG4-Related Disease",
+      "page": 10333
+    },
+    {
+      "level": 3,
+      "title": "369 Familial Mediterranean Fever and Other Hereditary Autoinflammatory Diseases",
+      "page": 10345
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Disorders of the Joints and Adjacent Tissues",
+      "page": 10357
+    },
+    {
+      "level": 3,
+      "title": "370 Approach to Articular and Musculoskeletal Disorders",
+      "page": 10358
+    },
+    {
+      "level": 3,
+      "title": "371 Osteoarthritis",
+      "page": 10397
+    },
+    {
+      "level": 3,
+      "title": "372 Gout and Other Crystal-Associated Arthropathies",
+      "page": 10427
+    },
+    {
+      "level": 3,
+      "title": "373 Fibromyalgia",
+      "page": 10449
+    },
+    {
+      "level": 3,
+      "title": "374 Arthritis Associated with Systemic Disease, and Other Arthritides",
+      "page": 10461
+    },
+    {
+      "level": 3,
+      "title": "375 Periarticular Disorders of the Extremities",
+      "page": 10490
+    },
+    {
+      "level": 1,
+      "title": "PART 12 Endocrinology and Metabolism",
+      "page": 10500
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Endocrinology",
+      "page": 10500
+    },
+    {
+      "level": 3,
+      "title": "376 Approach to the Patient with Endocrine Disorders",
+      "page": 10501
+    },
+    {
+      "level": 3,
+      "title": "377 Mechanisms of Hormone Action",
+      "page": 10513
+    },
+    {
+      "level": 3,
+      "title": "378 Physiology of Anterior Pituitary Hormones",
+      "page": 10540
+    },
+    {
+      "level": 3,
+      "title": "379 Hypopituitarism",
+      "page": 10557
+    },
+    {
+      "level": 3,
+      "title": "380 Pituitary Tumor Syndromes",
+      "page": 10582
+    },
+    {
+      "level": 3,
+      "title": "381 Disorders of the Neurohypophysis",
+      "page": 10638
+    },
+    {
+      "level": 3,
+      "title": "382 Thyroid Gland Physiology and Testing",
+      "page": 10667
+    },
+    {
+      "level": 3,
+      "title": "383 Hypothyroidism",
+      "page": 10692
+    },
+    {
+      "level": 3,
+      "title": "384 Hyperthyroidism and Other Causes of Thyrotoxicosis",
+      "page": 10711
+    },
+    {
+      "level": 3,
+      "title": "385 Thyroid Nodular Disease and Thyroid Cancer",
+      "page": 10742
+    },
+    {
+      "level": 3,
+      "title": "386 Disorders of the Adrenal Cortex",
+      "page": 10777
+    },
+    {
+      "level": 3,
+      "title": "387 Pheochromocytoma",
+      "page": 10842
+    },
+    {
+      "level": 3,
+      "title": "388 Multiple Endocrine Neoplasia Syndromes",
+      "page": 10863
+    },
+    {
+      "level": 3,
+      "title": "389 Autoimmune Polyendocrine Syndromes",
+      "page": 10900
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Sex- and Gender-Based Medicine",
+      "page": 10918
+    },
+    {
+      "level": 3,
+      "title": "390 Sex Development",
+      "page": 10919
+    },
+    {
+      "level": 3,
+      "title": "391 Disorders of the Testes and Male Reproductive System",
+      "page": 10944
+    },
+    {
+      "level": 3,
+      "title": "392 Disorders of the Female Reproductive System",
+      "page": 11020
+    },
+    {
+      "level": 3,
+      "title": "393 Menstrual Disorders and Pelvic Pain",
+      "page": 11048
+    },
+    {
+      "level": 3,
+      "title": "394 Hirsutism",
+      "page": 11067
+    },
+    {
+      "level": 3,
+      "title": "395 Menopause and Postmenopausal Hormone Therapy",
+      "page": 11081
+    },
+    {
+      "level": 3,
+      "title": "396 Infertility and Contraception",
+      "page": 11105
+    },
+    {
+      "level": 3,
+      "title": "397 Sexual Dysfunction",
+      "page": 11124
+    },
+    {
+      "level": 3,
+      "title": "398 Women’s Health",
+      "page": 11153
+    },
+    {
+      "level": 3,
+      "title": "399 Men’s Health",
+      "page": 11172
+    },
+    {
+      "level": 3,
+      "title": "400 Lesbian, Gay, Bisexual, and Transgender (LGBT) Health",
+      "page": 11208
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Obesity, Diabetes Mellitus, and Metabolic Syndrome",
+      "page": 11215
+    },
+    {
+      "level": 3,
+      "title": "401 Pathobiology of Obesity",
+      "page": 11216
+    },
+    {
+      "level": 3,
+      "title": "402 Evaluation and Management of Obesity",
+      "page": 11243
+    },
+    {
+      "level": 3,
+      "title": "403 Diabetes Mellitus: Diagnosis, Classification, and Pathophysiology",
+      "page": 11266
+    },
+    {
+      "level": 3,
+      "title": "404 Diabetes Mellitus: Management and Therapies",
+      "page": 11303
+    },
+    {
+      "level": 3,
+      "title": "405 Diabetes Mellitus: Complications",
+      "page": 11364
+    },
+    {
+      "level": 3,
+      "title": "406 Hypoglycemia",
+      "page": 11396
+    },
+    {
+      "level": 3,
+      "title": "407 Disorders of Lipoprotein Metabolism",
+      "page": 11420
+    },
+    {
+      "level": 3,
+      "title": "408 The Metabolic Syndrome",
+      "page": 11474
+    },
+    {
+      "level": 2,
+      "title": "SECTION 4 Disorders of Bone and Mineral Metabolism",
+      "page": 11496
+    },
+    {
+      "level": 3,
+      "title": "409 Bone and Mineral Metabolism in Health and Disease",
+      "page": 11497
+    },
+    {
+      "level": 3,
+      "title": "410 Disorders of the Parathyroid Gland and Calcium Homeostasis",
+      "page": 11546
+    },
+    {
+      "level": 3,
+      "title": "411 Osteoporosis",
+      "page": 11624
+    },
+    {
+      "level": 3,
+      "title": "412 Paget’s Disease and Other Dysplasias of Bone",
+      "page": 11692
+    },
+    {
+      "level": 2,
+      "title": "SECTION 5 Disorders of Intermediary Metabolism",
+      "page": 11722
+    },
+    {
+      "level": 3,
+      "title": "413 Heritable Disorders of Connective Tissue",
+      "page": 11723
+    },
+    {
+      "level": 3,
+      "title": "414 Hemochromatosis",
+      "page": 11763
+    },
+    {
+      "level": 3,
+      "title": "415 Wilson’s Disease",
+      "page": 11782
+    },
+    {
+      "level": 3,
+      "title": "416 The Porphyrias",
+      "page": 11792
+    },
+    {
+      "level": 3,
+      "title": "417 Disorders of Purine and Pyrimidine Metabolism",
+      "page": 11827
+    },
+    {
+      "level": 3,
+      "title": "418 Lysosomal Storage Diseases",
+      "page": 11849
+    },
+    {
+      "level": 3,
+      "title": "419 Glycogen Storage Diseases and Other Inherited Disorders of Carbohydrate Metabolism",
+      "page": 11869
+    },
+    {
+      "level": 3,
+      "title": "420 Inherited Disorders of Amino Acid Metabolism in Adults",
+      "page": 11894
+    },
+    {
+      "level": 3,
+      "title": "421 Inherited Defects of Membrane Transport",
+      "page": 11908
+    },
+    {
+      "level": 1,
+      "title": "PART 13 Neurologic Disorders",
+      "page": 11917
+    },
+    {
+      "level": 2,
+      "title": "SECTION 1 Diagnosis of Neurologic Disorders",
+      "page": 11917
+    },
+    {
+      "level": 3,
+      "title": "422 Approach to the Patient with Neurologic Disease",
+      "page": 11918
+    },
+    {
+      "level": 3,
+      "title": "423 Neuroimaging in Neurologic Disorders",
+      "page": 11941
+    },
+    {
+      "level": 3,
+      "title": "424 Pathobiology of Neurologic Diseases",
+      "page": 11976
+    },
+    {
+      "level": 2,
+      "title": "SECTION 2 Diseases of the Central Nervous System",
+      "page": 12021
+    },
+    {
+      "level": 3,
+      "title": "425 Seizures and Epilepsy",
+      "page": 12022
+    },
+    {
+      "level": 3,
+      "title": "426 Introduction to Cerebrovascular Diseases",
+      "page": 12090
+    },
+    {
+      "level": 3,
+      "title": "427 Ischemic Stroke",
+      "page": 12124
+    },
+    {
+      "level": 3,
+      "title": "428 Intracranial Hemorrhage",
+      "page": 12172
+    },
+    {
+      "level": 3,
+      "title": "429 Subarachnoid Hemorrhage",
+      "page": 12192
+    },
+    {
+      "level": 3,
+      "title": "430 Migraine and Other Primary Headache Disorders",
+      "page": 12206
+    },
+    {
+      "level": 3,
+      "title": "431 Alzheimer’s Disease",
+      "page": 12247
+    },
+    {
+      "level": 3,
+      "title": "432 Frontotemporal Dementia",
+      "page": 12279
+    },
+    {
+      "level": 3,
+      "title": "433 Vascular Dementia",
+      "page": 12290
+    },
+    {
+      "level": 3,
+      "title": "434 Dementia with Lewy Bodies",
+      "page": 12301
+    },
+    {
+      "level": 3,
+      "title": "435 Parkinson’s Disease",
+      "page": 12309
+    },
+    {
+      "level": 3,
+      "title": "436 Tremor, Chorea, and Other Movement Disorders",
+      "page": 12357
+    },
+    {
+      "level": 3,
+      "title": "437 Amyotrophic Lateral Sclerosis and Other Motor Neuron Diseases",
+      "page": 12394
+    },
+    {
+      "level": 3,
+      "title": "438 Prion Diseases",
+      "page": 12415
+    },
+    {
+      "level": 3,
+      "title": "439 Ataxic Disorders",
+      "page": 12439
+    },
+    {
+      "level": 3,
+      "title": "440 Disorders of the Autonomic Nervous System",
+      "page": 12458
+    },
+    {
+      "level": 3,
+      "title": "441 Trigeminal Neuralgia, Bell’s Palsy, and Other Cranial Nerve Disorders",
+      "page": 12490
+    },
+    {
+      "level": 3,
+      "title": "442 Diseases of the Spinal Cord",
+      "page": 12517
+    },
+    {
+      "level": 3,
+      "title": "443 Concussion and Other Traumatic Brain Injuries",
+      "page": 12559
+    },
+    {
+      "level": 3,
+      "title": "444 Multiple Sclerosis",
+      "page": 12584
+    },
+    {
+      "level": 3,
+      "title": "445 Neuromyelitis Optica",
+      "page": 12636
+    },
+    {
+      "level": 2,
+      "title": "SECTION 3 Nerve and Muscle Disorders",
+      "page": 12647
+    },
+    {
+      "level": 3,
+      "title": "446 Peripheral Neuropathy",
+      "page": 12648
+    },
+    {
+      "level": 3,
+      "title": "447 Guillain-Barré Syndrome and Other Immune-Mediated Neuropathies",
+      "page": 12718
+    },
+    {
+      "level": 3,
+      "title": "448 Myasthenia Gravis and Other Diseases of the Neuromuscular Junction",
+      "page": 12742
+    },
+    {
+      "level": 3,
+      "title": "449 Muscular Dystrophies and Other Muscle Diseases",
+      "page": 12769
+    },
+    {
+      "level": 2,
+      "title": "SECTION 4 Myalgic Encephalomyelitis/Chronic Fatigue Syndrome",
+      "page": 12818
+    },
+    {
+      "level": 3,
+      "title": "450 Myalgic Encephalomyelitis/Chronic Fatigue Syndrome",
+      "page": 12819
+    },
+    {
+      "level": 2,
+      "title": "SECTION 5 Psychiatric and Addiction Disorders",
+      "page": 12827
+    },
+    {
+      "level": 3,
+      "title": "451 Biology of Psychiatric Disorders",
+      "page": 12828
+    },
+    {
+      "level": 3,
+      "title": "452 Psychiatric Disorders",
+      "page": 12848
+    },
+    {
+      "level": 3,
+      "title": "453 Alcohol and Alcohol Use Disorders",
+      "page": 12906
+    },
+    {
+      "level": 3,
+      "title": "454 Nicotine Addiction",
+      "page": 12932
+    },
+    {
+      "level": 3,
+      "title": "455 Marijuana and Marijuana Use Disorders",
+      "page": 12950
+    },
+    {
+      "level": 3,
+      "title": "456 Opioid-Related Disorders",
+      "page": 12959
+    },
+    {
+      "level": 3,
+      "title": "457 Cocaine, Other Psychostimulants, and Hallucinogens",
+      "page": 12973
+    },
+    {
+      "level": 1,
+      "title": "PART 14 Poisoning, Drug Overdose, and Envenomation",
+      "page": 12994
+    },
+    {
+      "level": 2,
+      "title": "458 Heavy Metal Poisoning",
+      "page": 12995
+    },
+    {
+      "level": 2,
+      "title": "459 Poisoning and Drug Overdose",
+      "page": 13006
+    },
+    {
+      "level": 2,
+      "title": "460 Disorders Caused by Venomous Snakebites and Marine Animal Exposures",
+      "page": 13041
+    },
+    {
+      "level": 2,
+      "title": "461 Ectoparasite Infestations and Arthropod Injuries",
+      "page": 13081
+    },
+    {
+      "level": 1,
+      "title": "PART 15 Disorders Associated with Environmental Exposures",
+      "page": 13113
+    },
+    {
+      "level": 2,
+      "title": "462 Altitude Illness",
+      "page": 13114
+    },
+    {
+      "level": 2,
+      "title": "463 Hyperbaric and Diving Medicine",
+      "page": 13139
+    },
+    {
+      "level": 2,
+      "title": "464 Hypothermia and Peripheral Cold Injuries",
+      "page": 13167
+    },
+    {
+      "level": 2,
+      "title": "465 Heat-Related Illnesses",
+      "page": 13184
+    },
+    {
+      "level": 1,
+      "title": "PART 16 Genes, the Environment, and Disease",
+      "page": 13199
+    },
+    {
+      "level": 2,
+      "title": "466 Principles of Human Genetics",
+      "page": 13200
+    },
+    {
+      "level": 2,
+      "title": "467 The Practice of Genetics in Clinical Medicine",
+      "page": 13276
+    },
+    {
+      "level": 2,
+      "title": "468 Mitochondrial DNA and Heritable Traits and Diseases",
+      "page": 13300
+    },
+    {
+      "level": 2,
+      "title": "469 Telomere Disease",
+      "page": 13344
+    },
+    {
+      "level": 2,
+      "title": "470 Gene- and Cell-Based Therapy in Clinical Medicine",
+      "page": 13361
+    },
+    {
+      "level": 2,
+      "title": "471 The Human Microbiome",
+      "page": 13382
+    },
+    {
+      "level": 1,
+      "title": "PART 17 Global Medicine",
+      "page": 13425
+    },
+    {
+      "level": 2,
+      "title": "472 Global Issues in Medicine",
+      "page": 13426
+    },
+    {
+      "level": 2,
+      "title": "473 Emerging and Reemerging Infectious Diseases",
+      "page": 13466
+    },
+    {
+      "level": 2,
+      "title": "474 Primary Care and Global Health",
+      "page": 13486
+    },
+    {
+      "level": 2,
+      "title": "475 Health Effects of Climate Change",
+      "page": 13517
+    },
+    {
+      "level": 1,
+      "title": "PART 18 Aging",
+      "page": 13533
+    },
+    {
+      "level": 2,
+      "title": "476 Biology of Aging",
+      "page": 13534
+    },
+    {
+      "level": 2,
+      "title": "477 Caring for the Geriatric Patient",
+      "page": 13557
+    },
+    {
+      "level": 1,
+      "title": "PART 19 Consultative Medicine",
+      "page": 13623
+    },
+    {
+      "level": 2,
+      "title": "478 Approach to Medical Consultation",
+      "page": 13624
+    },
+    {
+      "level": 2,
+      "title": "479 Medical Disorders During Pregnancy",
+      "page": 13631
+    },
+    {
+      "level": 2,
+      "title": "480 Medical Evaluation of the Surgical Patient",
+      "page": 13656
+    },
+    {
+      "level": 1,
+      "title": "PART 20 Frontiers",
+      "page": 13675
+    },
+    {
+      "level": 2,
+      "title": "481 Behavioral Economics and Health",
+      "page": 13676
+    },
+    {
+      "level": 2,
+      "title": "482 Complementary and Integrative Therapies and Practices",
+      "page": 13712
+    },
+    {
+      "level": 2,
+      "title": "483 The Role of Epigenetics in Disease and Treatment",
+      "page": 13736
+    },
+    {
+      "level": 2,
+      "title": "484 Applications of Stem Cell Biology in Clinical Medicine",
+      "page": 13759
+    },
+    {
+      "level": 2,
+      "title": "485 The Role of Circadian Biology in Health and Disease",
+      "page": 13774
+    },
+    {
+      "level": 2,
+      "title": "486 Network Medicine: Systems Biology in Health and Disease",
+      "page": 13813
+    },
+    {
+      "level": 2,
+      "title": "487 Emerging Neurotherapeutic Technologies",
+      "page": 13832
+    },
+    {
+      "level": 2,
+      "title": "488 Machine Learning and Augmented Intelligence in Clinical Medicine",
+      "page": 13856
+    },
+    {
+      "level": 2,
+      "title": "489 Metabolomics",
+      "page": 13872
+    },
+    {
+      "level": 2,
+      "title": "490 Circulating Nucleic Acids as Liquid Biopsies and Noninvasive Disease Biomarkers",
+      "page": 13892
+    },
+    {
+      "level": 2,
+      "title": "491 Protein Folding Disorders",
+      "page": 13927
+    },
+    {
+      "level": 2,
+      "title": "492 Novel Approaches to Diseases of Unknown Etiology",
+      "page": 13946
+    },
+    {
+      "level": 1,
+      "title": "Index",
+      "page": 13965
+    }
+  ]
+}

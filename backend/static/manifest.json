@@ -1,0 +1,33 @@
+{
+  "name": "Harrison's Medical Reference",
+  "short_name": "HARRISON'S",
+  "description": "Harrison's Principles of Internal Medicine - 21st Edition",
+  "start_url": "/web",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23667eea' width='100' height='100'/%3E%3Ctext y='75' x='50' text-anchor='middle' font-size='60' fill='white' font-family='system-ui'%3EH%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23667eea' width='100' height='100'/%3E%3Ctext y='75' x='50' text-anchor='middle' font-size='60' fill='white' font-family='system-ui'%3EH%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["medical", "education", "reference"],
+  "shortcuts": [
+    {
+      "name": "Search",
+      "url": "/web",
+      "description": "Search medical topics"
+    }
+  ]
+}
+

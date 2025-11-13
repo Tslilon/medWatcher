@@ -1,0 +1,52 @@
+# API Keys and Secrets
+.env
+*.env
+secrets/
+backend/.env
+
+# SSL Certificates
+backend/key.pem
+backend/cert.pem
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+backend/venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files
+data/processed/
+data/embeddings/
+data/chroma_db/
+data/independant_pdfs/
+*.pdf
+
+# Docker
+*.tar
+.dockerignore
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+build/
+dist/
+*.egg-info/
+

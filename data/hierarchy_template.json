@@ -1,0 +1,3289 @@
+{
+  "metadata": {
+    "title": "Harrison's Principles of Internal Medicine",
+    "edition": "21st",
+    "year": 2022,
+    "total_pages": 15164,
+    "note": "This is a template. Please review and adjust as needed."
+  },
+  "parts": [
+    {
+      "part_number": 1,
+      "part_name": "Cover",
+      "start_page": 15164,
+      "end_page": 1,
+      "chapters": []
+    },
+    {
+      "part_number": 2,
+      "part_name": "Nav",
+      "start_page": 2,
+      "end_page": 20,
+      "chapters": []
+    },
+    {
+      "part_number": 3,
+      "part_name": "Cover",
+      "start_page": 21,
+      "end_page": 24,
+      "chapters": []
+    },
+    {
+      "part_number": 4,
+      "part_name": "Title Page",
+      "start_page": 25,
+      "end_page": 25,
+      "chapters": []
+    },
+    {
+      "part_number": 5,
+      "part_name": "Copyright Page",
+      "start_page": 26,
+      "end_page": 29,
+      "chapters": []
+    },
+    {
+      "part_number": 6,
+      "part_name": "Contents",
+      "start_page": 30,
+      "end_page": 76,
+      "chapters": []
+    },
+    {
+      "part_number": 7,
+      "part_name": "Contributors",
+      "start_page": 77,
+      "end_page": 162,
+      "chapters": []
+    },
+    {
+      "part_number": 8,
+      "part_name": "Preface",
+      "start_page": 163,
+      "end_page": 166,
+      "chapters": []
+    },
+    {
+      "part_number": 9,
+      "part_name": "Harrison’s Related Resources",
+      "start_page": 167,
+      "end_page": 168,
+      "chapters": []
+    },
+    {
+      "part_number": 1,
+      "part_name": "PART 1 The Profession of Medicine",
+      "start_page": 169,
+      "end_page": 490,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "1 The Practice of Medicine",
+          "start_page": 170,
+          "end_page": 198,
+          "topics": []
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "2 Promoting Good Health",
+          "start_page": 199,
+          "end_page": 217,
+          "topics": []
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "3 Vaccine Opposition and Hesitancy",
+          "start_page": 218,
+          "end_page": 241,
+          "topics": []
+        },
+        {
+          "chapter_number": 4,
+          "chapter_name": "4 Decision-Making in Clinical Medicine",
+          "start_page": 242,
+          "end_page": 277,
+          "topics": []
+        },
+        {
+          "chapter_number": 5,
+          "chapter_name": "5 Precision Medicine and Clinical Care",
+          "start_page": 278,
+          "end_page": 299,
+          "topics": []
+        },
+        {
+          "chapter_number": 6,
+          "chapter_name": "6 Screening and Prevention of Disease",
+          "start_page": 300,
+          "end_page": 314,
+          "topics": []
+        },
+        {
+          "chapter_number": 7,
+          "chapter_name": "7 Global Diversity of Health System Financing and Delivery",
+          "start_page": 315,
+          "end_page": 348,
+          "topics": []
+        },
+        {
+          "chapter_number": 8,
+          "chapter_name": "8 The Safety and Quality of Health Care",
+          "start_page": 349,
+          "end_page": 364,
+          "topics": []
+        },
+        {
+          "chapter_number": 9,
+          "chapter_name": "9 Diagnosis: Reducing Errors and Improving Quality",
+          "start_page": 365,
+          "end_page": 382,
+          "topics": []
+        },
+        {
+          "chapter_number": 10,
+          "chapter_name": "10 Racial and Ethnic Disparities in Health Care",
+          "start_page": 383,
+          "end_page": 411,
+          "topics": []
+        },
+        {
+          "chapter_number": 11,
+          "chapter_name": "11 Ethical Issues in Clinical Medicine",
+          "start_page": 412,
+          "end_page": 431,
+          "topics": []
+        },
+        {
+          "chapter_number": 12,
+          "chapter_name": "12 Palliative and End-of-Life Care",
+          "start_page": 432,
+          "end_page": 490,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 2,
+      "part_name": "PART 2 Cardinal Manifestations and Presentation of Diseases",
+      "start_page": 491,
+      "end_page": 1878,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Pain",
+          "start_page": 491,
+          "end_page": 633,
+          "topics": [
+            {
+              "topic_name": "13 Pain: Pathophysiology and Management",
+              "start_page": 492,
+              "end_page": 524
+            },
+            {
+              "topic_name": "14 Chest Discomfort",
+              "start_page": 525,
+              "end_page": 553
+            },
+            {
+              "topic_name": "15 Abdominal Pain",
+              "start_page": 554,
+              "end_page": 569
+            },
+            {
+              "topic_name": "16 Headache",
+              "start_page": 570,
+              "end_page": 587
+            },
+            {
+              "topic_name": "17 Back and Neck Pain",
+              "start_page": 588,
+              "end_page": 633
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Alterations in Body Temperature",
+          "start_page": 634,
+          "end_page": 693,
+          "topics": [
+            {
+              "topic_name": "18 Fever",
+              "start_page": 635,
+              "end_page": 648
+            },
+            {
+              "topic_name": "19 Fever and Rash",
+              "start_page": 649,
+              "end_page": 673
+            },
+            {
+              "topic_name": "20 Fever of Unknown Origin",
+              "start_page": 674,
+              "end_page": 693
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Nervous System Dysfunction",
+          "start_page": 694,
+          "end_page": 928,
+          "topics": [
+            {
+              "topic_name": "21 Syncope",
+              "start_page": 695,
+              "end_page": 717
+            },
+            {
+              "topic_name": "22 Dizziness and Vertigo",
+              "start_page": 718,
+              "end_page": 731
+            },
+            {
+              "topic_name": "23 Fatigue",
+              "start_page": 732,
+              "end_page": 741
+            },
+            {
+              "topic_name": "24 Neurologic Causes of Weakness and Paralysis",
+              "start_page": 742,
+              "end_page": 755
+            },
+            {
+              "topic_name": "25 Numbness, Tingling, and Sensory Loss",
+              "start_page": 756,
+              "end_page": 771
+            },
+            {
+              "topic_name": "26 Gait Disorders, Imbalance, and Falls",
+              "start_page": 772,
+              "end_page": 788
+            },
+            {
+              "topic_name": "27 Confusion and Delirium",
+              "start_page": 789,
+              "end_page": 808
+            },
+            {
+              "topic_name": "28 Coma",
+              "start_page": 809,
+              "end_page": 832
+            },
+            {
+              "topic_name": "29 Dementia",
+              "start_page": 833,
+              "end_page": 855
+            },
+            {
+              "topic_name": "30 Aphasia, Memory Loss, and Other Cognitive Disorders",
+              "start_page": 856,
+              "end_page": 889
+            },
+            {
+              "topic_name": "31 Sleep Disorders",
+              "start_page": 890,
+              "end_page": 928
+            }
+          ]
+        },
+        {
+          "chapter_number": 4,
+          "chapter_name": "SECTION 4 Disorders of Eyes, Ears, Nose, and Throat",
+          "start_page": 929,
+          "end_page": 1102,
+          "topics": [
+            {
+              "topic_name": "32 Disorders of the Eye",
+              "start_page": 931,
+              "end_page": 995
+            },
+            {
+              "topic_name": "33 Disorders of Smell and Taste",
+              "start_page": 996,
+              "end_page": 1018
+            },
+            {
+              "topic_name": "34 Disorders of Hearing",
+              "start_page": 1019,
+              "end_page": 1049
+            },
+            {
+              "topic_name": "35 Upper Respiratory Symptoms, Including Earache, Sinus Symptoms, and Sore Throat",
+              "start_page": 1050,
+              "end_page": 1081
+            },
+            {
+              "topic_name": "36 Oral Manifestations of Disease",
+              "start_page": 1082,
+              "end_page": 1102
+            }
+          ]
+        },
+        {
+          "chapter_number": 5,
+          "chapter_name": "SECTION 5 Alterations in Circulatory and Respiratory Functions",
+          "start_page": 1103,
+          "end_page": 1198,
+          "topics": [
+            {
+              "topic_name": "37 Dyspnea",
+              "start_page": 1104,
+              "end_page": 1118
+            },
+            {
+              "topic_name": "38 Cough",
+              "start_page": 1119,
+              "end_page": 1129
+            },
+            {
+              "topic_name": "39 Hemoptysis",
+              "start_page": 1130,
+              "end_page": 1138
+            },
+            {
+              "topic_name": "40 Hypoxia and Cyanosis",
+              "start_page": 1139,
+              "end_page": 1150
+            },
+            {
+              "topic_name": "41 Edema",
+              "start_page": 1151,
+              "end_page": 1163
+            },
+            {
+              "topic_name": "42 Approach to the Patient with a Heart Murmur",
+              "start_page": 1164,
+              "end_page": 1195
+            },
+            {
+              "topic_name": "43 Palpitations",
+              "start_page": 1196,
+              "end_page": 1198
+            }
+          ]
+        },
+        {
+          "chapter_number": 6,
+          "chapter_name": "SECTION 6 Alterations in Gastrointestinal Function",
+          "start_page": 1199,
+          "end_page": 1333,
+          "topics": [
+            {
+              "topic_name": "44 Dysphagia",
+              "start_page": 1200,
+              "end_page": 1211
+            },
+            {
+              "topic_name": "45 Nausea, Vomiting, and Indigestion",
+              "start_page": 1212,
+              "end_page": 1234
+            },
+            {
+              "topic_name": "46 Diarrhea and Constipation",
+              "start_page": 1235,
+              "end_page": 1276
+            },
+            {
+              "topic_name": "47 Unintentional Weight Loss",
+              "start_page": 1277,
+              "end_page": 1284
+            },
+            {
+              "topic_name": "48 Gastrointestinal Bleeding",
+              "start_page": 1285,
+              "end_page": 1297
+            },
+            {
+              "topic_name": "49 Jaundice",
+              "start_page": 1298,
+              "end_page": 1319
+            },
+            {
+              "topic_name": "50 Abdominal Swelling and Ascites",
+              "start_page": 1320,
+              "end_page": 1333
+            }
+          ]
+        },
+        {
+          "chapter_number": 7,
+          "chapter_name": "SECTION 7 Alterations in Renal and Urinary Tract Function",
+          "start_page": 1334,
+          "end_page": 1500,
+          "topics": [
+            {
+              "topic_name": "51 Interstitial Cystitis/Bladder Pain Syndrome",
+              "start_page": 1335,
+              "end_page": 1358
+            },
+            {
+              "topic_name": "52 Azotemia and Urinary Abnormalities",
+              "start_page": 1359,
+              "end_page": 1382
+            },
+            {
+              "topic_name": "53 Fluid and Electrolyte Disturbances",
+              "start_page": 1383,
+              "end_page": 1448
+            },
+            {
+              "topic_name": "54 Hypercalcemia and Hypocalcemia",
+              "start_page": 1449,
+              "end_page": 1460
+            },
+            {
+              "topic_name": "55 Acidosis and Alkalosis",
+              "start_page": 1461,
+              "end_page": 1500
+            }
+          ]
+        },
+        {
+          "chapter_number": 8,
+          "chapter_name": "SECTION 8 Alterations in the Skin",
+          "start_page": 1501,
+          "end_page": 1712,
+          "topics": [
+            {
+              "topic_name": "56 Approach to the Patient with a Skin Disorder",
+              "start_page": 1502,
+              "end_page": 1519
+            },
+            {
+              "topic_name": "57 Eczema, Psoriasis, Cutaneous Infections, Acne, and Other Common Skin Disorders",
+              "start_page": 1520,
+              "end_page": 1552
+            },
+            {
+              "topic_name": "58 Skin Manifestations of Internal Disease",
+              "start_page": 1553,
+              "end_page": 1618
+            },
+            {
+              "topic_name": "59 Immunologically Mediated Skin Diseases",
+              "start_page": 1619,
+              "end_page": 1645
+            },
+            {
+              "topic_name": "60 Cutaneous Drug Reactions",
+              "start_page": 1646,
+              "end_page": 1684
+            },
+            {
+              "topic_name": "61 Photosensitivity and Other Reactions to Sunlight",
+              "start_page": 1685,
+              "end_page": 1712
+            }
+          ]
+        },
+        {
+          "chapter_number": 9,
+          "chapter_name": "SECTION 9 Hematologic Alterations",
+          "start_page": 1713,
+          "end_page": 1878,
+          "topics": [
+            {
+              "topic_name": "62 Interpreting Peripheral Blood Smears",
+              "start_page": 1714,
+              "end_page": 1743
+            },
+            {
+              "topic_name": "63 Anemia and Polycythemia",
+              "start_page": 1744,
+              "end_page": 1784
+            },
+            {
+              "topic_name": "64 Disorders of Granulocytes and Monocytes",
+              "start_page": 1785,
+              "end_page": 1824
+            },
+            {
+              "topic_name": "65 Bleeding and Thrombosis",
+              "start_page": 1825,
+              "end_page": 1853
+            },
+            {
+              "topic_name": "66 Enlargement of Lymph Nodes and Spleen",
+              "start_page": 1854,
+              "end_page": 1878
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 3,
+      "part_name": "PART 3 Pharmacology",
+      "start_page": 1879,
+      "end_page": 1938,
+      "chapters": [
+        {
+          "chapter_number": 67,
+          "chapter_name": "67 Principles of Clinical Pharmacology",
+          "start_page": 1880,
+          "end_page": 1920,
+          "topics": []
+        },
+        {
+          "chapter_number": 68,
+          "chapter_name": "68 Pharmacogenomics",
+          "start_page": 1921,
+          "end_page": 1938,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 4,
+      "part_name": "PART 4 Oncology and Hematology",
+      "start_page": 1939,
+      "end_page": 3567,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Neoplastic Disorders",
+          "start_page": 1939,
+          "end_page": 2857,
+          "topics": [
+            {
+              "topic_name": "69 Approach to the Patient with Cancer",
+              "start_page": 1940,
+              "end_page": 1970
+            },
+            {
+              "topic_name": "70 Prevention and Early Detection of Cancer",
+              "start_page": 1971,
+              "end_page": 2000
+            },
+            {
+              "topic_name": "71 Cancer Genetics",
+              "start_page": 2001,
+              "end_page": 2034
+            },
+            {
+              "topic_name": "72 Cancer Cell Biology",
+              "start_page": 2035,
+              "end_page": 2101
+            },
+            {
+              "topic_name": "73 Principles of Cancer Treatment",
+              "start_page": 2102,
+              "end_page": 2179
+            },
+            {
+              "topic_name": "74 Infections in Patients with Cancer",
+              "start_page": 2180,
+              "end_page": 2215
+            },
+            {
+              "topic_name": "75 Oncologic Emergencies",
+              "start_page": 2216,
+              "end_page": 2265
+            },
+            {
+              "topic_name": "76 Cancer of the Skin",
+              "start_page": 2266,
+              "end_page": 2304
+            },
+            {
+              "topic_name": "77 Head and Neck Cancer",
+              "start_page": 2305,
+              "end_page": 2319
+            },
+            {
+              "topic_name": "78 Neoplasms of the Lung",
+              "start_page": 2320,
+              "end_page": 2381
+            },
+            {
+              "topic_name": "79 Breast Cancer",
+              "start_page": 2382,
+              "end_page": 2433
+            },
+            {
+              "topic_name": "80 Upper Gastrointestinal Tract Cancers",
+              "start_page": 2434,
+              "end_page": 2469
+            },
+            {
+              "topic_name": "81 Lower Gastrointestinal Cancers",
+              "start_page": 2470,
+              "end_page": 2495
+            },
+            {
+              "topic_name": "82 Tumors of the Liver and Biliary Tree",
+              "start_page": 2496,
+              "end_page": 2539
+            },
+            {
+              "topic_name": "83 Pancreatic Cancer",
+              "start_page": 2540,
+              "end_page": 2557
+            },
+            {
+              "topic_name": "84 Gastrointestinal Neuroendocrine Tumors",
+              "start_page": 2558,
+              "end_page": 2597
+            },
+            {
+              "topic_name": "85 Renal Cell Carcinoma",
+              "start_page": 2598,
+              "end_page": 2607
+            },
+            {
+              "topic_name": "86 Cancer of the Bladder and Urinary Tract",
+              "start_page": 2608,
+              "end_page": 2622
+            },
+            {
+              "topic_name": "87 Benign and Malignant Diseases of the Prostate",
+              "start_page": 2623,
+              "end_page": 2655
+            },
+            {
+              "topic_name": "88 Testicular Cancer",
+              "start_page": 2656,
+              "end_page": 2674
+            },
+            {
+              "topic_name": "89 Gynecologic Malignancies",
+              "start_page": 2675,
+              "end_page": 2697
+            },
+            {
+              "topic_name": "90 Primary and Metastatic Tumors of the Nervous System",
+              "start_page": 2698,
+              "end_page": 2743
+            },
+            {
+              "topic_name": "91 Soft Tissue and Bone Sarcomas and Bone Metastases",
+              "start_page": 2744,
+              "end_page": 2760
+            },
+            {
+              "topic_name": "92 Carcinoma of Unknown Primary",
+              "start_page": 2761,
+              "end_page": 2778
+            },
+            {
+              "topic_name": "93 Paraneoplastic Syndromes: Endocrinologic/Hematologic",
+              "start_page": 2779,
+              "end_page": 2802
+            },
+            {
+              "topic_name": "94 Paraneoplastic Neurologic Syndromes and Autoimmune Encephalitis",
+              "start_page": 2803,
+              "end_page": 2832
+            },
+            {
+              "topic_name": "95 Cancer Survivorship and the Long-Term Impact of Cancer and Its Treatment",
+              "start_page": 2833,
+              "end_page": 2857
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Hematopoietic Disorders",
+          "start_page": 2858,
+          "end_page": 3430,
+          "topics": [
+            {
+              "topic_name": "96 Hematopoietic Stem Cells",
+              "start_page": 2859,
+              "end_page": 2874
+            },
+            {
+              "topic_name": "97 Iron Deficiency and Other Hypoproliferative Anemias",
+              "start_page": 2875,
+              "end_page": 2902
+            },
+            {
+              "topic_name": "98 Disorders of Hemoglobin",
+              "start_page": 2903,
+              "end_page": 2940
+            },
+            {
+              "topic_name": "99 Megaloblastic Anemias",
+              "start_page": 2941,
+              "end_page": 2978
+            },
+            {
+              "topic_name": "100 Hemolytic Anemias",
+              "start_page": 2979,
+              "end_page": 3031
+            },
+            {
+              "topic_name": "101 Anemia Due to Acute Blood Loss",
+              "start_page": 3032,
+              "end_page": 3034
+            },
+            {
+              "topic_name": "102 Bone Marrow Failure Syndromes Including Aplastic Anemia and Myelodysplasia",
+              "start_page": 3035,
+              "end_page": 3073
+            },
+            {
+              "topic_name": "103 Polycythemia Vera and Other Myeloproliferative Neoplasms",
+              "start_page": 3074,
+              "end_page": 3099
+            },
+            {
+              "topic_name": "104 Acute Myeloid Leukemia",
+              "start_page": 3100,
+              "end_page": 3138
+            },
+            {
+              "topic_name": "105 Chronic Myeloid Leukemia",
+              "start_page": 3139,
+              "end_page": 3173
+            },
+            {
+              "topic_name": "106 Acute Lymphoid Leukemia",
+              "start_page": 3174,
+              "end_page": 3193
+            },
+            {
+              "topic_name": "107 Chronic Lymphocytic Leukemia",
+              "start_page": 3194,
+              "end_page": 3219
+            },
+            {
+              "topic_name": "108 Non-Hodgkin’s Lymphoma",
+              "start_page": 3220,
+              "end_page": 3262
+            },
+            {
+              "topic_name": "109 Hodgkin’s Lymphoma",
+              "start_page": 3263,
+              "end_page": 3275
+            },
+            {
+              "topic_name": "110 Less Common Lymphoid and Myeloid Malignancies",
+              "start_page": 3276,
+              "end_page": 3316
+            },
+            {
+              "topic_name": "111 Plasma Cell Disorders",
+              "start_page": 3317,
+              "end_page": 3355
+            },
+            {
+              "topic_name": "112 Amyloidosis",
+              "start_page": 3356,
+              "end_page": 3375
+            },
+            {
+              "topic_name": "113 Transfusion Therapy and Biology",
+              "start_page": 3376,
+              "end_page": 3404
+            },
+            {
+              "topic_name": "114 Hematopoietic Cell Transplantation",
+              "start_page": 3405,
+              "end_page": 3430
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Disorders of Hemostasis",
+          "start_page": 3431,
+          "end_page": 3567,
+          "topics": [
+            {
+              "topic_name": "115 Disorders of Platelets and Vessel Wall",
+              "start_page": 3432,
+              "end_page": 3458
+            },
+            {
+              "topic_name": "116 Coagulation Disorders",
+              "start_page": 3459,
+              "end_page": 3490
+            },
+            {
+              "topic_name": "117 Arterial and Venous Thrombosis",
+              "start_page": 3491,
+              "end_page": 3509
+            },
+            {
+              "topic_name": "118 Antiplatelet, Anticoagulant, and Fibrinolytic Drugs",
+              "start_page": 3510,
+              "end_page": 3567
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 5,
+      "part_name": "PART 5 Infectious Diseases",
+      "start_page": 3568,
+      "end_page": 6683,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Basic Considerations in Infectious Diseases",
+          "start_page": 3568,
+          "end_page": 3794,
+          "topics": [
+            {
+              "topic_name": "119 Approach to the Patient with an Infectious Disease",
+              "start_page": 3569,
+              "end_page": 3590
+            },
+            {
+              "topic_name": "120 Molecular Mechanisms of Microbial Pathogenesis",
+              "start_page": 3591,
+              "end_page": 3632
+            },
+            {
+              "topic_name": "121 Microbial Genomics and Infectious Disease",
+              "start_page": 3633,
+              "end_page": 3681
+            },
+            {
+              "topic_name": "122 Approach to the Acutely Ill Infected Febrile Patient",
+              "start_page": 3682,
+              "end_page": 3707
+            },
+            {
+              "topic_name": "123 Immunization Principles and Vaccine Use",
+              "start_page": 3708,
+              "end_page": 3734
+            },
+            {
+              "topic_name": "124 Health Recommendations for International Travel",
+              "start_page": 3735,
+              "end_page": 3769
+            },
+            {
+              "topic_name": "125 Climate Change and Infectious Disease",
+              "start_page": 3770,
+              "end_page": 3794
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Clinical Syndromes: Community-Acquired Infections",
+          "start_page": 3795,
+          "end_page": 4236,
+          "topics": [
+            {
+              "topic_name": "126 Pneumonia",
+              "start_page": 3796,
+              "end_page": 3839
+            },
+            {
+              "topic_name": "127 Lung Abscess",
+              "start_page": 3840,
+              "end_page": 3849
+            },
+            {
+              "topic_name": "128 Infective Endocarditis",
+              "start_page": 3850,
+              "end_page": 3890
+            },
+            {
+              "topic_name": "129 Infections of the Skin, Muscles, and Soft Tissues",
+              "start_page": 3891,
+              "end_page": 3909
+            },
+            {
+              "topic_name": "130 Infectious Arthritis",
+              "start_page": 3910,
+              "end_page": 3932
+            },
+            {
+              "topic_name": "131 Osteomyelitis",
+              "start_page": 3933,
+              "end_page": 3961
+            },
+            {
+              "topic_name": "132 Intraabdominal Infections and Abscesses",
+              "start_page": 3962,
+              "end_page": 3988
+            },
+            {
+              "topic_name": "133 Acute Infectious Diarrheal Diseases and Bacterial Food Poisoning",
+              "start_page": 3989,
+              "end_page": 4012
+            },
+            {
+              "topic_name": "134 Clostridioides difficile Infection, Including Pseudomembranous Colitis",
+              "start_page": 4013,
+              "end_page": 4026
+            },
+            {
+              "topic_name": "135 Urinary Tract Infections, Pyelonephritis, and Prostatitis",
+              "start_page": 4027,
+              "end_page": 4057
+            },
+            {
+              "topic_name": "136 Sexually Transmitted Infections: Overview and Clinical Approach",
+              "start_page": 4058,
+              "end_page": 4117
+            },
+            {
+              "topic_name": "137 Encephalitis",
+              "start_page": 4118,
+              "end_page": 4144
+            },
+            {
+              "topic_name": "138 Acute Meningitis",
+              "start_page": 4145,
+              "end_page": 4181
+            },
+            {
+              "topic_name": "139 Chronic and Recurrent Meningitis",
+              "start_page": 4182,
+              "end_page": 4199
+            },
+            {
+              "topic_name": "140 Brain Abscess and Empyema",
+              "start_page": 4200,
+              "end_page": 4224
+            },
+            {
+              "topic_name": "141 Infectious Complications of Bites",
+              "start_page": 4225,
+              "end_page": 4236
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Clinical Syndromes: Health Care–Associated Infections",
+          "start_page": 4237,
+          "end_page": 4312,
+          "topics": [
+            {
+              "topic_name": "142 Infections Acquired in Health Care Facilities",
+              "start_page": 4238,
+              "end_page": 4269
+            },
+            {
+              "topic_name": "143 Infections in Transplant Recipients",
+              "start_page": 4270,
+              "end_page": 4312
+            }
+          ]
+        },
+        {
+          "chapter_number": 4,
+          "chapter_name": "SECTION 4 Therapy for Bacterial Diseases",
+          "start_page": 4313,
+          "end_page": 4379,
+          "topics": [
+            {
+              "topic_name": "144 Treatment and Prophylaxis of Bacterial Infections",
+              "start_page": 4314,
+              "end_page": 4359
+            },
+            {
+              "topic_name": "145 Bacterial Resistance to Antimicrobial Agents",
+              "start_page": 4360,
+              "end_page": 4379
+            }
+          ]
+        },
+        {
+          "chapter_number": 5,
+          "chapter_name": "SECTION 5 Diseases Caused by Gram-Positive Bacteria",
+          "start_page": 4380,
+          "end_page": 4597,
+          "topics": [
+            {
+              "topic_name": "146 Pneumococcal Infections",
+              "start_page": 4381,
+              "end_page": 4413
+            },
+            {
+              "topic_name": "147 Staphylococcal Infections",
+              "start_page": 4414,
+              "end_page": 4452
+            },
+            {
+              "topic_name": "148 Streptococcal Infections",
+              "start_page": 4453,
+              "end_page": 4485
+            },
+            {
+              "topic_name": "149 Enterococcal Infections",
+              "start_page": 4486,
+              "end_page": 4512
+            },
+            {
+              "topic_name": "150 Diphtheria and Other Corynebacterial Infections",
+              "start_page": 4513,
+              "end_page": 4532
+            },
+            {
+              "topic_name": "151 Listeria monocytogenes Infections",
+              "start_page": 4533,
+              "end_page": 4543
+            },
+            {
+              "topic_name": "152 Tetanus",
+              "start_page": 4544,
+              "end_page": 4555
+            },
+            {
+              "topic_name": "153 Botulism",
+              "start_page": 4556,
+              "end_page": 4576
+            },
+            {
+              "topic_name": "154 Gas Gangrene and Other Clostridial Infections",
+              "start_page": 4577,
+              "end_page": 4597
+            }
+          ]
+        },
+        {
+          "chapter_number": 6,
+          "chapter_name": "SECTION 6 Diseases Caused by Gram-Negative Bacteria",
+          "start_page": 4598,
+          "end_page": 5017,
+          "topics": [
+            {
+              "topic_name": "155 Meningococcal Infections",
+              "start_page": 4599,
+              "end_page": 4630
+            },
+            {
+              "topic_name": "156 Gonococcal Infections",
+              "start_page": 4631,
+              "end_page": 4657
+            },
+            {
+              "topic_name": "157 Haemophilus and Moraxella Infections",
+              "start_page": 4658,
+              "end_page": 4677
+            },
+            {
+              "topic_name": "158 Infections Due to the HACEK Group and Miscellaneous Gram-Negative Bacteria",
+              "start_page": 4678,
+              "end_page": 4691
+            },
+            {
+              "topic_name": "159 Legionella Infections",
+              "start_page": 4692,
+              "end_page": 4718
+            },
+            {
+              "topic_name": "160 Pertussis and Other Bordetella Infections",
+              "start_page": 4719,
+              "end_page": 4734
+            },
+            {
+              "topic_name": "161 Diseases Caused by Gram-Negative Enteric Bacilli",
+              "start_page": 4735,
+              "end_page": 4789
+            },
+            {
+              "topic_name": "162 Acinetobacter Infections",
+              "start_page": 4790,
+              "end_page": 4803
+            },
+            {
+              "topic_name": "163 Helicobacter pylori Infections",
+              "start_page": 4804,
+              "end_page": 4822
+            },
+            {
+              "topic_name": "164 Infections Due to Pseudomonas, Burkholderia, and Stenotrophomonas Species",
+              "start_page": 4823,
+              "end_page": 4849
+            },
+            {
+              "topic_name": "165 Salmonellosis",
+              "start_page": 4850,
+              "end_page": 4876
+            },
+            {
+              "topic_name": "166 Shigellosis",
+              "start_page": 4877,
+              "end_page": 4892
+            },
+            {
+              "topic_name": "167 Infections Due to Campylobacter and Related Organisms",
+              "start_page": 4893,
+              "end_page": 4903
+            },
+            {
+              "topic_name": "168 Cholera and Other Vibrioses",
+              "start_page": 4904,
+              "end_page": 4923
+            },
+            {
+              "topic_name": "169 Brucellosis",
+              "start_page": 4924,
+              "end_page": 4939
+            },
+            {
+              "topic_name": "170 Tularemia",
+              "start_page": 4940,
+              "end_page": 4960
+            },
+            {
+              "topic_name": "171 Plague and Other Yersinia Infections",
+              "start_page": 4961,
+              "end_page": 4993
+            },
+            {
+              "topic_name": "172 Bartonella Infections, Including Cat-Scratch Disease",
+              "start_page": 4994,
+              "end_page": 5011
+            },
+            {
+              "topic_name": "173 Donovanosis",
+              "start_page": 5012,
+              "end_page": 5017
+            }
+          ]
+        },
+        {
+          "chapter_number": 7,
+          "chapter_name": "SECTION 7 Miscellaneous Bacterial Infections",
+          "start_page": 5018,
+          "end_page": 5102,
+          "topics": [
+            {
+              "topic_name": "174 Nocardiosis",
+              "start_page": 5019,
+              "end_page": 5036
+            },
+            {
+              "topic_name": "175 Actinomycosis",
+              "start_page": 5037,
+              "end_page": 5052
+            },
+            {
+              "topic_name": "176 Whipple’s Disease",
+              "start_page": 5053,
+              "end_page": 5067
+            },
+            {
+              "topic_name": "177 Infections Due to Mixed Anaerobic Organisms",
+              "start_page": 5068,
+              "end_page": 5102
+            }
+          ]
+        },
+        {
+          "chapter_number": 8,
+          "chapter_name": "SECTION 8 Mycobacterial Diseases",
+          "start_page": 5103,
+          "end_page": 5292,
+          "topics": [
+            {
+              "topic_name": "178 Tuberculosis",
+              "start_page": 5104,
+              "end_page": 5200
+            },
+            {
+              "topic_name": "179 Leprosy",
+              "start_page": 5201,
+              "end_page": 5241
+            },
+            {
+              "topic_name": "180 Nontuberculous Mycobacterial Infections",
+              "start_page": 5242,
+              "end_page": 5258
+            },
+            {
+              "topic_name": "181 Antimycobacterial Agents",
+              "start_page": 5259,
+              "end_page": 5292
+            }
+          ]
+        },
+        {
+          "chapter_number": 9,
+          "chapter_name": "SECTION 9 Spirochetal Diseases",
+          "start_page": 5293,
+          "end_page": 5388,
+          "topics": [
+            {
+              "topic_name": "182 Syphilis",
+              "start_page": 5294,
+              "end_page": 5322
+            },
+            {
+              "topic_name": "183 Endemic Treponematoses",
+              "start_page": 5323,
+              "end_page": 5333
+            },
+            {
+              "topic_name": "184 Leptospirosis",
+              "start_page": 5334,
+              "end_page": 5352
+            },
+            {
+              "topic_name": "185 Relapsing Fever and Borrelia miyamotoi Disease",
+              "start_page": 5353,
+              "end_page": 5367
+            },
+            {
+              "topic_name": "186 Lyme Borreliosis",
+              "start_page": 5368,
+              "end_page": 5388
+            }
+          ]
+        },
+        {
+          "chapter_number": 10,
+          "chapter_name": "SECTION 10 Diseases Caused by Rickettsiae, Mycoplasmas, and Chlamydiae",
+          "start_page": 5389,
+          "end_page": 5474,
+          "topics": [
+            {
+              "topic_name": "187 Rickettsial Diseases",
+              "start_page": 5390,
+              "end_page": 5429
+            },
+            {
+              "topic_name": "188 Infections Due to Mycoplasmas",
+              "start_page": 5430,
+              "end_page": 5441
+            },
+            {
+              "topic_name": "189 Chlamydial Infections",
+              "start_page": 5442,
+              "end_page": 5474
+            }
+          ]
+        },
+        {
+          "chapter_number": 11,
+          "chapter_name": "SECTION 11 Viral Diseases: General Considerations",
+          "start_page": 5475,
+          "end_page": 5532,
+          "topics": [
+            {
+              "topic_name": "190 Principles of Medical Virology",
+              "start_page": 5476,
+              "end_page": 5499
+            },
+            {
+              "topic_name": "191 Antiviral Chemotherapy, Excluding Antiretroviral Drugs",
+              "start_page": 5500,
+              "end_page": 5532
+            }
+          ]
+        },
+        {
+          "chapter_number": 12,
+          "chapter_name": "SECTION 12 Infections Due to DNA Viruses",
+          "start_page": 5533,
+          "end_page": 5661,
+          "topics": [
+            {
+              "topic_name": "192 Herpes Simplex Virus Infections",
+              "start_page": 5534,
+              "end_page": 5566
+            },
+            {
+              "topic_name": "193 Varicella-Zoster Virus Infections",
+              "start_page": 5567,
+              "end_page": 5581
+            },
+            {
+              "topic_name": "194 Epstein-Barr Virus Infections, Including Infectious Mononucleosis",
+              "start_page": 5582,
+              "end_page": 5596
+            },
+            {
+              "topic_name": "195 Cytomegalovirus and Human Herpesvirus Types 6, 7, and 8",
+              "start_page": 5597,
+              "end_page": 5614
+            },
+            {
+              "topic_name": "196 Molluscum Contagiosum, Monkeypox, and Other Poxvirus Infections",
+              "start_page": 5615,
+              "end_page": 5627
+            },
+            {
+              "topic_name": "197 Parvovirus Infections",
+              "start_page": 5628,
+              "end_page": 5638
+            },
+            {
+              "topic_name": "198 Human Papillomavirus Infections",
+              "start_page": 5639,
+              "end_page": 5661
+            }
+          ]
+        },
+        {
+          "chapter_number": 13,
+          "chapter_name": "SECTION 13 Infections Due to DNA and RNA Respiratory Viruses",
+          "start_page": 5662,
+          "end_page": 5715,
+          "topics": [
+            {
+              "topic_name": "199 Common Viral Respiratory Infections, Including COVID-19",
+              "start_page": 5663,
+              "end_page": 5705
+            },
+            {
+              "topic_name": "200 Influenza",
+              "start_page": 5706,
+              "end_page": 5715
+            }
+          ]
+        },
+        {
+          "chapter_number": 14,
+          "chapter_name": "SECTION 14 Infections Due to Human Immunodeficiency Virus and Other Human Retroviruses",
+          "start_page": 5716,
+          "end_page": 5985,
+          "topics": [
+            {
+              "topic_name": "201 The Human Retroviruses",
+              "start_page": 5731,
+              "end_page": 5750
+            },
+            {
+              "topic_name": "202 Human Immunodeficiency Virus Disease: AIDS and Related Disorders",
+              "start_page": 5751,
+              "end_page": 5985
+            }
+          ]
+        },
+        {
+          "chapter_number": 15,
+          "chapter_name": "SECTION 15 Infections Due to RNA Viruses",
+          "start_page": 5986,
+          "end_page": 6171,
+          "topics": [
+            {
+              "topic_name": "203 Viral Gastroenteritis",
+              "start_page": 5987,
+              "end_page": 6001
+            },
+            {
+              "topic_name": "204 Enterovirus, Parechovirus, and Reovirus Infections",
+              "start_page": 6002,
+              "end_page": 6025
+            },
+            {
+              "topic_name": "205 Measles (Rubeola)",
+              "start_page": 6026,
+              "end_page": 6042
+            },
+            {
+              "topic_name": "206 Rubella (German Measles)",
+              "start_page": 6043,
+              "end_page": 6054
+            },
+            {
+              "topic_name": "207 Mumps",
+              "start_page": 6055,
+              "end_page": 6067
+            },
+            {
+              "topic_name": "208 Rabies and Other Rhabdovirus Infections",
+              "start_page": 6068,
+              "end_page": 6088
+            },
+            {
+              "topic_name": "209 Arthropod-Borne and Rodent-Borne Virus Infections",
+              "start_page": 6089,
+              "end_page": 6151
+            },
+            {
+              "topic_name": "210 Ebolavirus and Marburgvirus Infections",
+              "start_page": 6152,
+              "end_page": 6171
+            }
+          ]
+        },
+        {
+          "chapter_number": 16,
+          "chapter_name": "SECTION 16 Fungal Infections",
+          "start_page": 6172,
+          "end_page": 6331,
+          "topics": [
+            {
+              "topic_name": "211 Pathogenesis, Diagnosis, and Treatment of Fungal Infections",
+              "start_page": 6173,
+              "end_page": 6188
+            },
+            {
+              "topic_name": "212 Histoplasmosis",
+              "start_page": 6189,
+              "end_page": 6201
+            },
+            {
+              "topic_name": "213 Coccidioidomycosis",
+              "start_page": 6202,
+              "end_page": 6213
+            },
+            {
+              "topic_name": "214 Blastomycosis",
+              "start_page": 6214,
+              "end_page": 6228
+            },
+            {
+              "topic_name": "215 Cryptococcosis",
+              "start_page": 6229,
+              "end_page": 6240
+            },
+            {
+              "topic_name": "216 Candidiasis",
+              "start_page": 6241,
+              "end_page": 6260
+            },
+            {
+              "topic_name": "217 Aspergillosis",
+              "start_page": 6261,
+              "end_page": 6279
+            },
+            {
+              "topic_name": "218 Mucormycosis",
+              "start_page": 6280,
+              "end_page": 6296
+            },
+            {
+              "topic_name": "219 Less Common Systemic Mycoses and Superficial Mycoses",
+              "start_page": 6297,
+              "end_page": 6316
+            },
+            {
+              "topic_name": "220 Pneumocystis Infections",
+              "start_page": 6317,
+              "end_page": 6331
+            }
+          ]
+        },
+        {
+          "chapter_number": 17,
+          "chapter_name": "SECTION 17 Protozoal and Helminthic Infections: General Considerations",
+          "start_page": 6332,
+          "end_page": 6383,
+          "topics": [
+            {
+              "topic_name": "221 Introduction to Parasitic Infections",
+              "start_page": 6333,
+              "end_page": 6347
+            },
+            {
+              "topic_name": "222 Agents Used to Treat Parasitic Infections",
+              "start_page": 6348,
+              "end_page": 6383
+            }
+          ]
+        },
+        {
+          "chapter_number": 18,
+          "chapter_name": "SECTION 18 Protozoal Infections",
+          "start_page": 6384,
+          "end_page": 6578,
+          "topics": [
+            {
+              "topic_name": "223 Amebiasis and Infection with Free-Living Amebae",
+              "start_page": 6385,
+              "end_page": 6410
+            },
+            {
+              "topic_name": "224 Malaria",
+              "start_page": 6411,
+              "end_page": 6461
+            },
+            {
+              "topic_name": "225 Babesiosis",
+              "start_page": 6462,
+              "end_page": 6481
+            },
+            {
+              "topic_name": "226 Leishmaniasis",
+              "start_page": 6482,
+              "end_page": 6506
+            },
+            {
+              "topic_name": "227 Chagas Disease and African Trypanosomiasis",
+              "start_page": 6507,
+              "end_page": 6534
+            },
+            {
+              "topic_name": "228 Toxoplasma Infections",
+              "start_page": 6535,
+              "end_page": 6561
+            },
+            {
+              "topic_name": "229 Protozoal Intestinal Infections and Trichomoniasis",
+              "start_page": 6562,
+              "end_page": 6578
+            }
+          ]
+        },
+        {
+          "chapter_number": 19,
+          "chapter_name": "SECTION 19 Helminthic Infections",
+          "start_page": 6579,
+          "end_page": 6683,
+          "topics": [
+            {
+              "topic_name": "230 Introduction to Helminthic Infections",
+              "start_page": 6580,
+              "end_page": 6584
+            },
+            {
+              "topic_name": "231 Trichinellosis and Other Tissue Nematode Infections",
+              "start_page": 6585,
+              "end_page": 6597
+            },
+            {
+              "topic_name": "232 Intestinal Nematode Infections",
+              "start_page": 6598,
+              "end_page": 6614
+            },
+            {
+              "topic_name": "233 Filarial and Related Infections",
+              "start_page": 6615,
+              "end_page": 6638
+            },
+            {
+              "topic_name": "234 Schistosomiasis and Other Trematode Infections",
+              "start_page": 6639,
+              "end_page": 6661
+            },
+            {
+              "topic_name": "235 Cestode Infections",
+              "start_page": 6662,
+              "end_page": 6683
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 6,
+      "part_name": "PART 6 Disorders of the Cardiovascular System",
+      "start_page": 6684,
+      "end_page": 7841,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Introduction to Cardiovascular Disorders",
+          "start_page": 6684,
+          "end_page": 6750,
+          "topics": [
+            {
+              "topic_name": "236 Approach to the Patient with Possible Cardiovascular Disease",
+              "start_page": 6685,
+              "end_page": 6695
+            },
+            {
+              "topic_name": "237 Basic Biology of the Cardiovascular System",
+              "start_page": 6696,
+              "end_page": 6734
+            },
+            {
+              "topic_name": "238 Epidemiology of Cardiovascular Disease",
+              "start_page": 6735,
+              "end_page": 6750
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Diagnosis of Cardiovascular Disorders",
+          "start_page": 6751,
+          "end_page": 6919,
+          "topics": [
+            {
+              "topic_name": "239 Physical Examination of the Cardiovascular System",
+              "start_page": 6752,
+              "end_page": 6785
+            },
+            {
+              "topic_name": "240 Electrocardiography",
+              "start_page": 6786,
+              "end_page": 6813
+            },
+            {
+              "topic_name": "241 Noninvasive Cardiac Imaging: Echocardiography, Nuclear Cardiology, and Magnetic Resonance/Computed Tomography Imaging",
+              "start_page": 6814,
+              "end_page": 6894
+            },
+            {
+              "topic_name": "242 Diagnostic Cardiac Catheterization and Coronary Angiography",
+              "start_page": 6895,
+              "end_page": 6919
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Disorders of Rhythm",
+          "start_page": 6920,
+          "end_page": 7121,
+          "topics": [
+            {
+              "topic_name": "243 Principles of Clinical Cardiac Electrophysiology",
+              "start_page": 6921,
+              "end_page": 6945
+            },
+            {
+              "topic_name": "244 The Bradyarrhythmias: Disorders of the Sinoatrial Node",
+              "start_page": 6946,
+              "end_page": 6965
+            },
+            {
+              "topic_name": "245 The Bradyarrhythmias: Disorders of the Atrioventricular Node",
+              "start_page": 6966,
+              "end_page": 6989
+            },
+            {
+              "topic_name": "246 Approach to Supraventricular Tachyarrhythmias",
+              "start_page": 6990,
+              "end_page": 6997
+            },
+            {
+              "topic_name": "247 Physiologic and Nonphysiologic Sinus Tachycardia",
+              "start_page": 6998,
+              "end_page": 7004
+            },
+            {
+              "topic_name": "248 Focal Atrial Tachycardia",
+              "start_page": 7005,
+              "end_page": 7010
+            },
+            {
+              "topic_name": "249 Paroxysmal Supraventricular Tachycardias",
+              "start_page": 7011,
+              "end_page": 7026
+            },
+            {
+              "topic_name": "250 Common Atrial Flutter and Macroreentrant and Multifocal Atrial Tachycardias",
+              "start_page": 7027,
+              "end_page": 7034
+            },
+            {
+              "topic_name": "251 Atrial Fibrillation",
+              "start_page": 7035,
+              "end_page": 7056
+            },
+            {
+              "topic_name": "252 Approach to Ventricular Arrhythmias",
+              "start_page": 7057,
+              "end_page": 7075
+            },
+            {
+              "topic_name": "253 Premature Ventricular Contractions, Nonsustained Ventricular Tachycardia, and Accelerated Idioventricular Rhythm",
+              "start_page": 7076,
+              "end_page": 7085
+            },
+            {
+              "topic_name": "254 Sustained Ventricular Tachycardia",
+              "start_page": 7086,
+              "end_page": 7101
+            },
+            {
+              "topic_name": "255 Polymorphic Ventricular Tachycardia and Ventricular Fibrillation",
+              "start_page": 7102,
+              "end_page": 7112
+            },
+            {
+              "topic_name": "256 Electrical Storm and Incessant Ventricular Tachycardia",
+              "start_page": 7113,
+              "end_page": 7121
+            }
+          ]
+        },
+        {
+          "chapter_number": 4,
+          "chapter_name": "SECTION 4 Disorders of the Heart, Muscles, Valves, and Pericardium",
+          "start_page": 7122,
+          "end_page": 7479,
+          "topics": [
+            {
+              "topic_name": "257 Heart Failure: Pathophysiology and Diagnosis",
+              "start_page": 7123,
+              "end_page": 7162
+            },
+            {
+              "topic_name": "258 Heart Failure: Management",
+              "start_page": 7163,
+              "end_page": 7207
+            },
+            {
+              "topic_name": "259 Cardiomyopathy and Myocarditis",
+              "start_page": 7208,
+              "end_page": 7279
+            },
+            {
+              "topic_name": "260 Cardiac Transplantation and Prolonged Assisted Circulation",
+              "start_page": 7280,
+              "end_page": 7296
+            },
+            {
+              "topic_name": "261 Aortic Stenosis",
+              "start_page": 7297,
+              "end_page": 7323
+            },
+            {
+              "topic_name": "262 Aortic Regurgitation",
+              "start_page": 7324,
+              "end_page": 7340
+            },
+            {
+              "topic_name": "263 Mitral Stenosis",
+              "start_page": 7341,
+              "end_page": 7355
+            },
+            {
+              "topic_name": "264 Mitral Regurgitation",
+              "start_page": 7356,
+              "end_page": 7371
+            },
+            {
+              "topic_name": "265 Mitral Valve Prolapse",
+              "start_page": 7372,
+              "end_page": 7379
+            },
+            {
+              "topic_name": "266 Tricuspid Valve Disease",
+              "start_page": 7380,
+              "end_page": 7389
+            },
+            {
+              "topic_name": "267 Pulmonic Valve Disease",
+              "start_page": 7390,
+              "end_page": 7395
+            },
+            {
+              "topic_name": "268 Multiple and Mixed Valvular Heart Disease",
+              "start_page": 7396,
+              "end_page": 7405
+            },
+            {
+              "topic_name": "269 Congenital Heart Disease in the Adult",
+              "start_page": 7406,
+              "end_page": 7438
+            },
+            {
+              "topic_name": "270 Pericardial Disease",
+              "start_page": 7439,
+              "end_page": 7460
+            },
+            {
+              "topic_name": "271 Atrial Myxoma and Other Cardiac Tumors",
+              "start_page": 7461,
+              "end_page": 7472
+            },
+            {
+              "topic_name": "272 Cardiac Trauma",
+              "start_page": 7473,
+              "end_page": 7479
+            }
+          ]
+        },
+        {
+          "chapter_number": 5,
+          "chapter_name": "SECTION 5 Coronary and Peripheral Vascular Disease",
+          "start_page": 7480,
+          "end_page": 7841,
+          "topics": [
+            {
+              "topic_name": "273 Ischemic Heart Disease",
+              "start_page": 7481,
+              "end_page": 7536
+            },
+            {
+              "topic_name": "274 Non-ST-Segment Elevation Acute Coronary Syndrome (Non-ST-Segment Elevation Myocardial Infarction and Unstable Angina)",
+              "start_page": 7537,
+              "end_page": 7561
+            },
+            {
+              "topic_name": "275 ST-Segment Elevation Myocardial Infarction",
+              "start_page": 7562,
+              "end_page": 7609
+            },
+            {
+              "topic_name": "276 Percutaneous Coronary Interventions and Other Interventional Procedures",
+              "start_page": 7610,
+              "end_page": 7630
+            },
+            {
+              "topic_name": "277 Hypertension",
+              "start_page": 7631,
+              "end_page": 7689
+            },
+            {
+              "topic_name": "278 Renovascular Disease",
+              "start_page": 7690,
+              "end_page": 7702
+            },
+            {
+              "topic_name": "279 Deep-Venous Thrombosis and Pulmonary Thromboembolism",
+              "start_page": 7703,
+              "end_page": 7738
+            },
+            {
+              "topic_name": "280 Diseases of the Aorta",
+              "start_page": 7739,
+              "end_page": 7763
+            },
+            {
+              "topic_name": "281 Arterial Diseases of the Extremities",
+              "start_page": 7764,
+              "end_page": 7791
+            },
+            {
+              "topic_name": "282 Chronic Venous Disease and Lymphedema",
+              "start_page": 7792,
+              "end_page": 7814
+            },
+            {
+              "topic_name": "283 Pulmonary Hypertension",
+              "start_page": 7815,
+              "end_page": 7841
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 7,
+      "part_name": "PART 7 Disorders of the Respiratory System",
+      "start_page": 7842,
+      "end_page": 8162,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Diagnosis of Respiratory Disorders",
+          "start_page": 7842,
+          "end_page": 7899,
+          "topics": [
+            {
+              "topic_name": "284 Approach to the Patient with Disease of the Respiratory System",
+              "start_page": 7843,
+              "end_page": 7852
+            },
+            {
+              "topic_name": "285 Disturbances of Respiratory Function",
+              "start_page": 7853,
+              "end_page": 7874
+            },
+            {
+              "topic_name": "286 Diagnostic Procedures in Respiratory Disease",
+              "start_page": 7875,
+              "end_page": 7899
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Diseases of the Respiratory System",
+          "start_page": 7900,
+          "end_page": 8162,
+          "topics": [
+            {
+              "topic_name": "287 Asthma",
+              "start_page": 7901,
+              "end_page": 7943
+            },
+            {
+              "topic_name": "288 Hypersensitivity Pneumonitis and Pulmonary Infiltrates with Eosinophilia",
+              "start_page": 7944,
+              "end_page": 7969
+            },
+            {
+              "topic_name": "289 Occupational and Environmental Lung Disease",
+              "start_page": 7970,
+              "end_page": 7994
+            },
+            {
+              "topic_name": "290 Bronchiectasis",
+              "start_page": 7995,
+              "end_page": 8005
+            },
+            {
+              "topic_name": "291 Cystic Fibrosis",
+              "start_page": 8006,
+              "end_page": 8023
+            },
+            {
+              "topic_name": "292 Chronic Obstructive Pulmonary Disease",
+              "start_page": 8024,
+              "end_page": 8058
+            },
+            {
+              "topic_name": "293 Interstitial Lung Disease",
+              "start_page": 8059,
+              "end_page": 8083
+            },
+            {
+              "topic_name": "294 Disorders of the Pleura",
+              "start_page": 8084,
+              "end_page": 8098
+            },
+            {
+              "topic_name": "295 Disorders of the Mediastinum",
+              "start_page": 8099,
+              "end_page": 8102
+            },
+            {
+              "topic_name": "296 Disorders of Ventilation",
+              "start_page": 8103,
+              "end_page": 8115
+            },
+            {
+              "topic_name": "297 Sleep Apnea",
+              "start_page": 8116,
+              "end_page": 8134
+            },
+            {
+              "topic_name": "298 Lung Transplantation",
+              "start_page": 8135,
+              "end_page": 8153
+            },
+            {
+              "topic_name": "299 Interventional Pulmonary Medicine",
+              "start_page": 8154,
+              "end_page": 8162
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 8,
+      "part_name": "PART 8 Critical Care Medicine",
+      "start_page": 8163,
+      "end_page": 8376,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Respiratory Critical Care",
+          "start_page": 8163,
+          "end_page": 8230,
+          "topics": [
+            {
+              "topic_name": "300 Approach to the Patient with Critical Illness",
+              "start_page": 8164,
+              "end_page": 8194
+            },
+            {
+              "topic_name": "301 Acute Respiratory Distress Syndrome",
+              "start_page": 8195,
+              "end_page": 8211
+            },
+            {
+              "topic_name": "302 Mechanical Ventilatory Support",
+              "start_page": 8212,
+              "end_page": 8230
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Shock and Cardiac Arrest",
+          "start_page": 8231,
+          "end_page": 8338,
+          "topics": [
+            {
+              "topic_name": "303 Approach to the Patient with Shock",
+              "start_page": 8232,
+              "end_page": 8255
+            },
+            {
+              "topic_name": "304 Sepsis and Septic Shock",
+              "start_page": 8256,
+              "end_page": 8283
+            },
+            {
+              "topic_name": "305 Cardiogenic Shock and Pulmonary Edema",
+              "start_page": 8284,
+              "end_page": 8308
+            },
+            {
+              "topic_name": "306 Cardiovascular Collapse, Cardiac Arrest, and Sudden Cardiac Death",
+              "start_page": 8309,
+              "end_page": 8338
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Neurologic Critical Care",
+          "start_page": 8339,
+          "end_page": 8376,
+          "topics": [
+            {
+              "topic_name": "307 Nervous System Disorders in Critical Care",
+              "start_page": 8340,
+              "end_page": 8376
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 9,
+      "part_name": "Part 9 Disorders of the Kidney and Urinary Tract",
+      "start_page": 8377,
+      "end_page": 8733,
+      "chapters": [
+        {
+          "chapter_number": 308,
+          "chapter_name": "308 Approach to the Patient with Renal Disease or Urinary Tract Disease",
+          "start_page": 8378,
+          "end_page": 8407,
+          "topics": []
+        },
+        {
+          "chapter_number": 309,
+          "chapter_name": "309 Cell Biology and Physiology of the Kidney",
+          "start_page": 8408,
+          "end_page": 8433,
+          "topics": []
+        },
+        {
+          "chapter_number": 310,
+          "chapter_name": "310 Acute Kidney Injury",
+          "start_page": 8434,
+          "end_page": 8475,
+          "topics": []
+        },
+        {
+          "chapter_number": 311,
+          "chapter_name": "311 Chronic Kidney Disease",
+          "start_page": 8476,
+          "end_page": 8518,
+          "topics": []
+        },
+        {
+          "chapter_number": 312,
+          "chapter_name": "312 Dialysis in the Treatment of Kidney Failure",
+          "start_page": 8519,
+          "end_page": 8534,
+          "topics": []
+        },
+        {
+          "chapter_number": 313,
+          "chapter_name": "313 Transplantation in the Treatment of Renal Failure",
+          "start_page": 8535,
+          "end_page": 8558,
+          "topics": []
+        },
+        {
+          "chapter_number": 314,
+          "chapter_name": "314 Glomerular Diseases",
+          "start_page": 8559,
+          "end_page": 8623,
+          "topics": []
+        },
+        {
+          "chapter_number": 315,
+          "chapter_name": "315 Polycystic Kidney Disease and Other Inherited Disorders of Tubule Growth and Development",
+          "start_page": 8624,
+          "end_page": 8648,
+          "topics": []
+        },
+        {
+          "chapter_number": 316,
+          "chapter_name": "316 Tubulointerstitial Diseases of the Kidney",
+          "start_page": 8649,
+          "end_page": 8675,
+          "topics": []
+        },
+        {
+          "chapter_number": 317,
+          "chapter_name": "317 Vascular Injury to the Kidney",
+          "start_page": 8676,
+          "end_page": 8690,
+          "topics": []
+        },
+        {
+          "chapter_number": 318,
+          "chapter_name": "318 Nephrolithiasis",
+          "start_page": 8691,
+          "end_page": 8710,
+          "topics": []
+        },
+        {
+          "chapter_number": 319,
+          "chapter_name": "319 Urinary Tract Obstruction",
+          "start_page": 8711,
+          "end_page": 8723,
+          "topics": []
+        },
+        {
+          "chapter_number": 320,
+          "chapter_name": "320 Interventional Nephrology",
+          "start_page": 8724,
+          "end_page": 8733,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 10,
+      "part_name": "PART 10 Disorders of the Gastrointestinal System",
+      "start_page": 8734,
+      "end_page": 9756,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Disorders of the Alimentary Tract",
+          "start_page": 8734,
+          "end_page": 9195,
+          "topics": [
+            {
+              "topic_name": "321 Approach to the Patient with Gastrointestinal Disease",
+              "start_page": 8735,
+              "end_page": 8756
+            },
+            {
+              "topic_name": "322 Gastrointestinal Endoscopy",
+              "start_page": 8757,
+              "end_page": 8846
+            },
+            {
+              "topic_name": "323 Diseases of the Esophagus",
+              "start_page": 8847,
+              "end_page": 8887
+            },
+            {
+              "topic_name": "324 Peptic Ulcer Disease and Related Disorders",
+              "start_page": 8888,
+              "end_page": 8978
+            },
+            {
+              "topic_name": "325 Disorders of Absorption",
+              "start_page": 8979,
+              "end_page": 9020
+            },
+            {
+              "topic_name": "326 Inflammatory Bowel Disease",
+              "start_page": 9021,
+              "end_page": 9093
+            },
+            {
+              "topic_name": "327 Irritable Bowel Syndrome",
+              "start_page": 9094,
+              "end_page": 9119
+            },
+            {
+              "topic_name": "328 Diverticular Disease and Common Anorectal Disorders",
+              "start_page": 9120,
+              "end_page": 9153
+            },
+            {
+              "topic_name": "329 Mesenteric Vascular Insufficiency",
+              "start_page": 9154,
+              "end_page": 9162
+            },
+            {
+              "topic_name": "330 Acute Intestinal Obstruction",
+              "start_page": 9163,
+              "end_page": 9179
+            },
+            {
+              "topic_name": "331 Acute Appendicitis and Peritonitis",
+              "start_page": 9180,
+              "end_page": 9195
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Nutrition",
+          "start_page": 9196,
+          "end_page": 9295,
+          "topics": [
+            {
+              "topic_name": "332 Nutrient Requirements and Dietary Assessment",
+              "start_page": 9197,
+              "end_page": 9217
+            },
+            {
+              "topic_name": "333 Vitamin and Trace Mineral Deficiency and Excess",
+              "start_page": 9218,
+              "end_page": 9254
+            },
+            {
+              "topic_name": "334 Malnutrition and Nutritional Assessment",
+              "start_page": 9255,
+              "end_page": 9267
+            },
+            {
+              "topic_name": "335 Enteral and Parenteral Nutrition",
+              "start_page": 9268,
+              "end_page": 9295
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Liver and Biliary Tract Disease",
+          "start_page": 9296,
+          "end_page": 9694,
+          "topics": [
+            {
+              "topic_name": "336 Approach to the Patient with Liver Disease",
+              "start_page": 9297,
+              "end_page": 9322
+            },
+            {
+              "topic_name": "337 Evaluation of Liver Function",
+              "start_page": 9323,
+              "end_page": 9335
+            },
+            {
+              "topic_name": "338 The Hyperbilirubinemias",
+              "start_page": 9336,
+              "end_page": 9354
+            },
+            {
+              "topic_name": "339 Acute Viral Hepatitis",
+              "start_page": 9355,
+              "end_page": 9434
+            },
+            {
+              "topic_name": "340 Toxic and Drug-Induced Hepatitis",
+              "start_page": 9435,
+              "end_page": 9461
+            },
+            {
+              "topic_name": "341 Chronic Hepatitis",
+              "start_page": 9462,
+              "end_page": 9551
+            },
+            {
+              "topic_name": "342 Alcohol-Associated Liver Disease",
+              "start_page": 9552,
+              "end_page": 9561
+            },
+            {
+              "topic_name": "343 Nonalcoholic Fatty Liver Diseases and Nonalcoholic Steatohepatitis",
+              "start_page": 9562,
+              "end_page": 9580
+            },
+            {
+              "topic_name": "344 Cirrhosis and Its Complications",
+              "start_page": 9581,
+              "end_page": 9619
+            },
+            {
+              "topic_name": "345 Liver Transplantation",
+              "start_page": 9620,
+              "end_page": 9652
+            },
+            {
+              "topic_name": "346 Diseases of the Gallbladder and Bile Ducts",
+              "start_page": 9653,
+              "end_page": 9694
+            }
+          ]
+        },
+        {
+          "chapter_number": 4,
+          "chapter_name": "SECTION 4 Disorders of the Pancreas",
+          "start_page": 9695,
+          "end_page": 9756,
+          "topics": [
+            {
+              "topic_name": "347 Approach to the Patient with Pancreatic Disease",
+              "start_page": 9697,
+              "end_page": 9711
+            },
+            {
+              "topic_name": "348 Acute and Chronic Pancreatitis",
+              "start_page": 9712,
+              "end_page": 9756
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 11,
+      "part_name": "PART 11 Immune-Mediated, Inflammatory, and Rheumatologic Disorders",
+      "start_page": 9757,
+      "end_page": 10499,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 The Immune System in Health and Disease",
+          "start_page": 9757,
+          "end_page": 9893,
+          "topics": [
+            {
+              "topic_name": "349 Introduction to the Immune System",
+              "start_page": 9758,
+              "end_page": 9836
+            },
+            {
+              "topic_name": "350 Mechanisms of Regulation and Dysregulation of the Immune System",
+              "start_page": 9837,
+              "end_page": 9855
+            },
+            {
+              "topic_name": "351 Primary Immune Deficiency Diseases",
+              "start_page": 9856,
+              "end_page": 9893
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Disorders of Immune-Mediated Injury",
+          "start_page": 9894,
+          "end_page": 10356,
+          "topics": [
+            {
+              "topic_name": "352 Urticaria, Angioedema, and Allergic Rhinitis",
+              "start_page": 9895,
+              "end_page": 9921
+            },
+            {
+              "topic_name": "353 Anaphylaxis",
+              "start_page": 9922,
+              "end_page": 9930
+            },
+            {
+              "topic_name": "354 Mastocytosis",
+              "start_page": 9931,
+              "end_page": 9939
+            },
+            {
+              "topic_name": "355 Autoimmunity and Autoimmune Diseases",
+              "start_page": 9940,
+              "end_page": 9960
+            },
+            {
+              "topic_name": "356 Systemic Lupus Erythematosus",
+              "start_page": 9961,
+              "end_page": 10002
+            },
+            {
+              "topic_name": "357 Antiphospholipid Syndrome",
+              "start_page": 10003,
+              "end_page": 10011
+            },
+            {
+              "topic_name": "358 Rheumatoid Arthritis",
+              "start_page": 10012,
+              "end_page": 10062
+            },
+            {
+              "topic_name": "359 Acute Rheumatic Fever",
+              "start_page": 10063,
+              "end_page": 10083
+            },
+            {
+              "topic_name": "360 Systemic Sclerosis (Scleroderma) and Related Disorders",
+              "start_page": 10084,
+              "end_page": 10146
+            },
+            {
+              "topic_name": "361 Sjögren’s Syndrome",
+              "start_page": 10147,
+              "end_page": 10157
+            },
+            {
+              "topic_name": "362 Spondyloarthritis",
+              "start_page": 10158,
+              "end_page": 10200
+            },
+            {
+              "topic_name": "363 The Vasculitis Syndromes",
+              "start_page": 10201,
+              "end_page": 10261
+            },
+            {
+              "topic_name": "364 Behçet Syndrome",
+              "start_page": 10262,
+              "end_page": 10267
+            },
+            {
+              "topic_name": "365 Inflammatory Myopathies",
+              "start_page": 10268,
+              "end_page": 10291
+            },
+            {
+              "topic_name": "366 Relapsing Polychondritis",
+              "start_page": 10292,
+              "end_page": 10304
+            },
+            {
+              "topic_name": "367 Sarcoidosis",
+              "start_page": 10305,
+              "end_page": 10332
+            },
+            {
+              "topic_name": "368 IgG4-Related Disease",
+              "start_page": 10333,
+              "end_page": 10344
+            },
+            {
+              "topic_name": "369 Familial Mediterranean Fever and Other Hereditary Autoinflammatory Diseases",
+              "start_page": 10345,
+              "end_page": 10356
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Disorders of the Joints and Adjacent Tissues",
+          "start_page": 10357,
+          "end_page": 10499,
+          "topics": [
+            {
+              "topic_name": "370 Approach to Articular and Musculoskeletal Disorders",
+              "start_page": 10358,
+              "end_page": 10396
+            },
+            {
+              "topic_name": "371 Osteoarthritis",
+              "start_page": 10397,
+              "end_page": 10426
+            },
+            {
+              "topic_name": "372 Gout and Other Crystal-Associated Arthropathies",
+              "start_page": 10427,
+              "end_page": 10448
+            },
+            {
+              "topic_name": "373 Fibromyalgia",
+              "start_page": 10449,
+              "end_page": 10460
+            },
+            {
+              "topic_name": "374 Arthritis Associated with Systemic Disease, and Other Arthritides",
+              "start_page": 10461,
+              "end_page": 10489
+            },
+            {
+              "topic_name": "375 Periarticular Disorders of the Extremities",
+              "start_page": 10490,
+              "end_page": 10499
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 12,
+      "part_name": "PART 12 Endocrinology and Metabolism",
+      "start_page": 10500,
+      "end_page": 11916,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Endocrinology",
+          "start_page": 10500,
+          "end_page": 10917,
+          "topics": [
+            {
+              "topic_name": "376 Approach to the Patient with Endocrine Disorders",
+              "start_page": 10501,
+              "end_page": 10512
+            },
+            {
+              "topic_name": "377 Mechanisms of Hormone Action",
+              "start_page": 10513,
+              "end_page": 10539
+            },
+            {
+              "topic_name": "378 Physiology of Anterior Pituitary Hormones",
+              "start_page": 10540,
+              "end_page": 10556
+            },
+            {
+              "topic_name": "379 Hypopituitarism",
+              "start_page": 10557,
+              "end_page": 10581
+            },
+            {
+              "topic_name": "380 Pituitary Tumor Syndromes",
+              "start_page": 10582,
+              "end_page": 10637
+            },
+            {
+              "topic_name": "381 Disorders of the Neurohypophysis",
+              "start_page": 10638,
+              "end_page": 10666
+            },
+            {
+              "topic_name": "382 Thyroid Gland Physiology and Testing",
+              "start_page": 10667,
+              "end_page": 10691
+            },
+            {
+              "topic_name": "383 Hypothyroidism",
+              "start_page": 10692,
+              "end_page": 10710
+            },
+            {
+              "topic_name": "384 Hyperthyroidism and Other Causes of Thyrotoxicosis",
+              "start_page": 10711,
+              "end_page": 10741
+            },
+            {
+              "topic_name": "385 Thyroid Nodular Disease and Thyroid Cancer",
+              "start_page": 10742,
+              "end_page": 10776
+            },
+            {
+              "topic_name": "386 Disorders of the Adrenal Cortex",
+              "start_page": 10777,
+              "end_page": 10841
+            },
+            {
+              "topic_name": "387 Pheochromocytoma",
+              "start_page": 10842,
+              "end_page": 10862
+            },
+            {
+              "topic_name": "388 Multiple Endocrine Neoplasia Syndromes",
+              "start_page": 10863,
+              "end_page": 10899
+            },
+            {
+              "topic_name": "389 Autoimmune Polyendocrine Syndromes",
+              "start_page": 10900,
+              "end_page": 10917
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Sex- and Gender-Based Medicine",
+          "start_page": 10918,
+          "end_page": 11214,
+          "topics": [
+            {
+              "topic_name": "390 Sex Development",
+              "start_page": 10919,
+              "end_page": 10943
+            },
+            {
+              "topic_name": "391 Disorders of the Testes and Male Reproductive System",
+              "start_page": 10944,
+              "end_page": 11019
+            },
+            {
+              "topic_name": "392 Disorders of the Female Reproductive System",
+              "start_page": 11020,
+              "end_page": 11047
+            },
+            {
+              "topic_name": "393 Menstrual Disorders and Pelvic Pain",
+              "start_page": 11048,
+              "end_page": 11066
+            },
+            {
+              "topic_name": "394 Hirsutism",
+              "start_page": 11067,
+              "end_page": 11080
+            },
+            {
+              "topic_name": "395 Menopause and Postmenopausal Hormone Therapy",
+              "start_page": 11081,
+              "end_page": 11104
+            },
+            {
+              "topic_name": "396 Infertility and Contraception",
+              "start_page": 11105,
+              "end_page": 11123
+            },
+            {
+              "topic_name": "397 Sexual Dysfunction",
+              "start_page": 11124,
+              "end_page": 11152
+            },
+            {
+              "topic_name": "398 Women’s Health",
+              "start_page": 11153,
+              "end_page": 11171
+            },
+            {
+              "topic_name": "399 Men’s Health",
+              "start_page": 11172,
+              "end_page": 11207
+            },
+            {
+              "topic_name": "400 Lesbian, Gay, Bisexual, and Transgender (LGBT) Health",
+              "start_page": 11208,
+              "end_page": 11214
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Obesity, Diabetes Mellitus, and Metabolic Syndrome",
+          "start_page": 11215,
+          "end_page": 11495,
+          "topics": [
+            {
+              "topic_name": "401 Pathobiology of Obesity",
+              "start_page": 11216,
+              "end_page": 11242
+            },
+            {
+              "topic_name": "402 Evaluation and Management of Obesity",
+              "start_page": 11243,
+              "end_page": 11265
+            },
+            {
+              "topic_name": "403 Diabetes Mellitus: Diagnosis, Classification, and Pathophysiology",
+              "start_page": 11266,
+              "end_page": 11302
+            },
+            {
+              "topic_name": "404 Diabetes Mellitus: Management and Therapies",
+              "start_page": 11303,
+              "end_page": 11363
+            },
+            {
+              "topic_name": "405 Diabetes Mellitus: Complications",
+              "start_page": 11364,
+              "end_page": 11395
+            },
+            {
+              "topic_name": "406 Hypoglycemia",
+              "start_page": 11396,
+              "end_page": 11419
+            },
+            {
+              "topic_name": "407 Disorders of Lipoprotein Metabolism",
+              "start_page": 11420,
+              "end_page": 11473
+            },
+            {
+              "topic_name": "408 The Metabolic Syndrome",
+              "start_page": 11474,
+              "end_page": 11495
+            }
+          ]
+        },
+        {
+          "chapter_number": 4,
+          "chapter_name": "SECTION 4 Disorders of Bone and Mineral Metabolism",
+          "start_page": 11496,
+          "end_page": 11721,
+          "topics": [
+            {
+              "topic_name": "409 Bone and Mineral Metabolism in Health and Disease",
+              "start_page": 11497,
+              "end_page": 11545
+            },
+            {
+              "topic_name": "410 Disorders of the Parathyroid Gland and Calcium Homeostasis",
+              "start_page": 11546,
+              "end_page": 11623
+            },
+            {
+              "topic_name": "411 Osteoporosis",
+              "start_page": 11624,
+              "end_page": 11691
+            },
+            {
+              "topic_name": "412 Paget’s Disease and Other Dysplasias of Bone",
+              "start_page": 11692,
+              "end_page": 11721
+            }
+          ]
+        },
+        {
+          "chapter_number": 5,
+          "chapter_name": "SECTION 5 Disorders of Intermediary Metabolism",
+          "start_page": 11722,
+          "end_page": 11916,
+          "topics": [
+            {
+              "topic_name": "413 Heritable Disorders of Connective Tissue",
+              "start_page": 11723,
+              "end_page": 11762
+            },
+            {
+              "topic_name": "414 Hemochromatosis",
+              "start_page": 11763,
+              "end_page": 11781
+            },
+            {
+              "topic_name": "415 Wilson’s Disease",
+              "start_page": 11782,
+              "end_page": 11791
+            },
+            {
+              "topic_name": "416 The Porphyrias",
+              "start_page": 11792,
+              "end_page": 11826
+            },
+            {
+              "topic_name": "417 Disorders of Purine and Pyrimidine Metabolism",
+              "start_page": 11827,
+              "end_page": 11848
+            },
+            {
+              "topic_name": "418 Lysosomal Storage Diseases",
+              "start_page": 11849,
+              "end_page": 11868
+            },
+            {
+              "topic_name": "419 Glycogen Storage Diseases and Other Inherited Disorders of Carbohydrate Metabolism",
+              "start_page": 11869,
+              "end_page": 11893
+            },
+            {
+              "topic_name": "420 Inherited Disorders of Amino Acid Metabolism in Adults",
+              "start_page": 11894,
+              "end_page": 11907
+            },
+            {
+              "topic_name": "421 Inherited Defects of Membrane Transport",
+              "start_page": 11908,
+              "end_page": 11916
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 13,
+      "part_name": "PART 13 Neurologic Disorders",
+      "start_page": 11917,
+      "end_page": 12993,
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "chapter_name": "SECTION 1 Diagnosis of Neurologic Disorders",
+          "start_page": 11917,
+          "end_page": 12020,
+          "topics": [
+            {
+              "topic_name": "422 Approach to the Patient with Neurologic Disease",
+              "start_page": 11918,
+              "end_page": 11940
+            },
+            {
+              "topic_name": "423 Neuroimaging in Neurologic Disorders",
+              "start_page": 11941,
+              "end_page": 11975
+            },
+            {
+              "topic_name": "424 Pathobiology of Neurologic Diseases",
+              "start_page": 11976,
+              "end_page": 12020
+            }
+          ]
+        },
+        {
+          "chapter_number": 2,
+          "chapter_name": "SECTION 2 Diseases of the Central Nervous System",
+          "start_page": 12021,
+          "end_page": 12646,
+          "topics": [
+            {
+              "topic_name": "425 Seizures and Epilepsy",
+              "start_page": 12022,
+              "end_page": 12089
+            },
+            {
+              "topic_name": "426 Introduction to Cerebrovascular Diseases",
+              "start_page": 12090,
+              "end_page": 12123
+            },
+            {
+              "topic_name": "427 Ischemic Stroke",
+              "start_page": 12124,
+              "end_page": 12171
+            },
+            {
+              "topic_name": "428 Intracranial Hemorrhage",
+              "start_page": 12172,
+              "end_page": 12191
+            },
+            {
+              "topic_name": "429 Subarachnoid Hemorrhage",
+              "start_page": 12192,
+              "end_page": 12205
+            },
+            {
+              "topic_name": "430 Migraine and Other Primary Headache Disorders",
+              "start_page": 12206,
+              "end_page": 12246
+            },
+            {
+              "topic_name": "431 Alzheimer’s Disease",
+              "start_page": 12247,
+              "end_page": 12278
+            },
+            {
+              "topic_name": "432 Frontotemporal Dementia",
+              "start_page": 12279,
+              "end_page": 12289
+            },
+            {
+              "topic_name": "433 Vascular Dementia",
+              "start_page": 12290,
+              "end_page": 12300
+            },
+            {
+              "topic_name": "434 Dementia with Lewy Bodies",
+              "start_page": 12301,
+              "end_page": 12308
+            },
+            {
+              "topic_name": "435 Parkinson’s Disease",
+              "start_page": 12309,
+              "end_page": 12356
+            },
+            {
+              "topic_name": "436 Tremor, Chorea, and Other Movement Disorders",
+              "start_page": 12357,
+              "end_page": 12393
+            },
+            {
+              "topic_name": "437 Amyotrophic Lateral Sclerosis and Other Motor Neuron Diseases",
+              "start_page": 12394,
+              "end_page": 12414
+            },
+            {
+              "topic_name": "438 Prion Diseases",
+              "start_page": 12415,
+              "end_page": 12438
+            },
+            {
+              "topic_name": "439 Ataxic Disorders",
+              "start_page": 12439,
+              "end_page": 12457
+            },
+            {
+              "topic_name": "440 Disorders of the Autonomic Nervous System",
+              "start_page": 12458,
+              "end_page": 12489
+            },
+            {
+              "topic_name": "441 Trigeminal Neuralgia, Bell’s Palsy, and Other Cranial Nerve Disorders",
+              "start_page": 12490,
+              "end_page": 12516
+            },
+            {
+              "topic_name": "442 Diseases of the Spinal Cord",
+              "start_page": 12517,
+              "end_page": 12558
+            },
+            {
+              "topic_name": "443 Concussion and Other Traumatic Brain Injuries",
+              "start_page": 12559,
+              "end_page": 12583
+            },
+            {
+              "topic_name": "444 Multiple Sclerosis",
+              "start_page": 12584,
+              "end_page": 12635
+            },
+            {
+              "topic_name": "445 Neuromyelitis Optica",
+              "start_page": 12636,
+              "end_page": 12646
+            }
+          ]
+        },
+        {
+          "chapter_number": 3,
+          "chapter_name": "SECTION 3 Nerve and Muscle Disorders",
+          "start_page": 12647,
+          "end_page": 12817,
+          "topics": [
+            {
+              "topic_name": "446 Peripheral Neuropathy",
+              "start_page": 12648,
+              "end_page": 12717
+            },
+            {
+              "topic_name": "447 Guillain-Barré Syndrome and Other Immune-Mediated Neuropathies",
+              "start_page": 12718,
+              "end_page": 12741
+            },
+            {
+              "topic_name": "448 Myasthenia Gravis and Other Diseases of the Neuromuscular Junction",
+              "start_page": 12742,
+              "end_page": 12768
+            },
+            {
+              "topic_name": "449 Muscular Dystrophies and Other Muscle Diseases",
+              "start_page": 12769,
+              "end_page": 12817
+            }
+          ]
+        },
+        {
+          "chapter_number": 4,
+          "chapter_name": "SECTION 4 Myalgic Encephalomyelitis/Chronic Fatigue Syndrome",
+          "start_page": 12818,
+          "end_page": 12826,
+          "topics": [
+            {
+              "topic_name": "450 Myalgic Encephalomyelitis/Chronic Fatigue Syndrome",
+              "start_page": 12819,
+              "end_page": 12826
+            }
+          ]
+        },
+        {
+          "chapter_number": 5,
+          "chapter_name": "SECTION 5 Psychiatric and Addiction Disorders",
+          "start_page": 12827,
+          "end_page": 12993,
+          "topics": [
+            {
+              "topic_name": "451 Biology of Psychiatric Disorders",
+              "start_page": 12828,
+              "end_page": 12847
+            },
+            {
+              "topic_name": "452 Psychiatric Disorders",
+              "start_page": 12848,
+              "end_page": 12905
+            },
+            {
+              "topic_name": "453 Alcohol and Alcohol Use Disorders",
+              "start_page": 12906,
+              "end_page": 12931
+            },
+            {
+              "topic_name": "454 Nicotine Addiction",
+              "start_page": 12932,
+              "end_page": 12949
+            },
+            {
+              "topic_name": "455 Marijuana and Marijuana Use Disorders",
+              "start_page": 12950,
+              "end_page": 12958
+            },
+            {
+              "topic_name": "456 Opioid-Related Disorders",
+              "start_page": 12959,
+              "end_page": 12972
+            },
+            {
+              "topic_name": "457 Cocaine, Other Psychostimulants, and Hallucinogens",
+              "start_page": 12973,
+              "end_page": 12993
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 14,
+      "part_name": "PART 14 Poisoning, Drug Overdose, and Envenomation",
+      "start_page": 12994,
+      "end_page": 13112,
+      "chapters": [
+        {
+          "chapter_number": 458,
+          "chapter_name": "458 Heavy Metal Poisoning",
+          "start_page": 12995,
+          "end_page": 13005,
+          "topics": []
+        },
+        {
+          "chapter_number": 459,
+          "chapter_name": "459 Poisoning and Drug Overdose",
+          "start_page": 13006,
+          "end_page": 13040,
+          "topics": []
+        },
+        {
+          "chapter_number": 460,
+          "chapter_name": "460 Disorders Caused by Venomous Snakebites and Marine Animal Exposures",
+          "start_page": 13041,
+          "end_page": 13080,
+          "topics": []
+        },
+        {
+          "chapter_number": 461,
+          "chapter_name": "461 Ectoparasite Infestations and Arthropod Injuries",
+          "start_page": 13081,
+          "end_page": 13112,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 15,
+      "part_name": "PART 15 Disorders Associated with Environmental Exposures",
+      "start_page": 13113,
+      "end_page": 13198,
+      "chapters": [
+        {
+          "chapter_number": 462,
+          "chapter_name": "462 Altitude Illness",
+          "start_page": 13114,
+          "end_page": 13138,
+          "topics": []
+        },
+        {
+          "chapter_number": 463,
+          "chapter_name": "463 Hyperbaric and Diving Medicine",
+          "start_page": 13139,
+          "end_page": 13166,
+          "topics": []
+        },
+        {
+          "chapter_number": 464,
+          "chapter_name": "464 Hypothermia and Peripheral Cold Injuries",
+          "start_page": 13167,
+          "end_page": 13183,
+          "topics": []
+        },
+        {
+          "chapter_number": 465,
+          "chapter_name": "465 Heat-Related Illnesses",
+          "start_page": 13184,
+          "end_page": 13198,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 16,
+      "part_name": "PART 16 Genes, the Environment, and Disease",
+      "start_page": 13199,
+      "end_page": 13424,
+      "chapters": [
+        {
+          "chapter_number": 466,
+          "chapter_name": "466 Principles of Human Genetics",
+          "start_page": 13200,
+          "end_page": 13275,
+          "topics": []
+        },
+        {
+          "chapter_number": 467,
+          "chapter_name": "467 The Practice of Genetics in Clinical Medicine",
+          "start_page": 13276,
+          "end_page": 13299,
+          "topics": []
+        },
+        {
+          "chapter_number": 468,
+          "chapter_name": "468 Mitochondrial DNA and Heritable Traits and Diseases",
+          "start_page": 13300,
+          "end_page": 13343,
+          "topics": []
+        },
+        {
+          "chapter_number": 469,
+          "chapter_name": "469 Telomere Disease",
+          "start_page": 13344,
+          "end_page": 13360,
+          "topics": []
+        },
+        {
+          "chapter_number": 470,
+          "chapter_name": "470 Gene- and Cell-Based Therapy in Clinical Medicine",
+          "start_page": 13361,
+          "end_page": 13381,
+          "topics": []
+        },
+        {
+          "chapter_number": 471,
+          "chapter_name": "471 The Human Microbiome",
+          "start_page": 13382,
+          "end_page": 13424,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 17,
+      "part_name": "PART 17 Global Medicine",
+      "start_page": 13425,
+      "end_page": 13532,
+      "chapters": [
+        {
+          "chapter_number": 472,
+          "chapter_name": "472 Global Issues in Medicine",
+          "start_page": 13426,
+          "end_page": 13465,
+          "topics": []
+        },
+        {
+          "chapter_number": 473,
+          "chapter_name": "473 Emerging and Reemerging Infectious Diseases",
+          "start_page": 13466,
+          "end_page": 13485,
+          "topics": []
+        },
+        {
+          "chapter_number": 474,
+          "chapter_name": "474 Primary Care and Global Health",
+          "start_page": 13486,
+          "end_page": 13516,
+          "topics": []
+        },
+        {
+          "chapter_number": 475,
+          "chapter_name": "475 Health Effects of Climate Change",
+          "start_page": 13517,
+          "end_page": 13532,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 18,
+      "part_name": "PART 18 Aging",
+      "start_page": 13533,
+      "end_page": 13622,
+      "chapters": [
+        {
+          "chapter_number": 476,
+          "chapter_name": "476 Biology of Aging",
+          "start_page": 13534,
+          "end_page": 13556,
+          "topics": []
+        },
+        {
+          "chapter_number": 477,
+          "chapter_name": "477 Caring for the Geriatric Patient",
+          "start_page": 13557,
+          "end_page": 13622,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 19,
+      "part_name": "PART 19 Consultative Medicine",
+      "start_page": 13623,
+      "end_page": 13674,
+      "chapters": [
+        {
+          "chapter_number": 478,
+          "chapter_name": "478 Approach to Medical Consultation",
+          "start_page": 13624,
+          "end_page": 13630,
+          "topics": []
+        },
+        {
+          "chapter_number": 479,
+          "chapter_name": "479 Medical Disorders During Pregnancy",
+          "start_page": 13631,
+          "end_page": 13655,
+          "topics": []
+        },
+        {
+          "chapter_number": 480,
+          "chapter_name": "480 Medical Evaluation of the Surgical Patient",
+          "start_page": 13656,
+          "end_page": 13674,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 20,
+      "part_name": "PART 20 Frontiers",
+      "start_page": 13675,
+      "end_page": 13964,
+      "chapters": [
+        {
+          "chapter_number": 481,
+          "chapter_name": "481 Behavioral Economics and Health",
+          "start_page": 13676,
+          "end_page": 13711,
+          "topics": []
+        },
+        {
+          "chapter_number": 482,
+          "chapter_name": "482 Complementary and Integrative Therapies and Practices",
+          "start_page": 13712,
+          "end_page": 13735,
+          "topics": []
+        },
+        {
+          "chapter_number": 483,
+          "chapter_name": "483 The Role of Epigenetics in Disease and Treatment",
+          "start_page": 13736,
+          "end_page": 13758,
+          "topics": []
+        },
+        {
+          "chapter_number": 484,
+          "chapter_name": "484 Applications of Stem Cell Biology in Clinical Medicine",
+          "start_page": 13759,
+          "end_page": 13773,
+          "topics": []
+        },
+        {
+          "chapter_number": 485,
+          "chapter_name": "485 The Role of Circadian Biology in Health and Disease",
+          "start_page": 13774,
+          "end_page": 13812,
+          "topics": []
+        },
+        {
+          "chapter_number": 486,
+          "chapter_name": "486 Network Medicine: Systems Biology in Health and Disease",
+          "start_page": 13813,
+          "end_page": 13831,
+          "topics": []
+        },
+        {
+          "chapter_number": 487,
+          "chapter_name": "487 Emerging Neurotherapeutic Technologies",
+          "start_page": 13832,
+          "end_page": 13855,
+          "topics": []
+        },
+        {
+          "chapter_number": 488,
+          "chapter_name": "488 Machine Learning and Augmented Intelligence in Clinical Medicine",
+          "start_page": 13856,
+          "end_page": 13871,
+          "topics": []
+        },
+        {
+          "chapter_number": 489,
+          "chapter_name": "489 Metabolomics",
+          "start_page": 13872,
+          "end_page": 13891,
+          "topics": []
+        },
+        {
+          "chapter_number": 490,
+          "chapter_name": "490 Circulating Nucleic Acids as Liquid Biopsies and Noninvasive Disease Biomarkers",
+          "start_page": 13892,
+          "end_page": 13926,
+          "topics": []
+        },
+        {
+          "chapter_number": 491,
+          "chapter_name": "491 Protein Folding Disorders",
+          "start_page": 13927,
+          "end_page": 13945,
+          "topics": []
+        },
+        {
+          "chapter_number": 492,
+          "chapter_name": "492 Novel Approaches to Diseases of Unknown Etiology",
+          "start_page": 13946,
+          "end_page": 13964,
+          "topics": []
+        }
+      ]
+    },
+    {
+      "part_number": 30,
+      "part_name": "Index",
+      "start_page": 13965,
+      "end_page": 15164,
+      "chapters": []
+    }
+  ]
+}

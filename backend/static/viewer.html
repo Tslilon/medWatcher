@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Harrison's - PDF Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .page-info {
+            font-size: 14px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        .controls {
+            background: #2a2a2a;
+            padding: 15px 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary {
+            background: #444;
+            color: white;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .page-input {
+            padding: 12px;
+            border: 2px solid #444;
+            border-radius: 10px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            width: 100px;
+            text-align: center;
+        }
+
+        .content {
+            position: fixed;
+            top: 60px;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            text-align: center;
+            padding: 30px;
+            background: #2a2a2a;
+            border-radius: 15px;
+            max-width: 500px;
+        }
+
+        .message h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .message p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .highlight .pages {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .instruction {
+            background: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .instruction-step {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .instruction-step::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #444;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .back-link:active {
+            background: #555;
+            transform: scale(0.95);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .option-btn {
+            padding: 15px;
+            background: #333;
+            border: 2px solid #444;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .option-btn:active {
+            background: #444;
+            border-color: #667eea;
+            transform: scale(0.98);
+        }
+
+        .option-icon {
+            font-size: 24px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .option-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📖 Harrison's PDF</h1>
+        <div class="page-info" id="pageInfo">Page ?</div>
+    </div>
+
+    <div class="content">
+        <div class="message">
+            <h2>📄 Open Harrison's PDF</h2>
+            
+            <div class="highlight">
+                <p style="font-size: 14px; opacity: 0.9;">Navigate to pages:</p>
+                <div class="pages" id="pageRange">? - ?</div>
+            </div>
+
+            <div class="instruction">
+                <p style="font-weight: 600; margin-bottom: 15px;">How to view the PDF on your iPhone:</p>
+                
+                <div class="instruction-step">
+                    <strong>Option 1: Files App</strong><br>
+                    If you have Harrison's PDF in Files app, open it there
+                </div>
+                
+                <div class="instruction-step">
+                    <strong>Option 2: iBooks</strong><br>
+                    If synced to iBooks, open it there
+                </div>
+                
+                <div class="instruction-step">
+                    <strong>Option 3: Dropbox/Drive</strong><br>
+                    If stored in cloud storage, open from that app
+                </div>
+
+                <div class="instruction-step">
+                    <strong>Option 4: Mac/iPad</strong><br>
+                    View on a larger device for better reading
+                </div>
+            </div>
+
+            <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
+                💡 Tip: The Apple Watch app will show these same page numbers instantly on your wrist!
+            </p>
+
+            <div class="options">
+                <a href="/web" class="option-btn">
+                    <div class="option-icon">🔍</div>
+                    <div class="option-content">
+                        <div class="option-title">Back to Search</div>
+                        <div class="option-desc">Search for another topic</div>
+                    </div>
+                </a>
+
+                <a href="#" class="option-btn" id="copyPages">
+                    <div class="option-icon">📋</div>
+                    <div class="option-content">
+                        <div class="option-title">Copy Page Numbers</div>
+                        <div class="option-desc">Copy to clipboard</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get page numbers from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const startPage = urlParams.get('start') || '?';
+        const endPage = urlParams.get('end') || '?';
+        const topicName = urlParams.get('topic') || 'Unknown Topic';
+
+        // Update display
+        document.getElementById('pageRange').textContent = `${startPage} - ${endPage}`;
+        document.getElementById('pageInfo').textContent = `Pages ${startPage}-${endPage}`;
+        document.title = `Harrison's - Pages ${startPage}-${endPage}`;
+
+        // Copy pages button
+        document.getElementById('copyPages').addEventListener('click', (e) => {
+            e.preventDefault();
+            const text = `Harrison's Pages ${startPage}-${endPage}: ${topicName}`;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('✅ Copied to clipboard!');
+                }).catch(() => {
+                    alert('Page numbers: ' + text);
+                });
+            } else {
+                alert('Page numbers: ' + text);
+            }
+        });
+    </script>
+</body>
+</html>
+

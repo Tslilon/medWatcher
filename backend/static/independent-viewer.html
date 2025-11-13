@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Medical PDF Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 6px 8px;
+            font-size: 11px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            flex-shrink: 0;
+        }
+        
+        #pageInfo {
+            font-weight: 600;
+        }
+        
+        #viewer {
+            flex: 1;
+            position: relative;
+            background: #000;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 10px 0;
+            /* Allow pinch zoom and single finger scroll */
+            touch-action: manipulation;
+        }
+        
+        .page-container {
+            width: 100%;
+            margin-bottom: 15px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: visible;
+            position: relative;
+        }
+        
+        .page-number {
+            background: #333;
+            color: #fff;
+            padding: 6px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .page-image-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            /* Enable pinch zoom */
+            touch-action: pan-x pan-y pinch-zoom;
+        }
+        
+        .page-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            transform-origin: center center;
+            transition: transform 0.1s ease-out;
+            /* Ultra high quality rendering */
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        
+        #loading {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            padding: 20px;
+        }
+        
+        #error {
+            font-size: 11px;
+            color: #ff4444;
+            text-align: center;
+            padding: 10px;
+            display: none;
+        }
+        
+        .loading-page {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div id="pageInfo">Loading pages...</div>
+    </div>
+    
+    <div id="viewer">
+        <div id="loading">Loading all pages...</div>
+        <div id="error"></div>
+        <div id="pagesContainer"></div>
+    </div>
+
+    <script>
+        // Get parameters from URL
+        const params = new URLSearchParams(window.location.search);
+        const startPage = parseInt(params.get('start')) || 1;
+        const endPage = parseInt(params.get('end')) || startPage;
+        const pdfFilename = params.get('pdf') || '';
+        const totalPages = endPage - startPage + 1;
+        
+        // Elements
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        const pageInfo = document.getElementById('pageInfo');
+        const pagesContainer = document.getElementById('pagesContainer');
+        
+        // Hide header to save space
+        pageInfo.textContent = '';
+        
+        // Load all pages continuously
+        async function loadAllPages() {
+            loading.textContent = `Loading...`;
+            
+            for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
+                // Create page container
+                const pageContainer = document.createElement('div');
+                pageContainer.className = 'page-container';
+                pageContainer.id = `page-${pageNum}`;
+                
+                // Add page number label
+                const pageLabel = document.createElement('div');
+                pageLabel.className = 'page-number';
+                pageLabel.textContent = `Page ${pageNum - startPage + 1} of ${totalPages}`;
+                pageContainer.appendChild(pageLabel);
+                
+                // Add loading placeholder
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'loading-page';
+                loadingDiv.textContent = 'Loading...';
+                pageContainer.appendChild(loadingDiv);
+                
+                pagesContainer.appendChild(pageContainer);
+                
+                // Load image asynchronously
+                loadPageImage(pageNum, pageContainer, loadingDiv);
+            }
+            
+            // Hide main loading after creating all containers
+            setTimeout(() => {
+                loading.style.display = 'none';
+            }, 500);
+        }
+        
+        function loadPageImage(pageNum, container, loadingDiv) {
+            // ULTRA HIGH RESOLUTION - 2000px width, 100% quality
+            const imageUrl = `/pdf/independent/page/${encodeURIComponent(pdfFilename)}/${pageNum}?width=2000&quality=100`;
+            
+            const img = new Image();
+            
+            img.onload = function() {
+                // Remove loading text
+                loadingDiv.remove();
+                
+                // Create wrapper for pinch zoom handling
+                const wrapper = document.createElement('div');
+                wrapper.className = 'page-image-wrapper';
+                
+                // Add image
+                const pageImage = document.createElement('img');
+                pageImage.src = imageUrl;
+                pageImage.className = 'page-image';
+                pageImage.alt = `Page ${pageNum}`;
+                pageImage.dataset.pageNum = pageNum;
+                
+                wrapper.appendChild(pageImage);
+                container.appendChild(wrapper);
+                
+                // Add pinch zoom handling for this image
+                setupPinchZoom(pageImage, wrapper);
+            };
+            
+            img.onerror = function() {
+                loadingDiv.textContent = '⚠️ Failed to load';
+                loadingDiv.style.color = '#ff4444';
+            };
+            
+            img.src = imageUrl;
+        }
+        
+        // Pinch zoom handler for each image
+        function setupPinchZoom(image, wrapper) {
+            let scale = 1;
+            let lastScale = 1;
+            let startDistance = 0;
+            let translateX = 0;
+            let translateY = 0;
+            let lastTranslateX = 0;
+            let lastTranslateY = 0;
+            let startTouch1 = null;
+            let startTouch2 = null;
+            
+            // Reset zoom on double tap
+            image.addEventListener('dblclick', function() {
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                lastScale = 1;
+                lastTranslateX = 0;
+                lastTranslateY = 0;
+                updateTransform();
+            });
+            
+            function updateTransform() {
+                image.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            }
+            
+            function getDistance(touch1, touch2) {
+                const dx = touch1.clientX - touch2.clientX;
+                const dy = touch1.clientY - touch2.clientY;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+            
+            function getMidpoint(touch1, touch2) {
+                return {
+                    x: (touch1.clientX + touch2.clientX) / 2,
+                    y: (touch1.clientY + touch2.clientY) / 2
+                };
+            }
+            
+            wrapper.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    startTouch1 = e.touches[0];
+                    startTouch2 = e.touches[1];
+                    startDistance = getDistance(startTouch1, startTouch2);
+                    lastScale = scale;
+                } else if (e.touches.length === 1 && scale > 1) {
+                    // Single finger pan when zoomed
+                    e.preventDefault();
+                    startTouch1 = e.touches[0];
+                    lastTranslateX = translateX;
+                    lastTranslateY = translateY;
+                }
+            }, { passive: false });
+            
+            wrapper.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const touch1 = e.touches[0];
+                    const touch2 = e.touches[1];
+                    const currentDistance = getDistance(touch1, touch2);
+                    
+                    // Calculate new scale
+                    scale = Math.max(1, Math.min(5, lastScale * (currentDistance / startDistance)));
+                    
+                    updateTransform();
+                } else if (e.touches.length === 1 && scale > 1 && startTouch1) {
+                    // Pan when zoomed
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const dx = touch.clientX - startTouch1.clientX;
+                    const dy = touch.clientY - startTouch1.clientY;
+                    
+                    translateX = lastTranslateX + dx;
+                    translateY = lastTranslateY + dy;
+                    
+                    updateTransform();
+                }
+            }, { passive: false });
+            
+            wrapper.addEventListener('touchend', function(e) {
+                if (e.touches.length === 0) {
+                    startTouch1 = null;
+                    startTouch2 = null;
+                    
+                    // Reset translation if scale is back to 1
+                    if (scale <= 1) {
+                        scale = 1;
+                        translateX = 0;
+                        translateY = 0;
+                        lastTranslateX = 0;
+                        lastTranslateY = 0;
+                        updateTransform();
+                    }
+                }
+            });
+        }
+        
+        // Start loading
+        loadAllPages();
+    </script>
+</body>
+</html>
+

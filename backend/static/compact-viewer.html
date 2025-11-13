@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Harrison's - Compact</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 6px 8px;
+            font-size: 11px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            flex-shrink: 0;
+        }
+        
+        #pageInfo {
+            font-weight: 600;
+        }
+        
+        #viewer {
+            flex: 1;
+            position: relative;
+            background: #000;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 10px 0;
+        }
+        
+        .page-container {
+            width: 100%;
+            margin-bottom: 15px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .page-number {
+            background: #333;
+            color: #fff;
+            padding: 6px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .page-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            touch-action: pan-y;
+            margin-left: -7.5%;
+        }
+        
+        #loading {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            padding: 20px;
+        }
+        
+        #error {
+            font-size: 11px;
+            color: #ff4444;
+            text-align: center;
+            padding: 10px;
+            display: none;
+        }
+        
+        .loading-page {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div id="pageInfo">Loading pages...</div>
+    </div>
+    
+    <div id="viewer">
+        <div id="loading">Loading all pages...</div>
+        <div id="error"></div>
+        <div id="pagesContainer"></div>
+    </div>
+
+    <script>
+        // Get parameters from URL
+        const params = new URLSearchParams(window.location.search);
+        const startPage = parseInt(params.get('start')) || 1;
+        const endPage = parseInt(params.get('end')) || startPage;
+        const totalPages = endPage - startPage + 1;
+        
+        // Elements
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        const pageInfo = document.getElementById('pageInfo');
+        const pagesContainer = document.getElementById('pagesContainer');
+        
+        // Hide header to save space
+        pageInfo.textContent = '';
+        
+        // Load all pages continuously
+        async function loadAllPages() {
+            loading.textContent = `Loading...`;
+            
+            for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
+                // Create page container
+                const pageContainer = document.createElement('div');
+                pageContainer.className = 'page-container';
+                pageContainer.id = `page-${pageNum}`;
+                
+                // Add page number label
+                const pageLabel = document.createElement('div');
+                pageLabel.className = 'page-number';
+                pageLabel.textContent = `Page ${pageNum - startPage + 1} of ${totalPages}`;
+                pageContainer.appendChild(pageLabel);
+                
+                // Add loading placeholder
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'loading-page';
+                loadingDiv.textContent = 'Loading...';
+                pageContainer.appendChild(loadingDiv);
+                
+                pagesContainer.appendChild(pageContainer);
+                
+                // Load image asynchronously
+                loadPageImage(pageNum, pageContainer, loadingDiv);
+            }
+            
+            // Hide main loading after creating all containers
+            setTimeout(() => {
+                loading.style.display = 'none';
+            }, 500);
+        }
+        
+        function loadPageImage(pageNum, container, loadingDiv) {
+            // High resolution for readability (800px wide, 100% quality)
+            const imageUrl = `/pdf/page/${pageNum}?width=800&quality=100`;
+            
+            const img = new Image();
+            
+            img.onload = function() {
+                // Remove loading text
+                loadingDiv.remove();
+                
+                // Add image
+                const pageImage = document.createElement('img');
+                pageImage.src = imageUrl;
+                pageImage.className = 'page-image';
+                pageImage.alt = `Page ${pageNum}`;
+                container.appendChild(pageImage);
+            };
+            
+            img.onerror = function() {
+                loadingDiv.textContent = '⚠️ Failed to load';
+                loadingDiv.style.color = '#ff4444';
+            };
+            
+            img.src = imageUrl;
+        }
+        
+        // Start loading
+        loadAllPages();
+        
+        // Enable smooth one-finger scrolling (disable pinch/zoom on container)
+        const viewer = document.getElementById('viewer');
+        viewer.style.touchAction = 'pan-y';
+    </script>
+</body>
+</html>
+
