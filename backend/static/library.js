@@ -384,11 +384,21 @@ async function confirmDelete() {
 
 // View functions
 function viewPDF(sourceId, filename) {
+    // Get the source to find the actual page count
+    const source = allSources.find(s => s.id === sourceId);
+    if (!source) {
+        console.error('Source not found:', sourceId);
+        return;
+    }
+    
     // Extract just the filename without the pdf_ prefix
     const actualFilename = filename || sourceId.replace('pdf_', '');
     
-    // Open in independent viewer
-    window.open(`/viewer/independent?start=1&end=9999&pdf=${encodeURIComponent(actualFilename)}`, '_blank');
+    // Use actual page count
+    const totalPages = source.total_pages || 1;
+    
+    // Open in independent viewer with correct page range
+    window.open(`/viewer/independent?start=1&end=${totalPages}&pdf=${encodeURIComponent(actualFilename)}`, '_blank');
 }
 
 function viewNote(noteId) {
