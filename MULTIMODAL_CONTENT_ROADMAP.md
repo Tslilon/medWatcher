@@ -45,8 +45,18 @@
 
 ### 4. **Voice Recordings** (NEW!)
 - Record audio in browser (MediaRecorder API)
-- Formats: WebM, MP4, WAV (browser-dependent)
-- Convert to MP3 for universal playback
+- **Formats supported:**
+  - **WebM** (.webm) - Chrome/Android default
+  - **MP4/M4A** (.mp4, .m4a) - Safari/iPhone default
+  - **AAC** (.aac) - Apple Watch/iOS compressed format
+  - **CAF** (.caf) - Core Audio Format (Apple devices)
+  - **WAV** (.wav) - Uncompressed (desktop)
+- **Apple Watch special handling:**
+  - Watch browser may not support MediaRecorder
+  - Fallback: File upload from Watch Voice Memos app
+  - Auto-detect Watch user-agent for appropriate UI
+  - Support AAC/M4A formats (Watch native output)
+- Convert ALL formats to MP3 for universal playback
 - Audio transcription (Whisper API or Google Speech-to-Text)
 - Playback with HTML5 audio player
 - Optional title/description
@@ -429,6 +439,76 @@ async def serve_image(image_filename: str):
        return chunks
    ```
 
+4. **Audio Processing (with Apple Watch format support):**
+   ```python
+   from pydub import AudioSegment
+   import openai
+   
+   def process_audio(audio_file: UploadFile, title: str, description: str):
+       # Generate ID
+       audio_id = f"audio_{int(time.time())}_{uuid4().hex[:8]}"
+       
+       # Detect format from file extension or content-type
+       original_ext = audio_file.filename.split('.')[-1].lower()
+       
+       # Save original temporarily
+       temp_path = f"/tmp/{audio_id}_original.{original_ext}"
+       with open(temp_path, 'wb') as f:
+           f.write(audio_file.file.read())
+       
+       # Convert to MP3 for universal playback
+       # pydub supports: webm, mp4, m4a, aac, caf, wav, ogg
+       try:
+           if original_ext in ['webm', 'mp4', 'm4a', 'aac', 'caf', 'wav', 'ogg']:
+               audio = AudioSegment.from_file(temp_path, format=original_ext)
+           else:
+               # Try to auto-detect format
+               audio = AudioSegment.from_file(temp_path)
+           
+           # Export as MP3
+           mp3_path = f"/tmp/{audio_id}.mp3"
+           audio.export(mp3_path, format='mp3', bitrate='128k')
+           
+           # Get duration
+           duration_seconds = len(audio) / 1000.0
+           
+       except Exception as e:
+           print(f"Audio conversion error: {e}")
+           # If conversion fails, use original file
+           mp3_path = temp_path
+           duration_seconds = 0
+       
+       # Upload MP3 to GCS
+       filename = f"{audio_id}.mp3"
+       upload_to_gcs(mp3_path, f"processed/user_audio/{filename}")
+       
+       # Transcribe audio using Whisper
+       try:
+           with open(mp3_path, 'rb') as audio_file:
+               transcript = openai.Audio.transcribe(
+                   model="whisper-1",
+                   file=audio_file
+               )
+           transcription = transcript.text
+       except Exception as e:
+           print(f"Transcription error: {e}")
+           transcription = ""
+       
+       # Combine title + description + transcription
+       full_text = f"{title}\n\n{description}\n\n{transcription}" if transcription else f"{title}\n\n{description}"
+       
+       # Chunk
+       chunks = create_chunks(full_text, content_type="audio")
+       
+       # Add audio-specific metadata
+       for chunk in chunks:
+           chunk['duration_seconds'] = duration_seconds
+           chunk['audio_filename'] = filename
+           chunk['has_transcription'] = bool(transcription)
+       
+       return chunks, filename, duration_seconds
+   ```
+
 **Tests:**
 - [ ] Test upload endpoint with mock files
 - [ ] Test OCR extraction
@@ -675,22 +755,65 @@ document.getElementById('saveDrawingBtn').addEventListener('click', async () => 
     }, 'image/png');
 });
 
-// Audio Recording
+// Audio Recording with Apple Watch fallback
 let mediaRecorder, audioChunks = [], recordingStartTime, timerInterval;
 let recordedAudioBlob = null;
 
-document.getElementById('recordBtn').addEventListener('click', async () => {
-    if (!mediaRecorder || mediaRecorder.state === 'inactive') {
-        await startRecording();
-    } else {
-        stopRecording();
-    }
-});
+// Detect Apple Watch
+function isAppleWatch() {
+    const ua = navigator.userAgent.toLowerCase();
+    return ua.includes('watch') || 
+           (ua.includes('safari') && window.screen.width <= 272); // Watch Series 7+ width
+}
+
+// Check if MediaRecorder is supported
+const supportsMediaRecorder = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+const isWatch = isAppleWatch();
+
+// If Apple Watch and no MediaRecorder, show file upload instead
+if (isWatch && !supportsMediaRecorder) {
+    document.getElementById('recordBtn').style.display = 'none';
+    document.getElementById('recordingStatus').innerHTML = `
+        <p>⌚ Apple Watch detected</p>
+        <p>Please upload an audio file from Voice Memos:</p>
+        <input type="file" id="audioFileInput" accept="audio/*,.m4a,.aac,.caf">
+    `;
+    
+    document.getElementById('audioFileInput').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            recordedAudioBlob = file;
+            const audioUrl = URL.createObjectURL(file);
+            const playback = document.getElementById('audioPlayback');
+            playback.src = audioUrl;
+            playback.style.display = 'block';
+            document.getElementById('saveAudioBtn').disabled = false;
+        }
+    });
+} else {
+    // Standard browser recording
+    document.getElementById('recordBtn').addEventListener('click', async () => {
+        if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+            await startRecording();
+        } else {
+            stopRecording();
+        }
+    });
+}
 
 async function startRecording() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
+        
+        // Try to use appropriate format for the platform
+        let mimeType = 'audio/webm';
+        if (MediaRecorder.isTypeSupported('audio/mp4')) {
+            mimeType = 'audio/mp4'; // Safari/iPhone
+        } else if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+            mimeType = 'audio/webm;codecs=opus'; // Chrome
+        }
+        
+        mediaRecorder = new MediaRecorder(stream, { mimeType });
         audioChunks = [];
         
         mediaRecorder.ondataavailable = (e) => {
@@ -698,7 +821,7 @@ async function startRecording() {
         };
         
         mediaRecorder.onstop = () => {
-            recordedAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            recordedAudioBlob = new Blob(audioChunks, { type: mimeType });
             const audioUrl = URL.createObjectURL(recordedAudioBlob);
             
             const playback = document.getElementById('audioPlayback');
@@ -723,7 +846,7 @@ async function startRecording() {
         
     } catch (error) {
         console.error('Error accessing microphone:', error);
-        alert('Could not access microphone. Please check permissions.');
+        alert('Could not access microphone. Please check permissions or use file upload.');
     }
 }
 
@@ -1359,9 +1482,11 @@ RUN apt-get update && apt-get install -y \
 **File Format Support:**
 - **Images:** JPEG (.jpg, .jpeg), PNG (.png), HEIC (.heic), WEBP (.webp)
   - HEIC files auto-converted to JPEG for compatibility
-- **Audio:** WebM (.webm), MP4 (.mp4), WAV (.wav)
-  - All audio converted to MP3 for universal playback
+- **Audio:** WebM (.webm), MP4 (.mp4), M4A (.m4a), AAC (.aac), CAF (.caf), WAV (.wav), OGG (.ogg)
+  - **Apple Watch/iOS formats:** M4A, AAC, CAF (all supported!)
+  - All audio converted to MP3 (128kbps) for universal playback
   - Transcribed via Whisper API for searchability
+  - pydub + ffmpeg handles all conversions
 
 ---
 
@@ -1371,16 +1496,24 @@ Before marking as complete:
 - [ ] All 4 content types (image, note, drawing, audio) can be uploaded
 - [ ] iPhone/Android camera photos (HEIC, JPEG) upload successfully
 - [ ] Audio recordings work in web browser (mic permission)
+- [ ] **Apple Watch audio testing:**
+  - [ ] Watch detects correctly (user-agent or screen width)
+  - [ ] File upload UI shown instead of recording button
+  - [ ] M4A files from Watch Voice Memos upload successfully
+  - [ ] AAC files from Watch upload successfully
+  - [ ] CAF files (if Watch produces them) upload successfully
+  - [ ] All Watch audio formats convert to MP3
+  - [ ] Watch audio files are transcribed and searchable
 - [ ] Audio transcription generates searchable text
 - [ ] All content appears in library
 - [ ] All content is searchable
 - [ ] Clicking results opens correct viewer/player
-- [ ] Audio files play back in browser
+- [ ] Audio files play back in browser (MP3 compatibility)
 - [ ] Delete works for all content types (all 6 locations)
 - [ ] Refresh button syncs new content
 - [ ] + button fits on one line with other buttons (responsive)
 - [ ] Image formats: JPEG, PNG, HEIC, WEBP all supported
-- [ ] Audio formats: WebM, WAV converted to MP3
+- [ ] Audio formats: WebM, MP4, M4A, AAC, CAF, WAV, OGG all convert to MP3
 - [ ] All tests pass (unit + integration)
 - [ ] Summary.json files correct for all 4 types
 - [ ] No orphaned files in GCS after delete
