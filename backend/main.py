@@ -106,6 +106,20 @@ async def web_interface():
     else:
         raise HTTPException(status_code=404, detail="Web interface not found")
 
+@app.get("/library", response_class=HTMLResponse, tags=["General"])
+async def library_interface():
+    """
+    Library management interface
+    
+    View and manage all content sources (Harrison's, PDFs, notes)
+    """
+    static_file = Path(__file__).parent / "static" / "library.html"
+    if static_file.exists():
+        with open(static_file, 'r', encoding='utf-8') as f:
+            return HTMLResponse(content=f.read())
+    else:
+        raise HTTPException(status_code=404, detail="Library interface not found")
+
 @app.get("/viewer", response_class=HTMLResponse, tags=["General"])
 async def pdf_viewer(request: Request):
     """
