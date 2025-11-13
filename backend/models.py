@@ -130,3 +130,89 @@ class ContentSourceResponse(BaseModel):
     source_id: str = Field(..., description="Content source ID")
     message: str = Field(default="", description="Status message")
 
+# ============================================================================
+# Multimodal Content Models (Images, Audio, Drawings, Notes)
+# ============================================================================
+
+class UserContent(BaseModel):
+    """Base model for user-uploaded content"""
+    content_id: str = Field(..., description="Unique content identifier")
+    content_type: Literal["image", "note", "drawing", "audio"] = Field(..., description="Type of content")
+    title: str = Field(..., description="Content title")
+    filename: str = Field(..., description="Stored filename")
+    caption: Optional[str] = Field(None, description="Caption or description")
+    tags: List[str] = Field(default_factory=list, description="User-defined tags")
+    created_at: datetime = Field(..., description="Creation timestamp")
+    file_size: int = Field(..., description="File size in bytes")
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
+    is_indexed: bool = Field(default=True, description="Whether indexed in ChromaDB")
+    chunks: int = Field(..., description="Number of chunks generated")
+
+class UserImage(UserContent):
+    """User-uploaded image with OCR"""
+    content_type: Literal["image"] = "image"
+    has_ocr: bool = Field(default=False, description="Whether OCR was performed")
+    ocr_text: Optional[str] = Field(None, description="Extracted text from OCR")
+    thumbnail_url: Optional[str] = Field(None, description="Thumbnail URL")
+    original_format: str = Field(..., description="Original image format (jpeg, png, heic, webp)")
+
+class UserDrawing(UserContent):
+    """User-created drawing"""
+    content_type: Literal["drawing"] = "drawing"
+    has_ocr: bool = Field(default=False, description="Whether OCR was performed")
+    ocr_text: Optional[str] = Field(None, description="Extracted text from OCR")
+    thumbnail_url: Optional[str] = Field(None, description="Thumbnail URL")
+
+class UserAudio(UserContent):
+    """User-uploaded audio recording"""
+    content_type: Literal["audio"] = "audio"
+    duration_seconds: float = Field(..., description="Audio duration in seconds")
+    has_transcription: bool = Field(default=False, description="Whether transcription was performed")
+    transcription: Optional[str] = Field(None, description="Audio transcription text")
+    original_format: str = Field(..., description="Original audio format (webm, m4a, aac, caf, wav)")
+    playback_url: Optional[str] = Field(None, description="MP3 playback URL")
+
+class UserNote(UserContent):
+    """User-created text note"""
+    content_type: Literal["note"] = "note"
+    text_content: str = Field(..., description="Full text content")
+    word_count: int = Field(..., description="Word count")
+    is_markdown: bool = Field(default=False, description="Whether content is markdown")
+
+# Upload request models
+class ContentUploadRequest(BaseModel):
+    """Base upload request"""
+    content_type: Literal["image", "note", "drawing", "audio"]
+    title: Optional[str] = Field(None, description="Content title (auto-generated if not provided)")
+    caption: Optional[str] = Field(None, description="Caption or description")
+    tags: Optional[str] = Field(None, description="Comma-separated tags")
+
+class ImageUploadRequest(ContentUploadRequest):
+    """Image upload request"""
+    content_type: Literal["image"] = "image"
+
+class AudioUploadRequest(ContentUploadRequest):
+    """Audio upload request"""
+    content_type: Literal["audio"] = "audio"
+    description: Optional[str] = Field(None, description="Audio description")
+
+class DrawingUploadRequest(ContentUploadRequest):
+    """Drawing upload request"""
+    content_type: Literal["drawing"] = "drawing"
+
+class NoteUploadRequest(ContentUploadRequest):
+    """Text note upload request"""
+    content_type: Literal["note"] = "note"
+    text_content: str = Field(..., min_length=1, max_length=50000, description="Note text content")
+    is_markdown: bool = Field(default=False, description="Whether content is markdown")
+
+# Response models
+class ContentUploadResponse(BaseModel):
+    """Response after content upload"""
+    status: str = Field(..., description="Upload status")
+    content_id: str = Field(..., description="Generated content ID")
+    filename: str = Field(..., description="Stored filename")
+    message: str = Field(..., description="Status message")
+    chunks_created: int = Field(..., description="Number of chunks created")
+    indexed: bool = Field(..., description="Whether content was indexed")
+
