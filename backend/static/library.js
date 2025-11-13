@@ -331,7 +331,7 @@ async function confirmUpload() {
         
         uploadProgressBar.style.width = '100%';
         uploadStatus.style.color = '#4caf50';
-        uploadStatus.textContent = `✅ File saved on RAG!`;
+        uploadStatus.innerHTML = `✅ File saved on RAG!<br><small style="font-size: 12px;">💡 Click 🔄 REFRESH on search page to find it!</small>`;
         
         // Wait a bit, then close and reload
         setTimeout(async () => {
@@ -345,7 +345,7 @@ async function confirmUpload() {
             
             cancelUpload();
             await loadLibrary();
-        }, 2000);
+        }, 3000);
         
     } catch (error) {
         console.error('Upload error:', error);

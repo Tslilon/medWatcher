@@ -957,11 +957,13 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
         doc_count = search_engine.vector_store.count_documents()
         print(f"   ✅ Reloaded! Search engine now has {doc_count} documents")
         
-        # STEP 2: Upload ChromaDB to GCS (for other containers/devices) - WITH TIMEOUT
+        # STEP 2: Upload ChromaDB to GCS (for other containers/devices) - BLOCKING UPLOAD
         print(f"☁️ Uploading ChromaDB to GCS (for other containers)...")
+        print(f"   ⏳ This may take 30-60 seconds for large ChromaDB...")
         
         try:
-            # Upload with explicit timeout handling
+            # CRITICAL: BLOCK until upload completes (don't return success until done!)
+            # This ensures when user gets "success" message, they can IMMEDIATELY refresh
             import threading
             upload_success = [False]
             
@@ -969,13 +971,14 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
                 upload_success[0] = upload_directory_to_gcs(str(chroma_dir), "chroma_db")
             
             upload_thread = threading.Thread(target=upload_chromadb)
-            upload_thread.daemon = True
+            upload_thread.daemon = False  # NOT daemon - we want to wait for it
             upload_thread.start()
-            upload_thread.join(timeout=30)  # 30 second timeout
+            upload_thread.join(timeout=90)  # 90 second timeout (increased from 30)
             
             if upload_thread.is_alive():
-                print(f"   ⚠️ ChromaDB upload taking too long (background upload continuing)")
-                print(f"   ✅ Search works NOW on this container!")
+                print(f"   ⚠️ ChromaDB upload taking longer than 90 seconds!")
+                print(f"   ⚠️ Continuing in background, but refresh may not work immediately")
+                print(f"   💡 Wait 1-2 minutes before clicking refresh button")
             elif upload_success[0]:
                 print(f"   ✅ ChromaDB uploaded to GCS!")
                 
@@ -986,6 +989,7 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
                 version_file.write_text(version_marker)
                 upload_to_gcs(str(version_file), "version.txt")
                 print(f"   ✅ Version marker updated: {version_marker}")
+                print(f"   ✅ You can now click REFRESH button to search this file!")
             else:
                 print(f"   ⚠️ ChromaDB upload failed (search still works on this container)")
         except Exception as e:
