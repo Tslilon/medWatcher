@@ -221,35 +221,62 @@ class LibraryManager:
             return {"status": "error", "message": f"Error deleting source: {str(e)}"}
     
     def _delete_pdf_source(self, source: Dict[str, Any]):
-        """Delete a PDF source from GCS only (keep local copy)"""
+        """Delete a PDF source from GCS and ChromaDB"""
         from gcs_helper import delete_from_gcs, delete_directory_from_gcs, check_gcs_available, upload_to_gcs
+        import re
         
         pdf_filename = source['filename']
         
-        # Note: We keep the local PDF file for backup/reference
-        # Only delete from GCS
+        # Generate chunk filename pattern using same logic as process_independent_pdfs.py
+        # 1. Remove .pdf extension
+        base_name = pdf_filename.rsplit('.', 1)[0] if '.' in pdf_filename else pdf_filename
+        # 2. Slugify: lowercase, remove special chars, replace hyphens/spaces with underscores
+        slug = base_name.lower()
+        slug = re.sub(r'[^\w\s-]', '', slug)
+        slug = re.sub(r'[-\s]+', '_', slug)
+        slug = slug[:50]
         
-        # Delete from GCS
+        chunk_pattern = f"independent_{slug}_chunk"
+        print(f"🔍 Looking for chunks matching pattern: {chunk_pattern}*")
+        
+        # 1. Delete PDF from GCS
         if check_gcs_available():
             if delete_from_gcs(f"independant_pdfs/{pdf_filename}"):
-                print(f"☁️ Deleted PDF from GCS: {pdf_filename}")
+                print(f"   ✅ Deleted PDF from GCS: {pdf_filename}")
             else:
-                print(f"⚠️ Warning: Could not delete PDF from GCS: {pdf_filename}")
+                print(f"   ⚠️ Warning: Could not delete PDF from GCS: {pdf_filename}")
         
-        # Delete chunks locally (but PDF file is kept)
-        deleted_chunks = []
-        for chunk_file in self.pdf_chunks_dir.glob(f"*{pdf_filename}*.json"):
-            if chunk_file.name != "summary.json":
-                chunk_file.unlink()  # Delete chunk files
-                deleted_chunks.append(chunk_file.name)
-        print(f"🗑️ Deleted {len(deleted_chunks)} local chunks (PDF file kept as backup)")
-        
-        # Delete chunks from GCS
+        # 2. Delete chunks from GCS (using gsutil to find all matching chunks)
         if check_gcs_available():
-            # Delete all chunks matching this PDF
-            for chunk_name in deleted_chunks:
-                delete_from_gcs(f"processed/independent_chunks/{chunk_name}")
-            print(f"☁️ Deleted chunks from GCS")
+            import subprocess
+            # List all chunks matching this PDF
+            result = subprocess.run(
+                ["gsutil", "ls", f"gs://harrisons-rag-data-flingoos/processed/independent_chunks/{chunk_pattern}*.json"],
+                capture_output=True,
+                text=True
+            )
+            
+            if result.returncode == 0:
+                chunk_paths = result.stdout.strip().split('\n')
+                deleted_count = 0
+                for chunk_path in chunk_paths:
+                    if chunk_path:  # Skip empty lines
+                        # Extract just the filename from full GCS path
+                        chunk_filename = chunk_path.split('/')[-1]
+                        if delete_from_gcs(f"processed/independent_chunks/{chunk_filename}"):
+                            deleted_count += 1
+                print(f"   ✅ Deleted {deleted_count} chunk(s) from GCS")
+            else:
+                print(f"   ⚠️ No chunks found in GCS (may have been deleted already)")
+        
+        # 3. Delete chunks locally
+        deleted_local = 0
+        for chunk_file in self.pdf_chunks_dir.glob(f"{chunk_pattern}*.json"):
+            if chunk_file.name != "summary.json":
+                chunk_file.unlink()
+                deleted_local += 1
+        if deleted_local > 0:
+            print(f"   ✅ Deleted {deleted_local} local chunk(s)")
         
         # Update summary.json
         summary_file = self.pdf_chunks_dir / "summary.json"
@@ -271,26 +298,36 @@ class LibraryManager:
             with open(summary_file, 'w') as f:
                 json.dump(summary, f, indent=2)
             
-            print(f"📝 Updated summary.json")
+            print(f"   ✅ Updated summary.json ({summary['total_pdfs']} PDFs, {summary['total_chunks']} chunks)")
             
             # Upload updated summary to GCS
             if check_gcs_available():
                 if upload_to_gcs(str(summary_file), "processed/independent_chunks/summary.json"):
-                    print(f"☁️ Uploaded updated summary.json to GCS")
+                    print(f"   ✅ Uploaded updated summary.json to GCS")
         
-        # Remove from vector store
+        # 4. Remove from vector store (ChromaDB)
         self.vector_store.delete_by_metadata('pdf_filename', pdf_filename)
-        print(f"🗑️ Removed from vector store")
+        doc_count = self.vector_store.count_documents()
+        print(f"   ✅ Removed from ChromaDB (now {doc_count} documents)")
         
-        # Update ChromaDB in GCS
+        # 5. Upload updated ChromaDB to GCS
         if check_gcs_available():
             from gcs_helper import upload_directory_to_gcs
+            import time
+            
             chroma_dir = self.data_dir / "chroma_db"
             if chroma_dir.exists():
                 if upload_directory_to_gcs(str(chroma_dir), "chroma_db"):
-                    print(f"☁️ Updated ChromaDB in GCS")
+                    print(f"   ✅ Uploaded ChromaDB to GCS ({doc_count} documents)")
+                    
+                    # Update version marker so other containers know to refresh
+                    version_marker = f"{int(time.time())}"
+                    version_file = chroma_dir.parent / "version.txt"
+                    version_file.write_text(version_marker)
+                    upload_to_gcs(str(version_file), "version.txt")
+                    print(f"   ✅ Updated version marker: {version_marker}")
                 else:
-                    print(f"⚠️ Warning: Could not update ChromaDB in GCS")
+                    print(f"   ⚠️ Warning: Could not update ChromaDB in GCS")
         
         # Reload the search engine to pick up the deletion
         print(f"🔄 Reloading vector store after deletion...")
