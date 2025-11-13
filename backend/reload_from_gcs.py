@@ -26,14 +26,24 @@ def reload_chromadb_from_gcs():
             shutil.rmtree(chroma_dir)
             print("   🗑️ Removed old ChromaDB")
         
-        # Download fresh ChromaDB from GCS
+        # Create fresh directory
+        chroma_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Download fresh ChromaDB from GCS (use rsync for cache-busting)
         bucket = "harrisons-rag-data-flingoos"
-        cmd = ["gsutil", "-m", "cp", "-r", f"gs://{bucket}/chroma_db", str(data_dir)]
+        # rsync with -d (delete extra files) ensures exact sync, no caching
+        cmd = ["gsutil", "-m", "rsync", "-r", "-d", f"gs://{bucket}/chroma_db", str(chroma_dir)]
         
         result = subprocess.run(cmd, capture_output=True, text=True)
         
         if result.returncode == 0:
-            print("   ✅ Downloaded fresh ChromaDB from GCS")
+            # Verify download by checking the main DB file
+            db_file = chroma_dir / "chroma.sqlite3"
+            if db_file.exists():
+                size_mb = db_file.stat().st_size / (1024 * 1024)
+                print(f"   ✅ Downloaded fresh ChromaDB from GCS ({size_mb:.1f}MB)")
+            else:
+                print(f"   ✅ Downloaded fresh ChromaDB from GCS")
             return True
         else:
             print(f"   ❌ Failed to download: {result.stderr}")
