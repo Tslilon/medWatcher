@@ -23,6 +23,8 @@ def download_from_gcs():
     data_dir.mkdir(parents=True, exist_ok=True)
     static_dir.mkdir(parents=True, exist_ok=True)
     processed_dir.mkdir(parents=True, exist_ok=True)
+    chunks_dir.mkdir(parents=True, exist_ok=True)
+    independent_chunks_dir.mkdir(parents=True, exist_ok=True)
     independent_pdfs_dir.mkdir(parents=True, exist_ok=True)
     
     print("🔄 Checking for RAG data...")
