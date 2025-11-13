@@ -40,9 +40,19 @@ def upload_directory_to_gcs(local_dir: str, gcs_dir: str) -> bool:
         True if successful, False otherwise
     """
     try:
-        # Use cp -r instead of rsync to avoid Python compatibility issues on macOS
+        from pathlib import Path
+        
+        # Upload directory CONTENTS (not the directory itself)
+        # Use /* to upload contents, not the parent folder
+        local_path = Path(local_dir)
+        
+        if not local_path.exists():
+            print(f"❌ Local directory does not exist: {local_dir}")
+            return False
+        
+        # Upload all files in the directory
         # -m for parallel, -r for recursive
-        cmd = ["gsutil", "-m", "cp", "-r", local_dir, f"gs://{GCS_BUCKET}/{gcs_dir}/"]
+        cmd = ["gsutil", "-m", "cp", "-r", f"{local_dir}/*", f"gs://{GCS_BUCKET}/{gcs_dir}/"]
         result = subprocess.run(cmd, capture_output=True, text=True, stderr=subprocess.STDOUT)
         
         # Check if successful (exit code 0 or files already up-to-date)
