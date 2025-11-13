@@ -305,6 +305,11 @@ async function confirmUpload() {
         uploadStatus.textContent = '☁️ Saving to RAG...';
     }, 3000);
     
+    setTimeout(() => {
+        uploadProgressBar.style.width = '85%';
+        uploadStatus.textContent = '🔄 Redeploying ChromaDB...';
+    }, 4500);
+    
     try {
         // Create form data
         const formData = new FormData();

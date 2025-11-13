@@ -44,49 +44,39 @@ class HierarchicalSearch:
         try:
             from reload_from_gcs import full_reload
             
-            # Get GCS ChromaDB timestamp
+            # Check lightweight version.txt marker file (much faster than checking ChromaDB)
             result = subprocess.run(
-                ["gsutil", "ls", "-l", "gs://harrisons-rag-data-flingoos/chroma_db/chroma.sqlite3"],
+                ["gsutil", "cat", "gs://harrisons-rag-data-flingoos/version.txt"],
                 capture_output=True,
                 text=True,
                 timeout=2
             )
             
             if result.returncode != 0:
-                return  # GCS check failed, continue with current data
+                return  # No version file or GCS check failed, continue with current data
             
-            # Parse timestamp from gsutil output
-            lines = result.stdout.strip().split('\n')
-            if not lines:
-                return
+            gcs_version = result.stdout.strip()
             
-            # Get local ChromaDB timestamp
-            local_chroma = Path("/app/data/chroma_db/chroma.sqlite3")
-            if not local_chroma.exists():
-                # No local ChromaDB, reload from GCS
-                print("🔄 No local ChromaDB, reloading from GCS...")
+            # Check local version
+            local_version_file = Path("/app/data/version.txt")
+            local_version = local_version_file.read_text().strip() if local_version_file.exists() else "0"
+            
+            # If GCS version is newer, reload
+            if gcs_version != local_version:
+                print(f"🔄 New version detected on GCS (local: {local_version}, GCS: {gcs_version})")
+                print(f"   Reloading ChromaDB from GCS...")
                 if full_reload():
-                    print("✅ Reloaded from GCS successfully")
-                return
-            
-            # Compare timestamps
-            gcs_line = lines[0]
-            # gsutil format: size  timestamp  url
-            parts = gcs_line.split()
-            if len(parts) >= 2:
-                gcs_timestamp_str = ' '.join(parts[1:3])  # Get timestamp part
-                local_mtime = local_chroma.stat().st_mtime
-                
-                # If we detect GCS is newer (simple heuristic), reload
-                # Note: This is a simplified check. In production, use proper timestamp parsing.
-                print(f"🔍 Checking for GCS updates...")
-                if full_reload():
-                    print("✅ Reloaded fresh data from GCS")
+                    # Save new version locally
+                    local_version_file.write_text(gcs_version)
+                    print(f"   ✅ Reloaded! Now using version {gcs_version}")
+                else:
+                    print(f"   ⚠️ Reload failed, continuing with current data")
         
+        except subprocess.TimeoutExpired:
+            print(f"⚠️ GCS version check timed out")
         except Exception as e:
             # Silently fail - don't break search if GCS check fails
             print(f"⚠️ GCS check failed: {e}")
-            pass
     
     def _load_hierarchy(self) -> Dict:
         """Load complete hierarchy for metadata"""

@@ -941,13 +941,39 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
         doc_count = search_engine.vector_store.count_documents()
         print(f"   ✅ Reloaded! Search engine now has {doc_count} documents")
         
-        # STEP 2: Upload ChromaDB to GCS (for other containers/devices)
+        # STEP 2: Upload ChromaDB to GCS (for other containers/devices) - WITH TIMEOUT
         print(f"☁️ Uploading ChromaDB to GCS (for other containers)...")
-        if not upload_directory_to_gcs(str(chroma_dir), "chroma_db"):
-            print(f"   ⚠️ Warning: Failed to upload ChromaDB to GCS (search still works on this container)")
-        else:
-            print(f"   ✅ ChromaDB uploaded to GCS!")
-            print(f"   📍 New files searchable NOW on this container, and on other containers after restart")
+        
+        try:
+            # Upload with explicit timeout handling
+            import threading
+            upload_success = [False]
+            
+            def upload_chromadb():
+                upload_success[0] = upload_directory_to_gcs(str(chroma_dir), "chroma_db")
+            
+            upload_thread = threading.Thread(target=upload_chromadb)
+            upload_thread.daemon = True
+            upload_thread.start()
+            upload_thread.join(timeout=30)  # 30 second timeout
+            
+            if upload_thread.is_alive():
+                print(f"   ⚠️ ChromaDB upload taking too long (background upload continuing)")
+                print(f"   ✅ Search works NOW on this container!")
+            elif upload_success[0]:
+                print(f"   ✅ ChromaDB uploaded to GCS!")
+                
+                # Create a version marker file to signal other containers
+                import time
+                version_marker = f"{int(time.time())}"
+                version_file = chroma_dir.parent / "version.txt"
+                version_file.write_text(version_marker)
+                upload_to_gcs(str(version_file), "version.txt")
+                print(f"   ✅ Version marker updated: {version_marker}")
+            else:
+                print(f"   ⚠️ ChromaDB upload failed (search still works on this container)")
+        except Exception as e:
+            print(f"   ⚠️ ChromaDB upload error: {e} (search still works on this container)")
         
         print(f"✅ PDF uploaded to GCS and indexed successfully: {pdf_name}")
         
