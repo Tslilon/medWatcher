@@ -697,6 +697,28 @@ async def get_library(source_type: Optional[str] = None):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving library: {str(e)}")
 
+@app.get("/api/library/stats", tags=["Library"])
+async def get_library_stats():
+    """Get statistics about the library"""
+    try:
+        stats = library_manager.get_library_stats()
+        return stats.dict()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving stats: {str(e)}")
+
+@app.get("/api/library/search", tags=["Library"])
+async def search_library(query: str, source_type: Optional[str] = None):
+    """Search library by title or content"""
+    try:
+        results = library_manager.search_library(query, source_type)
+        return {
+            "query": query,
+            "results": results,
+            "total": len(results)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error searching library: {str(e)}")
+
 @app.get("/api/library/{source_id}", tags=["Library"])
 async def get_source_details(source_id: str):
     """Get detailed information about a specific content source"""
@@ -722,28 +744,6 @@ async def delete_source(source_id: str):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error deleting source: {str(e)}")
-
-@app.get("/api/library/stats", tags=["Library"])
-async def get_library_stats():
-    """Get statistics about the library"""
-    try:
-        stats = library_manager.get_library_stats()
-        return stats.dict()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving stats: {str(e)}")
-
-@app.get("/api/library/search", tags=["Library"])
-async def search_library(query: str, source_type: Optional[str] = None):
-    """Search library by title or content"""
-    try:
-        results = library_manager.search_library(query, source_type)
-        return {
-            "query": query,
-            "results": results,
-            "total": len(results)
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error searching library: {str(e)}")
 
 # ============================================================================
 # Personal Notes API Endpoints
