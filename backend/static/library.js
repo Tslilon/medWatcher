@@ -3,11 +3,12 @@
 const API_BASE = window.location.origin;
 let allSources = [];
 let currentDeleteId = null;
+let currentUploadFile = null;
 
 // Load library on page load
 window.addEventListener('load', async () => {
-    await loadStats();
     await loadLibrary();
+    setupUploadZone();
 });
 
 // Filter change
@@ -15,22 +16,6 @@ document.getElementById('filterType').addEventListener('change', filterLibrary);
 
 // Search input
 document.getElementById('searchFilter').addEventListener('input', filterLibrary);
-
-async function loadStats() {
-    try {
-        const response = await fetch(`${API_BASE}/api/library/stats`);
-        if (!response.ok) throw new Error('Failed to load stats');
-        
-        const stats = await response.json();
-        
-        document.getElementById('totalSources').textContent = stats.total_sources;
-        document.getElementById('totalWords').textContent = formatNumber(stats.total_words);
-        document.getElementById('totalIndexed').textContent = stats.total_indexed;
-        document.getElementById('storageUsed').textContent = `${stats.storage_used_mb} MB`;
-    } catch (error) {
-        console.error('Error loading stats:', error);
-    }
-}
 
 async function loadLibrary() {
     const loading = document.getElementById('loading');
@@ -45,6 +30,10 @@ async function loadLibrary() {
         
         const data = await response.json();
         allSources = data.sources;
+        
+        // Update storage info in header
+        const stats = await fetch(`${API_BASE}/api/library/stats`).then(r => r.json());
+        document.getElementById('storageUsed').textContent = `${stats.storage_used_mb} MB`;
         
         loading.style.display = 'none';
         
@@ -130,15 +119,11 @@ function createSourceCard(source) {
     // Actions
     let actionsHtml = '';
     if (source.type === 'harrison') {
-        // Harrison's is not deletable, only viewable
-        actionsHtml = `
-            <button class="btn btn-view btn-small" disabled style="opacity: 0.5;">
-                View Chapters (Coming soon)
-            </button>
-        `;
+        // Harrison's - no actions
+        actionsHtml = '';
     } else if (source.type === 'independent_pdf') {
         actionsHtml = `
-            <button class="btn btn-view btn-small" onclick="viewPDF('${source.id}')">
+            <button class="btn btn-view btn-small" onclick="viewPDF('${source.id}', '${escapeHtml(source.filename)}')">
                 📖 View PDF
             </button>
             <button class="btn btn-delete btn-small" onclick="showDeleteConfirm('${source.id}', '${escapeHtml(source.title)}', '${source.type}')">
@@ -209,6 +194,132 @@ function filterLibrary() {
     displaySources(filtered);
 }
 
+// Upload Zone Setup
+function setupUploadZone() {
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    
+    // Click to upload
+    uploadZone.addEventListener('click', () => {
+        fileInput.click();
+    });
+    
+    // File selected
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileSelect(e.target.files[0]);
+        }
+    });
+    
+    // Drag and drop
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('dragover');
+    });
+    
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.classList.remove('dragover');
+    });
+    
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+        
+        if (e.dataTransfer.files.length > 0) {
+            const file = e.dataTransfer.files[0];
+            if (file.type === 'application/pdf') {
+                handleFileSelect(file);
+            } else {
+                alert('Please upload a PDF file');
+            }
+        }
+    });
+}
+
+function handleFileSelect(file) {
+    currentUploadFile = file;
+    
+    // Show upload modal with filename
+    const modal = document.getElementById('uploadModal');
+    document.getElementById('originalFilename').textContent = file.name;
+    
+    // Pre-fill with filename (without .pdf extension)
+    const defaultName = file.name.replace('.pdf', '');
+    document.getElementById('pdfNameInput').value = defaultName;
+    
+    modal.classList.add('active');
+}
+
+function cancelUpload() {
+    currentUploadFile = null;
+    document.getElementById('uploadModal').classList.remove('active');
+    document.getElementById('fileInput').value = '';
+    document.getElementById('uploadProgress').style.display = 'none';
+    document.getElementById('uploadProgressBar').style.width = '0%';
+    document.getElementById('uploadStatus').style.display = 'none';
+}
+
+async function confirmUpload() {
+    if (!currentUploadFile) return;
+    
+    const pdfName = document.getElementById('pdfNameInput').value.trim();
+    if (!pdfName) {
+        alert('Please enter a name for your PDF');
+        return;
+    }
+    
+    const uploadStatus = document.getElementById('uploadStatus');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const uploadProgressBar = document.getElementById('uploadProgressBar');
+    
+    // Show progress
+    uploadProgress.style.display = 'block';
+    uploadStatus.style.display = 'block';
+    uploadStatus.style.color = '#666';
+    uploadStatus.textContent = 'Uploading PDF...';
+    uploadProgressBar.style.width = '30%';
+    
+    try {
+        // Create form data
+        const formData = new FormData();
+        formData.append('file', currentUploadFile);
+        formData.append('pdf_name', pdfName);
+        
+        // Upload PDF
+        const response = await fetch(`${API_BASE}/api/upload-pdf`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Upload failed');
+        }
+        
+        uploadProgressBar.style.width = '60%';
+        uploadStatus.textContent = 'Processing and indexing...';
+        
+        const result = await response.json();
+        
+        uploadProgressBar.style.width = '100%';
+        uploadStatus.style.color = '#4caf50';
+        uploadStatus.textContent = `✅ ${result.message}`;
+        
+        // Wait a bit, then close and reload
+        setTimeout(async () => {
+            cancelUpload();
+            await loadLibrary();
+        }, 2000);
+        
+    } catch (error) {
+        console.error('Upload error:', error);
+        uploadStatus.style.color = '#c62828';
+        uploadStatus.textContent = `❌ Error: ${error.message}`;
+        uploadProgressBar.style.width = '0%';
+    }
+}
+
+// Delete functions
 function showDeleteConfirm(sourceId, title, type) {
     currentDeleteId = sourceId;
     const modal = document.getElementById('deleteModal');
@@ -257,11 +368,7 @@ async function confirmDelete() {
         modal.classList.remove('active');
         currentDeleteId = null;
         
-        // Show success message
-        message.innerHTML = `✅ ${result.message}`;
-        
         // Reload library
-        await loadStats();
         await loadLibrary();
         
     } catch (error) {
@@ -275,24 +382,21 @@ async function confirmDelete() {
     }
 }
 
-function viewPDF(sourceId) {
-    // Get the source to find filename
-    const source = allSources.find(s => s.id === sourceId);
-    if (!source) return;
+// View functions
+function viewPDF(sourceId, filename) {
+    // Extract just the filename without the pdf_ prefix
+    const actualFilename = filename || sourceId.replace('pdf_', '');
     
-    // For now, just alert - full implementation would open the PDF viewer
-    alert(`View PDF: ${source.title}\n\nFull implementation coming soon!`);
-    // TODO: Open independent PDF viewer with the source
+    // Open in independent viewer
+    window.open(`/viewer/independent?start=1&end=9999&pdf=${encodeURIComponent(actualFilename)}`, '_blank');
 }
 
 function viewNote(noteId) {
-    alert(`View note: ${noteId}\n\nFull implementation coming in Phase 2!`);
-    // TODO: Open note viewer
+    alert(`View note: ${noteId}\n\nNote viewer coming in Phase 2!`);
 }
 
 function editNote(noteId) {
-    alert(`Edit note: ${noteId}\n\nFull implementation coming in Phase 2!`);
-    // TODO: Open note editor
+    alert(`Edit note: ${noteId}\n\nNote editor coming in Phase 2!`);
 }
 
 // Utility functions
@@ -326,4 +430,3 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
-

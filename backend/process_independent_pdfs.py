@@ -233,11 +233,43 @@ def process_all_independent_pdfs(
 
 
 if __name__ == "__main__":
-    try:
-        chunks = process_all_independent_pdfs()
-        print(f"✅ Successfully processed {len(chunks)} chunks!")
-    except Exception as e:
-        print(f"\n❌ Error: {e}")
-        import traceback
-        traceback.print_exc()
+    import sys
+    
+    # Check if running as single file processor (from API upload)
+    if len(sys.argv) > 1:
+        # Single PDF processing mode
+        try:
+            pdf_path = sys.argv[1]
+            custom_name = sys.argv[2] if len(sys.argv) > 2 else None
+            
+            print(f"📄 Processing single PDF: {pdf_path}")
+            print(f"   Custom name: {custom_name or 'Auto-detect'}\n")
+            
+            processor = IndependentPDFProcessor(pdf_path)
+            chunks = processor.process_pdf()
+            
+            # Override pdf_name if custom name provided
+            if custom_name:
+                for chunk in chunks:
+                    chunk['pdf_name'] = custom_name
+            
+            processor.save_chunks(chunks)
+            
+            print(f"✅ Successfully processed {len(chunks)} chunks!")
+            sys.exit(0)
+            
+        except Exception as e:
+            print(f"\n❌ Error: {e}")
+            import traceback
+            traceback.print_exc()
+            sys.exit(1)
+    else:
+        # Batch processing mode (process all)
+        try:
+            chunks = process_all_independent_pdfs()
+            print(f"✅ Successfully processed {len(chunks)} chunks!")
+        except Exception as e:
+            print(f"\n❌ Error: {e}")
+            import traceback
+            traceback.print_exc()
 

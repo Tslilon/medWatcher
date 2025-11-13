@@ -811,6 +811,85 @@ async def delete_note(note_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error deleting note: {str(e)}")
 
+# ============================================================================
+# PDF Upload & Processing Endpoint
+# ============================================================================
+
+import shutil
+import subprocess
+from fastapi import Form
+
+@app.post("/api/upload-pdf", tags=["Library"])
+async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
+    """
+    Upload a PDF, process it, and index it into the RAG
+    
+    Steps:
+    1. Save PDF to independant_pdfs directory
+    2. Process PDF into chunks
+    3. Index chunks into ChromaDB
+    4. Return success
+    """
+    try:
+        # Validate file type
+        if not file.filename.endswith('.pdf'):
+            raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+        
+        # Determine paths
+        data_dir = Path("../data")
+        if not data_dir.exists():
+            data_dir = Path("data")
+        
+        pdfs_dir = data_dir / "independant_pdfs"
+        pdfs_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Save uploaded file
+        pdf_filename = file.filename
+        pdf_path = pdfs_dir / pdf_filename
+        
+        with open(pdf_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        # Process the PDF (chunk it)
+        print(f"📄 Processing PDF: {pdf_filename}")
+        process_result = subprocess.run(
+            ["python3", "process_independent_pdfs.py", str(pdf_path), pdf_name],
+            capture_output=True,
+            text=True,
+            cwd=Path(__file__).parent
+        )
+        
+        if process_result.returncode != 0:
+            print(f"❌ Processing error: {process_result.stderr}")
+            raise HTTPException(status_code=500, detail=f"PDF processing failed: {process_result.stderr}")
+        
+        # Index the chunks
+        print(f"🔍 Indexing PDF chunks...")
+        index_result = subprocess.run(
+            ["python3", "index_documents.py", "--force"],
+            capture_output=True,
+            text=True,
+            cwd=Path(__file__).parent
+        )
+        
+        if index_result.returncode != 0:
+            print(f"❌ Indexing error: {index_result.stderr}")
+            raise HTTPException(status_code=500, detail=f"Indexing failed: {index_result.stderr}")
+        
+        print(f"✅ PDF uploaded and indexed successfully: {pdf_name}")
+        
+        return {
+            "status": "success",
+            "message": f"PDF '{pdf_name}' uploaded and indexed successfully",
+            "filename": pdf_filename
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Upload error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Upload error: {str(e)}")
+
 # Development mode run
 if __name__ == "__main__":
     import uvicorn
