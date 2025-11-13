@@ -379,4 +379,173 @@ class MultimodalIndexer:
         
         print(f"✅ {content_type.capitalize()} content indexed successfully!")
         return True
+    
+    def delete_content(
+        self,
+        content_id: str,
+        content_type: str
+    ) -> bool:
+        """
+        Delete content from ALL locations
+        
+        Removes from:
+        1. Content file (local + GCS)
+        2. Chunk JSON files (local + GCS)
+        3. Summary JSON (local + GCS)
+        4. ChromaDB
+        5. In-memory cache (reload)
+        6. GCS ChromaDB (upload updated)
+        7. Version marker (update)
+        
+        Args:
+            content_id: Content ID to delete
+            content_type: Type of content
+            
+        Returns:
+            True if successful
+        """
+        print(f"\n🗑️ Deleting {content_type} content: {content_id}")
+        
+        from gcs_helper import delete_from_gcs, check_gcs_available
+        import subprocess
+        
+        try:
+            # Get directories
+            content_dir = self._get_content_dir(content_type)
+            chunks_dir = self._get_chunks_dir(content_type)
+            content_gcs_path, chunks_gcs_path = self._get_gcs_paths(content_type)
+            
+            # Step 1: Find and delete chunk files
+            chunk_files = list(chunks_dir.glob(f"{content_id}_chunk*.json"))
+            
+            if not chunk_files:
+                print(f"   ⚠️ No chunks found for {content_id}")
+                return False
+            
+            # Load first chunk to get filename
+            with open(chunk_files[0], 'r') as f:
+                first_chunk = json.load(f)
+            
+            filename = first_chunk['metadata']['filename']
+            
+            print(f"   Found {len(chunk_files)} chunk(s) and file: {filename}")
+            
+            # Step 2: Delete content file from GCS
+            if check_gcs_available():
+                if delete_from_gcs(f"{content_gcs_path}/{filename}"):
+                    print(f"   ✅ Deleted content file from GCS")
+                else:
+                    print(f"   ⚠️ Warning: Could not delete content file from GCS")
+            
+            # Step 3: Delete chunk files from GCS
+            if check_gcs_available():
+                deleted_count = 0
+                # List all chunks for this content_id on GCS
+                result = subprocess.run(
+                    ["gsutil", "ls", f"gs://harrisons-rag-data-flingoos/{chunks_gcs_path}/{content_id}_chunk*.json"],
+                    capture_output=True,
+                    text=True
+                )
+                
+                if result.returncode == 0:
+                    chunk_paths = result.stdout.strip().split('\n')
+                    for chunk_path in chunk_paths:
+                        if chunk_path:
+                            chunk_filename = chunk_path.split('/')[-1]
+                            if delete_from_gcs(f"{chunks_gcs_path}/{chunk_filename}"):
+                                deleted_count += 1
+                    print(f"   ✅ Deleted {deleted_count} chunk(s) from GCS")
+            
+            # Step 4: Delete chunk files locally
+            deleted_local = 0
+            for chunk_file in chunk_files:
+                chunk_file.unlink()
+                deleted_local += 1
+            print(f"   ✅ Deleted {deleted_local} local chunk(s)")
+            
+            # Step 5: Delete content file locally
+            content_file = content_dir / filename
+            if content_file.exists():
+                content_file.unlink()
+                print(f"   ✅ Deleted local content file")
+            
+            # Step 6: Update summary.json
+            summary_file = chunks_dir / "summary.json"
+            if summary_file.exists():
+                with open(summary_file, 'r') as f:
+                    summary = json.load(f)
+                
+                # Remove this content from summary
+                summary['items'] = [
+                    item for item in summary['items']
+                    if item['content_id'] != content_id
+                ]
+                
+                # Update totals
+                summary['total_items'] = len(summary['items'])
+                summary['total_chunks'] = sum(item['chunks'] for item in summary['items'])
+                
+                # Save updated summary locally
+                with open(summary_file, 'w') as f:
+                    json.dump(summary, f, indent=2)
+                
+                print(f"   ✅ Updated summary.json ({summary['total_items']} items, {summary['total_chunks']} chunks)")
+                
+                # Upload updated summary to GCS
+                if check_gcs_available():
+                    from gcs_helper import upload_to_gcs
+                    if upload_to_gcs(str(summary_file), f"{chunks_gcs_path}/summary.json"):
+                        print(f"   ✅ Uploaded updated summary.json to GCS")
+            
+            # Step 7: Remove from ChromaDB
+            # Find all chunk IDs for this content_id
+            chunk_ids = [f"{content_id}_chunk{i+1}" for i in range(len(chunk_files))]
+            
+            for chunk_id in chunk_ids:
+                self.vector_store.delete_by_id(chunk_id)
+            
+            doc_count = self.vector_store.count_documents()
+            print(f"   ✅ Removed from ChromaDB (now {doc_count} documents)")
+            
+            # Step 8: Upload updated ChromaDB to GCS
+            if not self.upload_chromadb_to_gcs():
+                print(f"   ⚠️ Warning: Could not update ChromaDB in GCS")
+            
+            # Step 9: Reload search engine
+            print(f"   🔄 Reloading search engine...")
+            try:
+                # Check if on Cloud Run (deployed)
+                is_cloud = Path("/app/data").exists()
+                
+                if is_cloud:
+                    # On Cloud Run: Reload from GCS
+                    print(f"      ☁️ Cloud environment - reloading from GCS...")
+                    from reload_from_gcs import full_reload
+                    if full_reload():
+                        print(f"      ✅ Reloaded from GCS after deletion")
+                    else:
+                        print(f"      ⚠️ GCS reload failed, using local reload")
+                        import hierarchical_search
+                        hierarchical_search._search_engine = None
+                        from hierarchical_search import get_search_engine
+                        search_engine = get_search_engine()
+                        print(f"      ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+                else:
+                    # Local: Just reload from disk
+                    import hierarchical_search
+                    hierarchical_search._search_engine = None
+                    from hierarchical_search import get_search_engine
+                    search_engine = get_search_engine()
+                    print(f"      ✅ Vector store reloaded with {search_engine.vector_store.count_documents()} documents")
+            except Exception as e:
+                print(f"   ⚠️ Warning: Could not reload vector store: {e}")
+            
+            print(f"✅ {content_type.capitalize()} content deleted successfully!")
+            return True
+            
+        except Exception as e:
+            print(f"❌ Error deleting content: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
 

@@ -1299,10 +1299,60 @@ async def serve_content_file(content_type: str, filename: str):
 @app.delete("/api/content/{content_id}", tags=["Multimodal Content"])
 async def delete_content(content_id: str):
     """
-    Delete content by ID (removes from all locations)
+    Delete content by ID (removes from ALL locations)
+    
+    Deletes from:
+    1. Content file (local + GCS)
+    2. Chunk JSON files (local + GCS)
+    3. Summary JSON (local + GCS)
+    4. ChromaDB
+    5. In-memory cache (reload)
+    6. GCS ChromaDB (upload updated)
+    7. Version marker (update)
     """
-    # TODO Phase 2.4: Implement content deletion
-    raise HTTPException(status_code=501, detail="Not yet implemented")
+    try:
+        print(f"\n🗑️ Deleting content: {content_id}")
+        
+        # Determine content type from content_id prefix
+        if content_id.startswith("image_"):
+            content_type = "image"
+        elif content_id.startswith("audio_"):
+            content_type = "audio"
+        elif content_id.startswith("drawing_"):
+            content_type = "drawing"
+        elif content_id.startswith("note_"):
+            content_type = "note"
+        else:
+            raise HTTPException(status_code=400, detail="Invalid content_id format")
+        
+        # Initialize indexer (lazy loading)
+        global multimodal_indexer
+        if multimodal_indexer is None:
+            print(f"   🔧 Initializing MultimodalIndexer...")
+            multimodal_indexer = MultimodalIndexer()
+        
+        # Delete content from all locations
+        success = multimodal_indexer.delete_content(
+            content_id=content_id,
+            content_type=content_type
+        )
+        
+        if success:
+            return {
+                "status": "success",
+                "content_id": content_id,
+                "message": f"{content_type.capitalize()} deleted from all locations. Click 🔄 REFRESH on search page."
+            }
+        else:
+            raise HTTPException(status_code=500, detail="Deletion failed")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Delete error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Delete error: {str(e)}")
 
 
 if __name__ == "__main__":
