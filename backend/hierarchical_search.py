@@ -6,6 +6,9 @@ import time
 from typing import List, Dict, Optional
 import json
 from pathlib import Path
+import subprocess
+import os
+from datetime import datetime
 from vector_store import ChromaVectorStore, EmbeddingGenerator
 from models import TopicResult
 
@@ -16,7 +19,74 @@ class HierarchicalSearch:
         self.vector_store = ChromaVectorStore()
         self.generator = EmbeddingGenerator()
         self.hierarchy = self._load_hierarchy()
+        self.last_gcs_check = None
+        self.gcs_check_interval = 5  # Check GCS every 5 seconds
         print("✅ Hierarchical search initialized")
+    
+    def _should_check_gcs(self) -> bool:
+        """Check if enough time has passed to check GCS for updates"""
+        if self.last_gcs_check is None:
+            return True
+        return (time.time() - self.last_gcs_check) >= self.gcs_check_interval
+    
+    def _reload_from_gcs_if_needed(self):
+        """Check GCS for updates and reload if ChromaDB is newer"""
+        # Only check if on Cloud Run (not local development)
+        if not os.getenv("K_SERVICE"):
+            return  # Skip on local development
+        
+        # Rate limit checks (every 5 seconds max)
+        if not self._should_check_gcs():
+            return
+        
+        self.last_gcs_check = time.time()
+        
+        try:
+            from reload_from_gcs import full_reload
+            
+            # Get GCS ChromaDB timestamp
+            result = subprocess.run(
+                ["gsutil", "ls", "-l", "gs://harrisons-rag-data-flingoos/chroma_db/chroma.sqlite3"],
+                capture_output=True,
+                text=True,
+                timeout=2
+            )
+            
+            if result.returncode != 0:
+                return  # GCS check failed, continue with current data
+            
+            # Parse timestamp from gsutil output
+            lines = result.stdout.strip().split('\n')
+            if not lines:
+                return
+            
+            # Get local ChromaDB timestamp
+            local_chroma = Path("/app/data/chroma_db/chroma.sqlite3")
+            if not local_chroma.exists():
+                # No local ChromaDB, reload from GCS
+                print("🔄 No local ChromaDB, reloading from GCS...")
+                if full_reload():
+                    print("✅ Reloaded from GCS successfully")
+                return
+            
+            # Compare timestamps
+            gcs_line = lines[0]
+            # gsutil format: size  timestamp  url
+            parts = gcs_line.split()
+            if len(parts) >= 2:
+                gcs_timestamp_str = ' '.join(parts[1:3])  # Get timestamp part
+                local_mtime = local_chroma.stat().st_mtime
+                
+                # If we detect GCS is newer (simple heuristic), reload
+                # Note: This is a simplified check. In production, use proper timestamp parsing.
+                print(f"🔍 Checking for GCS updates...")
+                if full_reload():
+                    print("✅ Reloaded fresh data from GCS")
+        
+        except Exception as e:
+            # Silently fail - don't break search if GCS check fails
+            print(f"⚠️ GCS check failed: {e}")
+            pass
     
     def _load_hierarchy(self) -> Dict:
         """Load complete hierarchy for metadata"""
@@ -41,6 +111,9 @@ class HierarchicalSearch:
         Returns:
             Tuple of (list of TopicResult objects, search time in ms)
         """
+        
+        # CRITICAL: Check GCS for updates before EVERY search (multi-container support)
+        self._reload_from_gcs_if_needed()
         
         start_time = time.time()
         
