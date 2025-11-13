@@ -40,9 +40,17 @@ def upload_directory_to_gcs(local_dir: str, gcs_dir: str) -> bool:
         True if successful, False otherwise
     """
     try:
-        cmd = ["gsutil", "-m", "rsync", "-r", local_dir, f"gs://{GCS_BUCKET}/{gcs_dir}"]
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        return result.returncode == 0
+        # Use cp -r instead of rsync to avoid Python compatibility issues on macOS
+        # -m for parallel, -r for recursive
+        cmd = ["gsutil", "-m", "cp", "-r", local_dir, f"gs://{GCS_BUCKET}/{gcs_dir}/"]
+        result = subprocess.run(cmd, capture_output=True, text=True, stderr=subprocess.STDOUT)
+        
+        # Check if successful (exit code 0 or files already up-to-date)
+        if result.returncode == 0 or "already up-to-date" in result.stdout:
+            return True
+        else:
+            print(f"❌ GCS directory upload stderr: {result.stdout}")
+            return False
     except Exception as e:
         print(f"❌ GCS directory upload error: {e}")
         return False

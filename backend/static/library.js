@@ -271,6 +271,16 @@ async function confirmUpload() {
     const uploadStatus = document.getElementById('uploadStatus');
     const uploadProgress = document.getElementById('uploadProgress');
     const uploadProgressBar = document.getElementById('uploadProgressBar');
+    const uploadBtn = document.getElementById('uploadConfirmBtn');
+    const cancelBtn = document.getElementById('uploadCancelBtn');
+    
+    // Disable buttons during upload
+    uploadBtn.disabled = true;
+    cancelBtn.disabled = true;
+    uploadBtn.style.opacity = '0.5';
+    cancelBtn.style.opacity = '0.5';
+    uploadBtn.style.cursor = 'not-allowed';
+    cancelBtn.style.cursor = 'not-allowed';
     
     // Show progress
     uploadProgress.style.display = 'block';
@@ -320,6 +330,14 @@ async function confirmUpload() {
         
         // Wait a bit, then close and reload
         setTimeout(async () => {
+            // Re-enable buttons before closing
+            uploadBtn.disabled = false;
+            cancelBtn.disabled = false;
+            uploadBtn.style.opacity = '1';
+            cancelBtn.style.opacity = '1';
+            uploadBtn.style.cursor = 'pointer';
+            cancelBtn.style.cursor = 'pointer';
+            
             cancelUpload();
             await loadLibrary();
         }, 2000);
@@ -329,6 +347,14 @@ async function confirmUpload() {
         uploadStatus.style.color = '#c62828';
         uploadStatus.textContent = `❌ Error: ${error.message}`;
         uploadProgressBar.style.width = '0%';
+        
+        // Re-enable buttons after error
+        uploadBtn.disabled = false;
+        cancelBtn.disabled = false;
+        uploadBtn.style.opacity = '1';
+        cancelBtn.style.opacity = '1';
+        uploadBtn.style.cursor = 'pointer';
+        cancelBtn.style.cursor = 'pointer';
     }
 }
 
