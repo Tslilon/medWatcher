@@ -143,7 +143,9 @@ class ContentProcessor:
                 if sentence_end > start + chunk_size // 2:
                     end = sentence_end + 1
             
-            chunks.append(text[start:end].strip())
+            chunk = text[start:end].strip()
+            if chunk:  # Only add non-empty chunks
+                chunks.append(chunk)
             start = end - overlap
         
         return chunks
