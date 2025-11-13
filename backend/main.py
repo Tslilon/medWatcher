@@ -838,18 +838,19 @@ async def reload_from_gcs_endpoint():
         if full_reload():
             print("✅ ChromaDB reloaded from GCS")
             
-            # Also force the search engine singleton to reload (bypass rate limit)
-            try:
-                search_engine = get_search_engine()
-                if hasattr(search_engine, 'force_reload'):
-                    search_engine.force_reload()
-                    print("✅ Search engine force-reloaded")
-            except Exception as e:
-                print(f"⚠️ Search engine reload warning: {e}")
+            # CRITICAL: Reset the search engine singleton to force recreation with new ChromaDB
+            import hierarchical_search
+            hierarchical_search._search_engine = None
+            print("   🔄 Reset search engine singleton")
+            
+            # Force creation of new search engine (will load fresh ChromaDB)
+            search_engine = get_search_engine()
+            doc_count = search_engine.vector_store.count_documents()
+            print(f"   ✅ Search engine recreated with {doc_count} documents")
             
             return {
                 "status": "success",
-                "message": "ChromaDB reloaded from GCS successfully"
+                "message": f"ChromaDB reloaded from GCS successfully ({doc_count} documents)"
             }
         else:
             raise HTTPException(status_code=500, detail="Failed to reload from GCS")
