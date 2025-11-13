@@ -1186,9 +1186,20 @@
             }
         }
         
-        // Image file selection handler
-        const imageDropZone = document.getElementById('imageDropZone');
-        const imageFileInput = document.getElementById('imageFile');
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMultimodalListeners();
+        });
+        
+        function initializeMultimodalListeners() {
+            // Image file selection handler
+            const imageDropZone = document.getElementById('imageDropZone');
+            const imageFileInput = document.getElementById('imageFile');
+            
+            if (!imageDropZone || !imageFileInput) {
+                console.error('Image elements not found');
+                return;
+            }
         
         function handleImageFile(file) {
             if (file && file.type.startsWith('image/')) {
@@ -1247,12 +1258,22 @@
         });
         
         // Audio recording functionality
+        const startRecordingBtn = document.getElementById('startRecording');
+        const stopRecordingBtn = document.getElementById('stopRecording');
+        const selectAudioBtn = document.getElementById('selectAudio');
+        const audioFileInput = document.getElementById('audioFile');
+        
+        if (!startRecordingBtn || !stopRecordingBtn || !selectAudioBtn || !audioFileInput) {
+            console.error('Audio elements not found');
+            return;
+        }
+        
         let mediaRecorder = null;
         let audioChunks = [];
         let recordingInterval = null;
         let recordingStartTime = null;
         
-        document.getElementById('startRecording').addEventListener('click', async () => {
+        startRecordingBtn.addEventListener('click', async () => {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 mediaRecorder = new MediaRecorder(stream);
@@ -1296,22 +1317,22 @@
             }
         });
         
-        document.getElementById('stopRecording').addEventListener('click', () => {
+        stopRecordingBtn.addEventListener('click', () => {
             if (mediaRecorder && mediaRecorder.state !== 'inactive') {
                 mediaRecorder.stop();
             }
             clearInterval(recordingInterval);
-            document.getElementById('startRecording').style.display = 'inline-block';
-            document.getElementById('stopRecording').style.display = 'none';
+            startRecordingBtn.style.display = 'inline-block';
+            stopRecordingBtn.style.display = 'none';
             document.getElementById('recordingTime').style.display = 'none';
         });
         
         // Audio file selection handler
-        document.getElementById('selectAudio').addEventListener('click', () => {
-            document.getElementById('audioFile').click();
+        selectAudioBtn.addEventListener('click', () => {
+            audioFileInput.click();
         });
         
-        document.getElementById('audioFile').addEventListener('change', (e) => {
+        audioFileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
                 const audioURL = URL.createObjectURL(file);
@@ -1322,9 +1343,17 @@
         });
         
         // Drawing support with proper coordinate scaling and undo
+        const canvas = document.getElementById('drawingCanvas');
+        const clearCanvasBtn = document.getElementById('clearCanvas');
+        const undoCanvasBtn = document.getElementById('undoCanvas');
+        
+        if (!canvas || !clearCanvasBtn || !undoCanvasBtn) {
+            console.error('Canvas elements not found');
+            return;
+        }
+        
         let isDrawing = false;
         let drawingHistory = [];
-        const canvas = document.getElementById('drawingCanvas');
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1399,13 +1428,13 @@
             }
         });
         
-        document.getElementById('clearCanvas').addEventListener('click', () => {
+        clearCanvasBtn.addEventListener('click', () => {
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             drawingHistory = [canvas.toDataURL()];
         });
         
-        document.getElementById('undoCanvas').addEventListener('click', () => {
+        undoCanvasBtn.addEventListener('click', () => {
             if (drawingHistory.length > 1) {
                 drawingHistory.pop();
                 const img = new Image();
@@ -1417,8 +1446,11 @@
             }
         });
         
+        console.log('✅ Event listeners initialized');
+        } // End of initializeMultimodalListeners
+        
         console.log('✅ Inline save functions ready');
-        console.log('📦 Version: 2024-11-13-v2 (Multimodal Content with all fixes)');
+        console.log('📦 Version: 2024-11-13-v3 (DOM event listeners fixed)');
     </script>
 
 
