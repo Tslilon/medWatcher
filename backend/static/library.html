@@ -64,6 +64,14 @@
             align-items: center;
         }
         
+        .controls-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex: 1;
+            justify-content: flex-end;
+        }
+        
         select, input[type="text"] {
             padding: 12px 20px;
             border: 2px solid #e0e0e0;
@@ -113,17 +121,18 @@
             background: #e0e0e0;
         }
         
-        /* Upload Zone */
+        /* Upload Zone - Compact */
         .upload-zone {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            border: 3px dashed #667eea;
-            text-align: center;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 2px dashed #667eea;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
         }
         
         .upload-zone:hover, .upload-zone.dragover {
@@ -133,24 +142,23 @@
         }
         
         .upload-zone-content {
-            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .upload-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
+            font-size: 20px;
         }
         
         .upload-text {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
+            color: #667eea;
         }
         
         .upload-subtext {
-            font-size: 14px;
-            color: #666;
+            display: none; /* Hide subtitle in compact mode */
         }
         
         .content-list {
@@ -412,18 +420,18 @@
                     <option value="personal_note">My Notes</option>
                 </select>
                 <input type="text" id="searchFilter" placeholder="Search library...">
-                <a href="/web" class="btn btn-back">← Back to Search</a>
+                <div class="controls-right">
+                    <!-- Upload Zone - Compact -->
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-zone-content">
+                            <div class="upload-icon">📄</div>
+                            <div class="upload-text">Add PDF</div>
+                        </div>
+                        <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+                    </div>
+                    <a href="/web" class="btn btn-back">← Back to Search</a>
+                </div>
             </div>
-        </div>
-        
-        <!-- Upload Zone -->
-        <div class="upload-zone" id="uploadZone">
-            <div class="upload-zone-content">
-                <div class="upload-icon">📄</div>
-                <div class="upload-text">Drop PDF here or click to upload</div>
-                <div class="upload-subtext">Add medical PDFs to your searchable library</div>
-            </div>
-            <input type="file" id="fileInput" accept=".pdf" style="display: none;">
         </div>
         
         <!-- Loading state -->

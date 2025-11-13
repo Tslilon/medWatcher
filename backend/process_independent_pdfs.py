@@ -93,16 +93,17 @@ class IndependentPDFProcessor:
         # Fallback to filename without extension
         return self.pdf_filename.rsplit('.', 1)[0]
     
-    def process_pdf(self, chunk_size: int = 5) -> List[IndependentPDFChunk]:
+    def process_pdf(self, chunk_size: int = 5, custom_name: str = None) -> List[IndependentPDFChunk]:
         """
         Process PDF into chunks
         chunk_size: pages per chunk (default 5)
+        custom_name: optional custom name for the PDF (overrides auto-detected title)
         """
         print(f"📚 Processing {self.pdf_filename}...")
         print(f"   Total pages: {self.total_pages}")
         print(f"   Chunk size: {chunk_size} pages\n")
         
-        title = self.extract_title()
+        title = custom_name if custom_name else self.extract_title()
         print(f"   Title: {title}\n")
         
         chunks = []
@@ -246,12 +247,7 @@ if __name__ == "__main__":
             print(f"   Custom name: {custom_name or 'Auto-detect'}\n")
             
             processor = IndependentPDFProcessor(pdf_path)
-            chunks = processor.process_pdf()
-            
-            # Override pdf_name if custom name provided
-            if custom_name:
-                for chunk in chunks:
-                    chunk['pdf_name'] = custom_name
+            chunks = processor.process_pdf(custom_name=custom_name)
             
             processor.save_chunks(chunks)
             
