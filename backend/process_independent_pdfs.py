@@ -283,6 +283,54 @@ if __name__ == "__main__":
             
             processor.save_chunks(chunks)
             
+            # Update summary.json with new PDF
+            output_dir = None
+            if Path("/app/data/processed/independent_chunks").exists():
+                output_dir = Path("/app/data/processed/independent_chunks")
+            elif Path("../data/processed/independent_chunks").exists():
+                output_dir = Path("../data/processed/independent_chunks")
+            else:
+                output_dir = Path("../data/processed/independent_chunks")
+            
+            summary_file = output_dir / "summary.json"
+            
+            # Load existing summary or create new one
+            if summary_file.exists():
+                with open(summary_file, 'r') as f:
+                    summary = json.load(f)
+            else:
+                summary = {
+                    "total_pdfs": 0,
+                    "total_chunks": 0,
+                    "pdfs_processed": []
+                }
+            
+            # Remove old entry for this PDF if exists
+            pdf_filename = Path(pdf_path).name
+            summary['pdfs_processed'] = [
+                p for p in summary['pdfs_processed'] 
+                if p['filename'] != pdf_filename
+            ]
+            
+            # Add new entry
+            summary['pdfs_processed'].append({
+                "filename": pdf_filename,
+                "title": chunks[0].pdf_name if chunks else custom_name or pdf_filename,
+                "total_pages": chunks[0].total_pages if chunks else 0,
+                "chunks": len(chunks)
+            })
+            
+            # Update totals
+            summary['total_pdfs'] = len(summary['pdfs_processed'])
+            summary['total_chunks'] = sum(p['chunks'] for p in summary['pdfs_processed'])
+            
+            # Save updated summary
+            with open(summary_file, 'w') as f:
+                json.dump(summary, f, indent=2)
+            
+            print(f"📝 Updated summary.json:")
+            print(f"   Total PDFs: {summary['total_pdfs']}")
+            print(f"   Total chunks: {summary['total_chunks']}")
             print(f"✅ Successfully processed {len(chunks)} chunks!")
             sys.exit(0)
             

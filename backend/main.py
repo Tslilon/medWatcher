@@ -882,10 +882,12 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
             print(f"❌ Processing error: {process_result.stderr}")
             raise HTTPException(status_code=500, detail=f"PDF processing failed: {process_result.stderr}")
         
-        # Upload chunks to GCS
+        # Upload chunks to GCS (includes summary.json)
         print(f"☁️ Uploading chunks to GCS...")
         if not upload_directory_to_gcs(str(chunks_dir), "processed/independent_chunks"):
             print("⚠️ Warning: Failed to upload chunks to GCS")
+        else:
+            print(f"   ✅ Uploaded chunks and summary.json")
         
         # Index the chunks
         print(f"🔍 Indexing PDF chunks...")

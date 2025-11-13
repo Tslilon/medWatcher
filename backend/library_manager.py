@@ -222,7 +222,7 @@ class LibraryManager:
     
     def _delete_pdf_source(self, source: Dict[str, Any]):
         """Delete a PDF source (locally and from GCS)"""
-        from gcs_helper import delete_from_gcs, delete_directory_from_gcs, check_gcs_available
+        from gcs_helper import delete_from_gcs, delete_directory_from_gcs, check_gcs_available, upload_to_gcs
         
         pdf_filename = source['filename']
         
@@ -242,8 +242,9 @@ class LibraryManager:
         # Delete chunks locally
         deleted_chunks = []
         for chunk_file in self.pdf_chunks_dir.glob(f"*{pdf_filename}*.json"):
-            chunk_file.unlink()
-            deleted_chunks.append(chunk_file.name)
+            if chunk_file.name != "summary.json":
+                chunk_file.unlink()
+                deleted_chunks.append(chunk_file.name)
         print(f"🗑️ Deleted {len(deleted_chunks)} local chunks")
         
         # Delete chunks from GCS
@@ -252,6 +253,33 @@ class LibraryManager:
             for chunk_name in deleted_chunks:
                 delete_from_gcs(f"processed/independent_chunks/{chunk_name}")
             print(f"☁️ Deleted chunks from GCS")
+        
+        # Update summary.json
+        summary_file = self.pdf_chunks_dir / "summary.json"
+        if summary_file.exists():
+            with open(summary_file, 'r') as f:
+                summary = json.load(f)
+            
+            # Remove this PDF from summary
+            summary['pdfs_processed'] = [
+                p for p in summary['pdfs_processed']
+                if p['filename'] != pdf_filename
+            ]
+            
+            # Update totals
+            summary['total_pdfs'] = len(summary['pdfs_processed'])
+            summary['total_chunks'] = sum(p['chunks'] for p in summary['pdfs_processed'])
+            
+            # Save updated summary locally
+            with open(summary_file, 'w') as f:
+                json.dump(summary, f, indent=2)
+            
+            print(f"📝 Updated summary.json")
+            
+            # Upload updated summary to GCS
+            if check_gcs_available():
+                if upload_to_gcs(str(summary_file), "processed/independent_chunks/summary.json"):
+                    print(f"☁️ Uploaded updated summary.json to GCS")
         
         # Remove from vector store
         self.vector_store.delete_by_metadata('pdf_filename', pdf_filename)
