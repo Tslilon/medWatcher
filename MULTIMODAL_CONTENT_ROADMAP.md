@@ -1,5 +1,7 @@
 # 🎨 Multimodal Content Addition Roadmap
-**Goal:** Add images, text notes, and drawings to RAG with full CRUD support
+**Goal:** Add images, text notes, drawings, and voice recordings to RAG with full CRUD support
+
+**Note:** This is a web-based application. Mobile device support means accepting file formats produced by iPhone/Android cameras (JPEG, PNG, HEIC), not native mobile app development.
 
 ---
 
@@ -16,12 +18,18 @@
 
 ## 🎯 CONTENT TYPES
 
-### 1. **Images** (PNG/JPEG/JPG/WEBP)
-- Upload from gallery/camera
+### 1. **Images** (JPEG/PNG/HEIC/WEBP)
+- Upload from gallery/camera (web file picker)
+- Supports formats produced by iPhone/Android cameras:
+  - JPEG (.jpg, .jpeg) - standard
+  - PNG (.png) - screenshots
+  - HEIC (.heic) - iPhone default format
+  - WEBP (.webp) - modern format
 - Optional caption/description
 - OCR text extraction (for searchability)
 - Thumbnail generation
 - EXIF metadata extraction
+- Auto-convert HEIC to JPEG for compatibility
 
 ### 2. **Text Notes**
 - Plain text input
@@ -30,10 +38,20 @@
 - Auto-generated title from first line
 
 ### 3. **Drawings**
-- Canvas-based drawing pad
+- Canvas-based drawing pad (HTML5 Canvas)
 - Save as PNG with transparency
 - Optional caption
-- Size: optimized for mobile (800x600)
+- Size: 800x600 (optimized for web)
+
+### 4. **Voice Recordings** (NEW!)
+- Record audio in browser (MediaRecorder API)
+- Formats: WebM, MP4, WAV (browser-dependent)
+- Convert to MP3 for universal playback
+- Audio transcription (Whisper API or Google Speech-to-Text)
+- Playback with HTML5 audio player
+- Optional title/description
+- Duration metadata
+- Waveform visualization (optional)
 
 ---
 
@@ -62,14 +80,22 @@ gs://harrisons-rag-data-flingoos/
 │   │   ├── note_note_001_chunk1.json
 │   │   ├── note_note_002_chunk1.json
 │   │   └── summary.json                 # NEW!
-│   └── user_drawings/                   # NEW!
-│       ├── drawing_001.png
-│       ├── drawing_002.png
-│       └── ...
-├── user_drawings_chunks/                # NEW!
-│   ├── drawing_drawing_001_chunk1.json
-│   ├── drawing_drawing_002_chunk1.json
-│   └── summary.json                     # NEW!
+│   ├── user_drawings/                   # NEW!
+│   │   ├── drawing_001.png
+│   │   ├── drawing_002.png
+│   │   └── ...
+│   ├── user_drawings_chunks/            # NEW!
+│   │   ├── drawing_drawing_001_chunk1.json
+│   │   ├── drawing_drawing_002_chunk1.json
+│   │   └── summary.json                 # NEW!
+│   ├── user_audio/                      # NEW!
+│   │   ├── audio_001.mp3
+│   │   ├── audio_002.mp3
+│   │   └── ...
+│   └── user_audio_chunks/               # NEW!
+│       ├── audio_audio_001_chunk1.json
+│       ├── audio_audio_002_chunk1.json
+│       └── summary.json                 # NEW!
 ├── chroma_db/                           # (existing - will contain all new content)
 └── version.txt                          # (existing)
 ```
@@ -199,6 +225,7 @@ gs://harrisons-rag-data-flingoos/
 │  [ 📷 Upload Image ]                │
 │  [ 📝 Create Note ]                 │
 │  [ ✏️  Draw Something ]              │
+│  [ 🎤 Record Audio ]                │
 │  [ 📁 Upload File ]                 │
 │                                     │
 │           [ Cancel ]                │
@@ -235,6 +262,17 @@ gs://harrisons-rag-data-flingoos/
    - Clear button
    - Caption input
 2. Save button (exports to PNG)
+```
+
+#### **4. Voice Recording:**
+```
+1. Audio recorder opens with:
+   - Record button (press to start/stop)
+   - Timer showing duration
+   - Playback button (review before saving)
+   - Waveform visualization (optional)
+   - Title/description input
+2. Save button (uploads audio file)
 ```
 
 ---
@@ -472,6 +510,23 @@ async def serve_image(image_filename: str):
                 <input type="text" id="drawingCaption" placeholder="Add a caption...">
                 <button id="saveDrawingBtn">Save Drawing</button>
             </div>
+            
+            <!-- Audio Recording Form -->
+            <div id="audioForm" class="content-form">
+                <div class="audio-recorder">
+                    <button id="recordBtn" class="record-btn">🎤 Start Recording</button>
+                    <div id="recordingStatus" style="display: none;">
+                        <span class="recording-indicator">🔴 Recording</span>
+                        <span id="recordingTimer">00:00</span>
+                    </div>
+                    <audio id="audioPlayback" controls style="display: none;"></audio>
+                    <canvas id="waveformCanvas" width="400" height="100"></canvas>
+                </div>
+                <input type="text" id="audioTitle" placeholder="Title (optional)...">
+                <textarea id="audioDescription" rows="3" placeholder="Description (optional)..."></textarea>
+                <input type="text" id="audioTags" placeholder="Tags (comma-separated)">
+                <button id="saveAudioBtn" disabled>Save Recording</button>
+            </div>
         </div>
         
         <button id="closeAddModal" class="close-btn">Cancel</button>
@@ -618,6 +673,108 @@ document.getElementById('saveDrawingBtn').addEventListener('click', async () => 
             closeAddModal();
         }
     }, 'image/png');
+});
+
+// Audio Recording
+let mediaRecorder, audioChunks = [], recordingStartTime, timerInterval;
+let recordedAudioBlob = null;
+
+document.getElementById('recordBtn').addEventListener('click', async () => {
+    if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+        await startRecording();
+    } else {
+        stopRecording();
+    }
+});
+
+async function startRecording() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        
+        mediaRecorder.ondataavailable = (e) => {
+            audioChunks.push(e.data);
+        };
+        
+        mediaRecorder.onstop = () => {
+            recordedAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const audioUrl = URL.createObjectURL(recordedAudioBlob);
+            
+            const playback = document.getElementById('audioPlayback');
+            playback.src = audioUrl;
+            playback.style.display = 'block';
+            
+            document.getElementById('saveAudioBtn').disabled = false;
+            
+            // Stop all tracks
+            stream.getTracks().forEach(track => track.stop());
+        };
+        
+        mediaRecorder.start();
+        
+        // Update UI
+        document.getElementById('recordBtn').textContent = '⏹️ Stop Recording';
+        document.getElementById('recordingStatus').style.display = 'block';
+        
+        // Start timer
+        recordingStartTime = Date.now();
+        timerInterval = setInterval(updateTimer, 100);
+        
+    } catch (error) {
+        console.error('Error accessing microphone:', error);
+        alert('Could not access microphone. Please check permissions.');
+    }
+}
+
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+        
+        // Update UI
+        document.getElementById('recordBtn').textContent = '🎤 Start Recording';
+        document.getElementById('recordingStatus').style.display = 'none';
+        
+        // Stop timer
+        clearInterval(timerInterval);
+    }
+}
+
+function updateTimer() {
+    const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+    const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+    const seconds = (elapsed % 60).toString().padStart(2, '0');
+    document.getElementById('recordingTimer').textContent = `${minutes}:${seconds}`;
+}
+
+document.getElementById('saveAudioBtn').addEventListener('click', async () => {
+    if (!recordedAudioBlob) {
+        alert('No recording to save!');
+        return;
+    }
+    
+    const title = document.getElementById('audioTitle').value || 'Voice Note';
+    const description = document.getElementById('audioDescription').value;
+    const tags = document.getElementById('audioTags').value;
+    
+    const formData = new FormData();
+    formData.append('file', recordedAudioBlob, 'recording.webm');
+    formData.append('content_type', 'audio');
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('tags', tags);
+    
+    const response = await fetch('/api/content/upload', {
+        method: 'POST',
+        body: formData
+    });
+    
+    if (response.ok) {
+        alert('Recording saved successfully!');
+        closeAddModal();
+    } else {
+        alert('Failed to save recording');
+    }
 });
 ```
 
@@ -1116,6 +1273,28 @@ def test_delete_image():
 }
 ```
 
+### **user_audio_chunks/summary.json:**
+```json
+{
+  "total_audio": 3,
+  "total_chunks": 5,
+  "audio": [
+    {
+      "content_id": "audio_1731512345_jkl012",
+      "title": "Case Discussion - DKA Management",
+      "filename": "audio_1731512345_jkl012.mp3",
+      "description": "Notes from morning rounds on DKA patient",
+      "tags": ["case", "dka", "rounds"],
+      "created_at": "2025-11-13T19:30:12Z",
+      "file_size": 1245678,
+      "duration_seconds": 125,
+      "has_transcription": true,
+      "chunks": 2
+    }
+  ]
+}
+```
+
 ---
 
 ## 🚨 CRITICAL: ALL DELETION LOCATIONS
@@ -1126,16 +1305,19 @@ When deleting content, **MUST** remove from:
    - `gs://harrisons-rag-data-flingoos/processed/user_images/{filename}`
    - `gs://harrisons-rag-data-flingoos/processed/user_notes/{filename}`
    - `gs://harrisons-rag-data-flingoos/processed/user_drawings/{filename}`
+   - `gs://harrisons-rag-data-flingoos/processed/user_audio/{filename}`
 
 2. **GCS Chunk Files:**
    - `gs://harrisons-rag-data-flingoos/processed/user_images_chunks/{chunk_pattern}*.json`
    - `gs://harrisons-rag-data-flingoos/processed/user_notes_chunks/{chunk_pattern}*.json`
    - `gs://harrisons-rag-data-flingoos/processed/user_drawings_chunks/{chunk_pattern}*.json`
+   - `gs://harrisons-rag-data-flingoos/processed/user_audio_chunks/{chunk_pattern}*.json`
 
 3. **Summary JSON:**
    - Remove entry from `user_images_chunks/summary.json`
    - Remove entry from `user_notes_chunks/summary.json`
    - Remove entry from `user_drawings_chunks/summary.json`
+   - Remove entry from `user_audio_chunks/summary.json`
    - Re-upload updated summary to GCS
 
 4. **ChromaDB:**
@@ -1157,8 +1339,11 @@ When deleting content, **MUST** remove from:
 Add to `requirements.txt`:
 ```txt
 pytesseract==0.3.10         # OCR for images
-Pillow==10.1.0               # Image processing
-google-cloud-vision==3.4.5   # Alternative OCR (Cloud Vision API)
+Pillow==10.1.0              # Image processing (JPEG, PNG, HEIC)
+pillow-heif==0.13.1         # HEIC format support (iPhone photos)
+google-cloud-vision==3.4.5  # Alternative OCR (Cloud Vision API)
+openai-whisper==20231117    # Audio transcription (Whisper)
+pydub==0.25.1               # Audio format conversion
 ```
 
 Install system dependencies in `Dockerfile`:
@@ -1166,30 +1351,46 @@ Install system dependencies in `Dockerfile`:
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     tesseract-ocr-eng \
+    ffmpeg \
+    libheif-dev \
     && rm -rf /var/lib/apt/lists/*
 ```
+
+**File Format Support:**
+- **Images:** JPEG (.jpg, .jpeg), PNG (.png), HEIC (.heic), WEBP (.webp)
+  - HEIC files auto-converted to JPEG for compatibility
+- **Audio:** WebM (.webm), MP4 (.mp4), WAV (.wav)
+  - All audio converted to MP3 for universal playback
+  - Transcribed via Whisper API for searchability
 
 ---
 
 ## 🎯 FINAL VERIFICATION CHECKLIST
 
 Before marking as complete:
-- [ ] All 3 content types (image, note, drawing) can be uploaded
+- [ ] All 4 content types (image, note, drawing, audio) can be uploaded
+- [ ] iPhone/Android camera photos (HEIC, JPEG) upload successfully
+- [ ] Audio recordings work in web browser (mic permission)
+- [ ] Audio transcription generates searchable text
 - [ ] All content appears in library
 - [ ] All content is searchable
-- [ ] Clicking results opens correct viewer
-- [ ] Delete works for all content types
+- [ ] Clicking results opens correct viewer/player
+- [ ] Audio files play back in browser
+- [ ] Delete works for all content types (all 6 locations)
 - [ ] Refresh button syncs new content
-- [ ] + button fits on one line with other buttons
-- [ ] Works on iPhone, Android, Apple Watch (viewer only)
+- [ ] + button fits on one line with other buttons (responsive)
+- [ ] Image formats: JPEG, PNG, HEIC, WEBP all supported
+- [ ] Audio formats: WebM, WAV converted to MP3
 - [ ] All tests pass (unit + integration)
-- [ ] Summary.json files are correct
+- [ ] Summary.json files correct for all 4 types
 - [ ] No orphaned files in GCS after delete
 - [ ] ChromaDB document count is accurate
+- [ ] Microphone permissions handled gracefully
+- [ ] Large file uploads (images/audio) don't timeout
 
 ---
 
-**Estimated Total Time:** 7-8 days
+**Estimated Total Time:** 8-10 days (added audio transcription complexity)
 **Priority:** High (extends core functionality significantly)
-**Risk Level:** Medium (complex integration, many moving parts)
+**Risk Level:** Medium (complex integration, many moving parts + audio processing)
 
