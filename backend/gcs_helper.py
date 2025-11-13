@@ -53,7 +53,7 @@ def upload_directory_to_gcs(local_dir: str, gcs_dir: str) -> bool:
         # Upload all files in the directory
         # -m for parallel, -r for recursive
         cmd = ["gsutil", "-m", "cp", "-r", f"{local_dir}/*", f"gs://{GCS_BUCKET}/{gcs_dir}/"]
-        result = subprocess.run(cmd, capture_output=True, text=True, stderr=subprocess.STDOUT)
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         
         # Check if successful (exit code 0 or files already up-to-date)
         if result.returncode == 0 or "already up-to-date" in result.stdout:
