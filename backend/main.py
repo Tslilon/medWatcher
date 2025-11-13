@@ -1019,6 +1019,7 @@ from content_processor import ContentProcessor
 from multimodal_indexer import MultimodalIndexer
 from models import ContentUploadResponse
 import base64
+import json
 import json as json_lib
 
 # Initialize content processor and indexer
@@ -1156,9 +1157,143 @@ async def upload_content(
 async def get_content(content_id: str):
     """
     Get content details by ID
+    
+    Returns:
+    - Content metadata
+    - File path/URL for viewing
+    - Content type for proper rendering
     """
-    # TODO Phase 2.5: Implement content retrieval
-    raise HTTPException(status_code=501, detail="Not yet implemented")
+    try:
+        print(f"\n📖 Retrieving content: {content_id}")
+        
+        # Determine content type from content_id prefix
+        if content_id.startswith("image_"):
+            content_type = "image"
+        elif content_id.startswith("audio_"):
+            content_type = "audio"
+        elif content_id.startswith("drawing_"):
+            content_type = "drawing"
+        elif content_id.startswith("note_"):
+            content_type = "note"
+        else:
+            raise HTTPException(status_code=400, detail="Invalid content_id format")
+        
+        # Get directories
+        type_map = {
+            "image": ("user_images", "user_images_chunks"),
+            "audio": ("user_audio", "user_audio_chunks"),
+            "drawing": ("user_drawings", "user_drawings_chunks"),
+            "note": ("user_notes", "user_notes_chunks")
+        }
+        
+        content_dir_name, chunks_dir_name = type_map[content_type]
+        
+        # Determine data directory
+        if Path("/app/data").exists():
+            data_dir = Path("/app/data")
+        else:
+            data_dir = Path(__file__).parent.parent / "data"
+        
+        chunks_dir = data_dir / "processed" / chunks_dir_name
+        
+        # Find chunk files for this content_id
+        chunk_files = list(chunks_dir.glob(f"{content_id}_chunk*.json"))
+        
+        if not chunk_files:
+            raise HTTPException(status_code=404, detail=f"Content not found: {content_id}")
+        
+        # Load first chunk to get metadata
+        with open(chunk_files[0], 'r') as f:
+            first_chunk = json.load(f)
+        
+        metadata = first_chunk['metadata']
+        filename = metadata['filename']
+        
+        # Build file path
+        content_dir = data_dir / "processed" / content_dir_name
+        content_file = content_dir / filename
+        
+        if not content_file.exists():
+            raise HTTPException(status_code=404, detail=f"Content file not found: {filename}")
+        
+        # Return metadata + viewing info
+        return {
+            "content_id": content_id,
+            "content_type": content_type,
+            "metadata": metadata,
+            "file_path": f"/api/content/file/{content_type}/{filename}",
+            "chunk_count": len(chunk_files),
+            "file_exists": content_file.exists()
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Error retrieving content: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error retrieving content: {str(e)}")
+
+
+@app.get("/api/content/file/{content_type}/{filename}", tags=["Multimodal Content"])
+async def serve_content_file(content_type: str, filename: str):
+    """
+    Serve content file (image, audio, drawing, note)
+    """
+    try:
+        # Validate content type
+        if content_type not in ["image", "audio", "drawing", "note"]:
+            raise HTTPException(status_code=400, detail="Invalid content type")
+        
+        # Get content directory
+        type_map = {
+            "image": "user_images",
+            "audio": "user_audio",
+            "drawing": "user_drawings",
+            "note": "user_notes"
+        }
+        
+        content_dir_name = type_map[content_type]
+        
+        # Determine data directory
+        if Path("/app/data").exists():
+            data_dir = Path("/app/data")
+        else:
+            data_dir = Path(__file__).parent.parent / "data"
+        
+        content_dir = data_dir / "processed" / content_dir_name
+        content_file = content_dir / filename
+        
+        if not content_file.exists():
+            raise HTTPException(status_code=404, detail="File not found")
+        
+        # Serve file with appropriate media type
+        media_types = {
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+            ".png": "image/png",
+            ".webp": "image/webp",
+            ".mp3": "audio/mpeg",
+            ".wav": "audio/wav",
+            ".ogg": "audio/ogg",
+            ".txt": "text/plain; charset=utf-8",
+            ".md": "text/markdown; charset=utf-8"
+        }
+        
+        ext = content_file.suffix.lower()
+        media_type = media_types.get(ext, "application/octet-stream")
+        
+        return FileResponse(
+            path=str(content_file),
+            media_type=media_type,
+            filename=filename
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Error serving file: {e}")
+        raise HTTPException(status_code=500, detail=f"Error serving file: {str(e)}")
 
 
 @app.delete("/api/content/{content_id}", tags=["Multimodal Content"])
@@ -1166,7 +1301,7 @@ async def delete_content(content_id: str):
     """
     Delete content by ID (removes from all locations)
     """
-    # TODO Phase 2.6: Implement content deletion
+    # TODO Phase 2.4: Implement content deletion
     raise HTTPException(status_code=501, detail="Not yet implemented")
 
 
