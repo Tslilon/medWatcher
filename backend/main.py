@@ -941,7 +941,6 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
         # Delete local ChromaDB and download fresh from GCS to ensure consistency
         print(f"🔄 Syncing with GCS (deleting local, downloading fresh)...")
         
-        import shutil
         if chroma_dir.exists():
             shutil.rmtree(chroma_dir)
             print(f"   🗑️ Deleted local ChromaDB")
