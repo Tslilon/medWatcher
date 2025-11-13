@@ -459,7 +459,7 @@
                 <button class="btn btn-voice" id="voiceBtn" title="Voice Search" style="flex: 1; padding: 12px; font-size: 20px;">
                     🎤
                 </button>
-                <button class="btn" id="addContentBtn" title="Add Content (notes, images, audio)" style="flex: 1; padding: 12px; font-size: 20px; background: #4caf50; color: white; font-weight: bold;">
+                <button class="btn" id="addContentBtn" title="Add Content (notes, images, audio)" style="flex: 1; padding: 12px; font-size: 20px; background: #4caf50; color: white; font-weight: bold; cursor: pointer;" onclick="console.log('Button clicked!'); document.getElementById('addContentModal').style.display='block'; document.getElementById('contentTypeSelection').style.display='block'; document.getElementById('noteInterface').style.display='none'; document.getElementById('imageInterface').style.display='none'; document.getElementById('drawingInterface').style.display='none'; document.getElementById('audioInterface').style.display='none';">
                     ➕
                 </button>
                 <button class="btn" id="refreshBtn" title="Reload Search Engine (click after uploading new files)" style="flex: 1; padding: 12px; font-size: 20px; background: #ff9800; color: white; font-weight: bold;">
