@@ -99,15 +99,15 @@ def download_from_gcs():
     print("   Checking for independent PDF chunks...")
     result = subprocess.run([
         "gsutil", "ls",
-        f"gs://{bucket_name}/independent_chunks/"
+        f"gs://{bucket_name}/processed/independent_chunks/"
     ], capture_output=True, text=True)
     
     if result.returncode == 0:
         print("   Downloading independent PDF chunks...")
         subprocess.run([
             "gsutil", "-m", "cp", "-r",
-            f"gs://{bucket_name}/independent_chunks",
-            str(processed_dir)
+            f"gs://{bucket_name}/processed/independent_chunks/*",
+            str(independent_chunks_dir)
         ], check=True)
         print(f"   ✅ Independent PDF chunks downloaded to {independent_chunks_dir}")
     else:
