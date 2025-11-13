@@ -1016,12 +1016,14 @@ async def upload_pdf(file: UploadFile = File(...), pdf_name: str = Form(...)):
 
 from fastapi import Form
 from content_processor import ContentProcessor
+from multimodal_indexer import MultimodalIndexer
 from models import ContentUploadResponse
 import base64
 import json as json_lib
 
-# Initialize content processor
+# Initialize content processor and indexer
 content_processor = ContentProcessor()
+multimodal_indexer = None  # Will be initialized on first use (lazy loading)
 
 @app.post("/api/content/upload", response_model=ContentUploadResponse, tags=["Multimodal Content"])
 async def upload_content(
@@ -1113,19 +1115,34 @@ async def upload_content(
         else:
             raise HTTPException(status_code=400, detail=f"Invalid content_type: {content_type}")
         
-        # TODO Phase 2.2: Save chunks to ChromaDB
-        # TODO Phase 2.3: Upload to GCS
-        # TODO Phase 2.4: Update version marker
+        # Initialize indexer (lazy loading)
+        global multimodal_indexer
+        if multimodal_indexer is None:
+            print(f"   🔧 Initializing MultimodalIndexer...")
+            multimodal_indexer = MultimodalIndexer()
         
-        print(f"✅ {content_type.capitalize()} uploaded: {filename} ({len(chunks)} chunks)")
+        # Index content: save chunks, update summary, index to ChromaDB, upload to GCS
+        indexed = multimodal_indexer.index_content(
+            metadata=metadata,
+            chunks=chunks,
+            content_type=content_type,
+            filename=filename
+        )
+        
+        if indexed:
+            message = f"{content_type.capitalize()} uploaded and indexed successfully! Click 🔄 REFRESH on search page to find it."
+        else:
+            message = f"{content_type.capitalize()} uploaded but indexing failed"
+        
+        print(f"✅ {content_type.capitalize()} uploaded: {filename} ({len(chunks)} chunks, indexed={indexed})")
         
         return ContentUploadResponse(
-            status="success",
+            status="success" if indexed else "partial",
             content_id=metadata['content_id'],
             filename=filename,
-            message=f"{content_type.capitalize()} uploaded successfully",
+            message=message,
             chunks_created=len(chunks),
-            indexed=False  # Will be True after ChromaDB integration
+            indexed=indexed
         )
     
     except Exception as e:
