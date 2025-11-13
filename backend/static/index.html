@@ -459,6 +459,9 @@
                 <button class="btn btn-voice" id="voiceBtn" title="Voice Search" style="flex: 1; padding: 12px; font-size: 20px;">
                     🎤
                 </button>
+                <button class="btn" id="addContentBtn" title="Add Content (notes, images, audio)" style="flex: 1; padding: 12px; font-size: 20px; background: #4caf50; color: white; font-weight: bold;">
+                    ➕
+                </button>
                 <button class="btn" id="refreshBtn" title="Reload Search Engine (click after uploading new files)" style="flex: 1; padding: 12px; font-size: 20px; background: #ff9800; color: white; font-weight: bold;">
                     🔄
                 </button>
@@ -958,6 +961,129 @@
             }
         });
     </script>
+
+    <!-- Add Content Modal -->
+    <div id="addContentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; padding: 20px; overflow-y: auto;">
+        <div style="max-width: 600px; margin: 20px auto; background: white; border-radius: 15px; padding: 20px;">
+            <!-- Modal Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0; font-size: 20px;">➕ Add Content</h2>
+                <button id="closeAddContentModal" style="background: none; border: none; font-size: 28px; cursor: pointer; padding: 0; line-height: 1;">×</button>
+            </div>
+
+            <!-- Content Type Selection -->
+            <div id="contentTypeSelection">
+                <p style="margin: 0 0 15px 0; color: #666;">Choose content type:</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button class="content-type-btn" data-type="note" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">📝</div>
+                        <div style="font-weight: 600;">Note</div>
+                        <div style="font-size: 12px; color: #666;">Text or markdown</div>
+                    </button>
+                    <button class="content-type-btn" data-type="image" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">📷</div>
+                        <div style="font-weight: 600;">Image</div>
+                        <div style="font-size: 12px; color: #666;">Photo from gallery</div>
+                    </button>
+                    <button class="content-type-btn" data-type="drawing" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">✏️</div>
+                        <div style="font-weight: 600;">Drawing</div>
+                        <div style="font-size: 12px; color: #666;">Canvas sketch</div>
+                    </button>
+                    <button class="content-type-btn" data-type="audio" style="padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer; transition: all 0.2s;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🎤</div>
+                        <div style="font-weight: 600;">Audio</div>
+                        <div style="font-size: 12px; color: #666;">Voice recording</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Note Interface -->
+            <div id="noteInterface" style="display: none;">
+                <button class="back-btn" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
+                <h3 style="margin: 0 0 15px 0;">📝 Create Note</h3>
+                <input type="text" id="noteTitle" placeholder="Title" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; box-sizing: border-box;">
+                <textarea id="noteText" placeholder="Write your note here..." style="width: 100%; height: 200px; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; font-family: inherit; resize: vertical; box-sizing: border-box;"></textarea>
+                <input type="text" id="noteTags" placeholder="Tags (comma-separated)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; box-sizing: border-box;">
+                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px; cursor: pointer;">
+                    <input type="checkbox" id="noteMarkdown" style="width: 18px; height: 18px;">
+                    <span>Markdown format</span>
+                </label>
+                <button id="saveNote" style="width: 100%; padding: 15px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;">Save Note</button>
+                <div id="noteStatus" class="status" style="display: none; margin-top: 10px;"></div>
+            </div>
+
+            <!-- Image Interface -->
+            <div id="imageInterface" style="display: none;">
+                <button class="back-btn" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
+                <h3 style="margin: 0 0 15px 0;">📷 Upload Image</h3>
+                <input type="file" id="imageFile" accept="image/*" style="display: none;">
+                <button id="selectImage" style="width: 100%; padding: 40px; border: 2px dashed #ccc; border-radius: 8px; background: #f9f9f9; cursor: pointer; margin-bottom: 10px;">
+                    <div style="font-size: 48px; margin-bottom: 8px;">📷</div>
+                    <div>Tap to select image</div>
+                </button>
+                <div id="imagePreview" style="display: none; margin-bottom: 10px;">
+                    <img id="previewImg" style="max-width: 100%; border-radius: 8px;">
+                </div>
+                <input type="text" id="imageCaption" placeholder="Caption (optional)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; box-sizing: border-box;">
+                <input type="text" id="imageTags" placeholder="Tags (comma-separated)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 15px; font-size: 15px; box-sizing: border-box;">
+                <button id="saveImage" style="width: 100%; padding: 15px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;" disabled>Upload Image</button>
+                <div id="imageStatus" class="status" style="display: none; margin-top: 10px;"></div>
+            </div>
+
+            <!-- Drawing Interface -->
+            <div id="drawingInterface" style="display: none;">
+                <button class="back-btn" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
+                <h3 style="margin: 0 0 15px 0;">✏️ Draw</h3>
+                <canvas id="drawingCanvas" width="560" height="400" style="border: 2px solid #e0e0e0; border-radius: 8px; cursor: crosshair; touch-action: none; display: block; width: 100%; height: auto;"></canvas>
+                <div style="display: flex; gap: 8px; margin: 10px 0;">
+                    <button id="clearCanvas" style="flex: 1; padding: 10px; background: #f44336; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Clear</button>
+                    <button id="undoCanvas" style="flex: 1; padding: 10px; background: #ff9800; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Undo</button>
+                </div>
+                <input type="text" id="drawingCaption" placeholder="Caption (optional)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; box-sizing: border-box;">
+                <input type="text" id="drawingTags" placeholder="Tags (comma-separated)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 15px; font-size: 15px; box-sizing: border-box;">
+                <button id="saveDrawing" style="width: 100%; padding: 15px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;">Save Drawing</button>
+                <div id="drawingStatus" class="status" style="display: none; margin-top: 10px;"></div>
+            </div>
+
+            <!-- Audio Interface -->
+            <div id="audioInterface" style="display: none;">
+                <button class="back-btn" style="background: none; border: none; cursor: pointer; padding: 5px 0; margin-bottom: 15px; color: #667eea; font-weight: 600;">← Back</button>
+                <h3 style="margin: 0 0 15px 0;">🎤 Record Audio</h3>
+                <input type="file" id="audioFile" accept="audio/*" style="display: none;">
+                <div id="audioRecorder" style="text-align: center; padding: 30px; background: #f9f9f9; border-radius: 8px; margin-bottom: 10px;">
+                    <div style="font-size: 64px; margin-bottom: 15px;">🎤</div>
+                    <button id="startRecording" style="padding: 15px 30px; background: #f44336; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;">Start Recording</button>
+                    <button id="stopRecording" style="display: none; padding: 15px 30px; background: #666; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;">Stop Recording</button>
+                    <div id="recordingTime" style="margin-top: 10px; font-size: 18px; font-weight: 600; color: #f44336; display: none;">0:00</div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #666;">Or</div>
+                    <button id="selectAudio" style="margin-top: 10px; padding: 12px 20px; background: #667eea; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Upload Audio File</button>
+                </div>
+                <audio id="audioPreview" controls style="width: 100%; margin-bottom: 10px; display: none;"></audio>
+                <input type="text" id="audioTitle" placeholder="Title (optional)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; box-sizing: border-box;">
+                <input type="text" id="audioDescription" placeholder="Description (optional)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; font-size: 15px; box-sizing: border-box;">
+                <input type="text" id="audioTags" placeholder="Tags (comma-separated)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 15px; font-size: 15px; box-sizing: border-box;">
+                <button id="saveAudio" style="width: 100%; padding: 15px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;" disabled>Save Audio</button>
+                <div id="audioStatus" class="status" style="display: none; margin-top: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .content-type-btn:hover {
+            border-color: #667eea;
+            background: #f0f0ff;
+            transform: scale(1.02);
+        }
+        
+        .content-type-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+
+    <!-- Add Content Modal JavaScript -->
+    <script src="/static/add-content.js"></script>
+
 </body>
 </html>
 
