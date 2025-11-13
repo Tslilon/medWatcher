@@ -659,6 +659,140 @@ async def transcribe_audio(audio: UploadFile = File(...)):
             detail=f"Audio transcription error: {str(e)}"
         )
 
+# ============================================================================
+# Library Management API Endpoints
+# ============================================================================
+
+from library_manager import LibraryManager
+library_manager = LibraryManager()
+
+@app.get("/api/library", tags=["Library"])
+async def get_library(source_type: Optional[str] = None):
+    """
+    Get all content sources in the library
+    
+    Query params:
+    - source_type: Filter by type ('harrison', 'independent_pdf', 'personal_note')
+    """
+    try:
+        sources = library_manager.get_all_sources(source_type)
+        return {
+            "sources": sources,
+            "total": len(sources)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving library: {str(e)}")
+
+@app.get("/api/library/{source_id}", tags=["Library"])
+async def get_source_details(source_id: str):
+    """Get detailed information about a specific content source"""
+    try:
+        source = library_manager.get_source_by_id(source_id)
+        if not source:
+            raise HTTPException(status_code=404, detail="Source not found")
+        return source
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving source: {str(e)}")
+
+@app.delete("/api/library/{source_id}", tags=["Library"])
+async def delete_source(source_id: str):
+    """Delete a content source (PDF or note, not Harrison's)"""
+    try:
+        result = library_manager.delete_source(source_id)
+        if result["status"] == "error":
+            raise HTTPException(status_code=400, detail=result["message"])
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting source: {str(e)}")
+
+@app.get("/api/library/stats", tags=["Library"])
+async def get_library_stats():
+    """Get statistics about the library"""
+    try:
+        stats = library_manager.get_library_stats()
+        return stats.dict()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving stats: {str(e)}")
+
+@app.get("/api/library/search", tags=["Library"])
+async def search_library(query: str, source_type: Optional[str] = None):
+    """Search library by title or content"""
+    try:
+        results = library_manager.search_library(query, source_type)
+        return {
+            "query": query,
+            "results": results,
+            "total": len(results)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error searching library: {str(e)}")
+
+# ============================================================================
+# Personal Notes API Endpoints
+# ============================================================================
+
+from models import PersonalNoteCreate, PersonalNoteUpdate
+
+@app.post("/api/notes", tags=["Notes"])
+async def create_note(note: PersonalNoteCreate):
+    """Create a new personal note"""
+    try:
+        # Implementation will be in note_processor.py (Phase 2)
+        return {"status": "pending", "message": "Note creation coming in Phase 2"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creating note: {str(e)}")
+
+@app.get("/api/notes", tags=["Notes"])
+async def get_all_notes():
+    """Get all personal notes"""
+    try:
+        sources = library_manager.get_all_sources(source_type="personal_note")
+        return {
+            "notes": sources,
+            "total": len(sources)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving notes: {str(e)}")
+
+@app.get("/api/notes/{note_id}", tags=["Notes"])
+async def get_note(note_id: str):
+    """Get a specific note"""
+    try:
+        note = library_manager.get_source_by_id(note_id)
+        if not note or note['type'] != 'personal_note':
+            raise HTTPException(status_code=404, detail="Note not found")
+        return note
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving note: {str(e)}")
+
+@app.put("/api/notes/{note_id}", tags=["Notes"])
+async def update_note(note_id: str, note: PersonalNoteUpdate):
+    """Update an existing note"""
+    try:
+        # Implementation will be in note_processor.py (Phase 2)
+        return {"status": "pending", "message": "Note update coming in Phase 2"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error updating note: {str(e)}")
+
+@app.delete("/api/notes/{note_id}", tags=["Notes"])
+async def delete_note(note_id: str):
+    """Delete a note"""
+    try:
+        result = library_manager.delete_source(note_id)
+        if result["status"] == "error":
+            raise HTTPException(status_code=400, detail=result["message"])
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting note: {str(e)}")
+
 # Development mode run
 if __name__ == "__main__":
     import uvicorn

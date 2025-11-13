@@ -132,6 +132,38 @@ class ChromaVectorStore:
         """Get total document count"""
         return self.collection.count()
     
+    def delete_by_id(self, doc_id: str):
+        """Delete a document by ID"""
+        try:
+            self.collection.delete(ids=[doc_id])
+            print(f"✅ Deleted document: {doc_id}")
+        except Exception as e:
+            print(f"❌ Error deleting document {doc_id}: {e}")
+    
+    def delete_by_metadata(self, key: str, value: str):
+        """Delete documents by metadata filter"""
+        try:
+            # Get all documents with matching metadata
+            results = self.collection.get(where={key: value})
+            if results['ids']:
+                self.collection.delete(ids=results['ids'])
+                print(f"✅ Deleted {len(results['ids'])} documents where {key}={value}")
+        except Exception as e:
+            print(f"❌ Error deleting documents: {e}")
+    
+    def update_document(self, doc_id: str, document: Dict, embedding: List[float]):
+        """Update an existing document"""
+        try:
+            self.collection.update(
+                ids=[doc_id],
+                embeddings=[embedding],
+                metadatas=[document['metadata']],
+                documents=[document['text']]
+            )
+            print(f"✅ Updated document: {doc_id}")
+        except Exception as e:
+            print(f"❌ Error updating document {doc_id}: {e}")
+    
     def delete_collection(self):
         """Delete the entire collection"""
         self.client.delete_collection(name=self.collection.name)

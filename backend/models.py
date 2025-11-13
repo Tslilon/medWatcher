@@ -58,3 +58,75 @@ class ErrorResponse(BaseModel):
     message: str = Field(..., description="Error message")
     details: Optional[str] = Field(None, description="Additional error details")
 
+# ============================================================================
+# Content Management & Personal Notes Models
+# ============================================================================
+
+from datetime import datetime
+from typing import Dict, Any, Literal
+
+class ContentSource(BaseModel):
+    """Base model for all content sources in the system"""
+    id: str = Field(..., description="Unique identifier")
+    type: Literal["harrison", "independent_pdf", "personal_note"] = Field(..., description="Content type")
+    title: str = Field(..., description="Content title")
+    created_at: datetime = Field(..., description="Creation timestamp")
+    updated_at: datetime = Field(..., description="Last update timestamp")
+    word_count: int = Field(..., description="Total word count")
+    is_indexed: bool = Field(..., description="Whether content is indexed in vector store")
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
+
+class HarrisonSource(ContentSource):
+    """Harrison's Principles of Internal Medicine"""
+    type: Literal["harrison"] = "harrison"
+    total_chapters: int = Field(..., description="Total number of chapters")
+    total_pages: int = Field(..., description="Total number of pages")
+    
+class IndependentPDFSource(ContentSource):
+    """Independent PDF document"""
+    type: Literal["independent_pdf"] = "independent_pdf"
+    filename: str = Field(..., description="PDF filename")
+    pdf_path: str = Field(..., description="Path to PDF file")
+    total_pages: int = Field(..., description="Total number of pages")
+    file_size: int = Field(..., description="File size in bytes")
+    
+class PersonalNote(ContentSource):
+    """User's personal medical note"""
+    type: Literal["personal_note"] = "personal_note"
+    note_id: str = Field(..., description="Note identifier")
+    content: str = Field(..., description="Note text content")
+    tags: List[str] = Field(default_factory=list, description="User-defined tags")
+    linked_sources: List[str] = Field(default_factory=list, description="IDs of linked content")
+    is_public: bool = Field(default=False, description="Whether note is shareable")
+
+class PersonalNoteCreate(BaseModel):
+    """Model for creating a new personal note"""
+    title: str = Field(..., min_length=1, max_length=200, description="Note title")
+    content: str = Field(..., min_length=1, max_length=50000, description="Note content")
+    tags: List[str] = Field(default_factory=list, description="Note tags")
+    linked_sources: List[str] = Field(default_factory=list, description="Linked content IDs")
+
+class PersonalNoteUpdate(BaseModel):
+    """Model for updating an existing personal note"""
+    title: Optional[str] = Field(None, min_length=1, max_length=200, description="Updated title")
+    content: Optional[str] = Field(None, min_length=1, max_length=50000, description="Updated content")
+    tags: Optional[List[str]] = Field(None, description="Updated tags")
+    linked_sources: Optional[List[str]] = Field(None, description="Updated linked sources")
+
+class LibraryStats(BaseModel):
+    """Statistics about the library"""
+    total_sources: int = Field(..., description="Total number of content sources")
+    harrison_chapters: int = Field(..., description="Number of Harrison's chapters")
+    independent_pdfs: int = Field(..., description="Number of independent PDFs")
+    personal_notes: int = Field(..., description="Number of personal notes")
+    total_words: int = Field(..., description="Total word count across all content")
+    total_indexed: int = Field(..., description="Total indexed documents")
+    last_updated: datetime = Field(..., description="Last update timestamp")
+    storage_used_mb: float = Field(..., description="Storage used in megabytes")
+
+class ContentSourceResponse(BaseModel):
+    """Response model for content source operations"""
+    status: str = Field(..., description="Operation status")
+    source_id: str = Field(..., description="Content source ID")
+    message: str = Field(default="", description="Status message")
+
