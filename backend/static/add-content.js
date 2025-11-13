@@ -507,9 +507,24 @@ function showStatus(elementId, type, message) {
 // EVENT LISTENERS
 // ===========================================================================
 
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize when DOM is ready (handle both cases: before and after DOMContentLoaded)
+function initializeEventListeners() {
+    // Check if API_BASE is defined (it should be defined in index.html)
+    if (typeof API_BASE === 'undefined') {
+        console.error('❌ API_BASE is not defined');
+        window.API_BASE = window.location.origin;
+        console.log('✅ API_BASE set to:', window.API_BASE);
+    }
+    
+    // Check if button exists
+    const addContentBtn = document.getElementById('addContentBtn');
+    if (!addContentBtn) {
+        console.error('❌ Add Content button not found');
+        return;
+    }
+    
     // Open modal
-    document.getElementById('addContentBtn').addEventListener('click', openAddContentModal);
+    addContentBtn.addEventListener('click', openAddContentModal);
     
     // Close modal
     document.getElementById('closeAddContentModal').addEventListener('click', closeAddContentModal);
@@ -551,5 +566,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('selectAudio').addEventListener('click', selectAudio);
     document.getElementById('audioFile').addEventListener('change', handleAudioSelect);
     document.getElementById('saveAudio').addEventListener('click', saveAudio);
-});
+    
+    console.log('✅ Add Content Modal initialized');
+}
+
+// Initialize immediately if DOM is already loaded, otherwise wait
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeEventListeners);
+} else {
+    // DOM is already loaded, initialize now
+    initializeEventListeners();
+}
 
