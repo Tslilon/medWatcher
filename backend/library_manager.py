@@ -35,7 +35,8 @@ class LibraryManager:
         Get all content sources
         
         Args:
-            source_type: Filter by type ('harrison', 'independent_pdf', 'personal_note', or None for all)
+            source_type: Filter by type ('harrison', 'independent_pdf', 'personal_note', 
+                         'user_note', 'user_image', 'user_drawing', 'user_audio', or None for all)
         
         Returns:
             List of content source dictionaries
@@ -53,10 +54,15 @@ class LibraryManager:
             pdf_sources = self._get_pdf_sources()
             sources.extend(pdf_sources)
         
-        # Get personal notes
+        # Get personal notes (old system)
         if source_type is None or source_type == "personal_note":
             note_sources = self._get_note_sources()
             sources.extend(note_sources)
+        
+        # Get multimodal content (new system)
+        if source_type is None or source_type in ["user_note", "user_image", "user_drawing", "user_audio"]:
+            multimodal_sources = self._get_multimodal_sources(source_type)
+            sources.extend(multimodal_sources)
         
         return sources
     
@@ -179,6 +185,66 @@ class LibraryManager:
                 "is_public": note_data.get('is_public', False),
                 "metadata": note_data.get('metadata', {})
             })
+        
+        return sources
+    
+    def _get_multimodal_sources(self, source_type: Optional[str] = None) -> List[Dict[str, Any]]:
+        """
+        Get multimodal content sources (notes, images, drawings, audio)
+        
+        Args:
+            source_type: Filter by specific type or None for all multimodal content
+        
+        Returns:
+            List of multimodal content sources
+        """
+        sources = []
+        
+        # Map content types to directories
+        content_types = {
+            "user_note": ("user_notes_chunks", "📝", "Note"),
+            "user_image": ("user_images_chunks", "📷", "Image"),
+            "user_drawing": ("user_drawings_chunks", "✏️", "Drawing"),
+            "user_audio": ("user_audio_chunks", "🎤", "Audio")
+        }
+        
+        # Filter to specific type if requested
+        if source_type and source_type in content_types:
+            types_to_check = {source_type: content_types[source_type]}
+        else:
+            types_to_check = content_types
+        
+        for content_type, (dir_name, icon, label) in types_to_check.items():
+            chunks_dir = self.data_dir / "processed" / dir_name
+            summary_file = chunks_dir / "summary.json"
+            
+            if not summary_file.exists():
+                continue
+            
+            try:
+                with open(summary_file, 'r') as f:
+                    summary = json.load(f)
+                
+                for item in summary.get('items', []):
+                    sources.append({
+                        "id": item['content_id'],
+                        "type": content_type,
+                        "title": item.get('title', item.get('caption', f"{label} {item['content_id']}")),
+                        "created_at": item['created_at'],
+                        "updated_at": item['updated_at'],
+                        "word_count": item.get('word_count', 0),
+                        "is_indexed": True,
+                        "filename": item['filename'],
+                        "content_type": content_type,
+                        "icon": icon,
+                        "label": label,
+                        "chunks": item['chunks'],
+                        "tags": item.get('tags', []),
+                        "metadata": item.get('metadata', {})
+                    })
+            except Exception as e:
+                print(f"Error loading {content_type} from {summary_file}: {e}")
+                continue
         
         return sources
     

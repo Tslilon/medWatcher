@@ -84,11 +84,34 @@ function createSourceCard(source) {
     card.dataset.type = source.type;
     card.dataset.title = source.title.toLowerCase();
     
-    // Type badge
-    const typeClass = source.type === 'harrison' ? 'type-harrison' : 
-                      source.type === 'independent_pdf' ? 'type-pdf' : 'type-note';
-    const typeLabel = source.type === 'harrison' ? '📖 Harrison\'s' : 
-                      source.type === 'independent_pdf' ? '📄 PDF' : '📝 Note';
+    // Type badge with support for multimodal content
+    let typeClass, typeLabel;
+    
+    if (source.type === 'harrison') {
+        typeClass = 'type-harrison';
+        typeLabel = '📖 Harrison\'s';
+    } else if (source.type === 'independent_pdf') {
+        typeClass = 'type-pdf';
+        typeLabel = '📄 PDF';
+    } else if (source.type === 'personal_note') {
+        typeClass = 'type-note';
+        typeLabel = '📝 Note';
+    } else if (source.type === 'user_note') {
+        typeClass = 'type-user-note';
+        typeLabel = '📝 Note';
+    } else if (source.type === 'user_image') {
+        typeClass = 'type-image';
+        typeLabel = '📷 Image';
+    } else if (source.type === 'user_drawing') {
+        typeClass = 'type-drawing';
+        typeLabel = '✏️ Drawing';
+    } else if (source.type === 'user_audio') {
+        typeClass = 'type-audio';
+        typeLabel = '🎤 Audio';
+    } else {
+        typeClass = 'type-note';
+        typeLabel = '📄 Unknown';
+    }
     
     // Metadata
     let metaHtml = '';
@@ -112,6 +135,16 @@ function createSourceCard(source) {
         metaHtml = `
             <span>📊 ${formatNumber(source.word_count)} words</span>
             <span>📅 ${formatDate(source.created_at)}</span>
+            ${tags}
+        `;
+    } else if (['user_note', 'user_image', 'user_drawing', 'user_audio'].includes(source.type)) {
+        // Multimodal content
+        const tags = source.tags && source.tags.length > 0 ? 
+            source.tags.map(t => `<span style="background:#e3f2fd;padding:2px 8px;border-radius:10px;font-size:12px;">#${t}</span>`).join(' ') : '';
+        metaHtml = `
+            <span>📦 ${source.chunks} chunk${source.chunks !== 1 ? 's' : ''}</span>
+            <span>📅 ${formatDate(source.created_at)}</span>
+            <span>✅ Indexed</span>
             ${tags}
         `;
     }
@@ -139,6 +172,16 @@ function createSourceCard(source) {
                 ✏️ Edit
             </button>
             <button class="btn btn-delete btn-small" onclick="showDeleteConfirm('${source.id}', '${escapeHtml(source.title)}', '${source.type}')">
+                🗑️ Delete
+            </button>
+        `;
+    } else if (['user_note', 'user_image', 'user_drawing', 'user_audio'].includes(source.type)) {
+        // Multimodal content actions
+        actionsHtml = `
+            <button class="btn btn-view btn-small" onclick="viewMultimodalContent('${source.id}', '${source.type}')">
+                👁️ View
+            </button>
+            <button class="btn btn-delete btn-small" onclick="deleteMultimodalContent('${source.id}', '${escapeHtml(source.title)}', '${source.type}')">
                 🗑️ Delete
             </button>
         `;
@@ -514,4 +557,128 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+// ============================================================================
+// Multimodal Content Functions
+// ============================================================================
+
+async function viewMultimodalContent(contentId, contentType) {
+    try {
+        const response = await fetch(`${API_BASE}/api/content/${contentId}`);
+        if (!response.ok) throw new Error('Failed to load content');
+        
+        const data = await response.json();
+        
+        // Create modal to display content
+        const modal = document.createElement('div');
+        modal.id = 'contentViewerModal';
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;';
+        
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = 'background:white;border-radius:15px;max-width:800px;max-height:90vh;overflow:auto;padding:30px;position:relative;';
+        
+        let contentHtml = '';
+        
+        if (contentType === 'user_note') {
+            // Display text note
+            const metadata = data.metadata;
+            contentHtml = `
+                <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.title || 'Note')}</h2>
+                <div style="color:#666;margin-bottom:20px;font-size:14px;">
+                    📅 ${formatDate(metadata.created_at)} | 
+                    ${metadata.tags && metadata.tags.length > 0 ? metadata.tags.map(t => `#${t}`).join(' ') : ''}
+                </div>
+                <div style="white-space:pre-wrap;line-height:1.6;">${escapeHtml(metadata.text_content || 'No content')}</div>
+            `;
+        } else if (contentType === 'user_image') {
+            // Display image
+            const metadata = data.metadata;
+            contentHtml = `
+                <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.caption || 'Image')}</h2>
+                <div style="color:#666;margin-bottom:20px;font-size:14px;">
+                    📅 ${formatDate(metadata.created_at)}
+                </div>
+                <img src="${data.file_path}" style="max-width:100%;border-radius:10px;" alt="${escapeHtml(metadata.caption || 'Image')}">
+                ${metadata.ocr_text ? `<div style="margin-top:20px;padding:15px;background:#f5f5f5;border-radius:10px;"><strong>Extracted Text:</strong><br>${escapeHtml(metadata.ocr_text)}</div>` : ''}
+            `;
+        } else if (contentType === 'user_drawing') {
+            // Display drawing
+            const metadata = data.metadata;
+            contentHtml = `
+                <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.caption || 'Drawing')}</h2>
+                <div style="color:#666;margin-bottom:20px;font-size:14px;">
+                    📅 ${formatDate(metadata.created_at)}
+                </div>
+                <img src="${data.file_path}" style="max-width:100%;border-radius:10px;" alt="${escapeHtml(metadata.caption || 'Drawing')}">
+            `;
+        } else if (contentType === 'user_audio') {
+            // Display audio player
+            const metadata = data.metadata;
+            contentHtml = `
+                <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.title || 'Audio Recording')}</h2>
+                <div style="color:#666;margin-bottom:20px;font-size:14px;">
+                    📅 ${formatDate(metadata.created_at)} | 
+                    ⏱️ ${metadata.duration ? Math.floor(metadata.duration) + 's' : 'Unknown'}
+                </div>
+                <audio controls style="width:100%;margin-bottom:20px;">
+                    <source src="${data.file_path}" type="audio/webm">
+                    <source src="${data.file_path}" type="audio/mpeg">
+                    Your browser does not support audio playback.
+                </audio>
+                ${metadata.transcription ? `<div style="padding:15px;background:#f5f5f5;border-radius:10px;"><strong>Transcription:</strong><br>${escapeHtml(metadata.transcription)}</div>` : ''}
+            `;
+        }
+        
+        modalContent.innerHTML = contentHtml + `
+            <button onclick="document.getElementById('contentViewerModal').remove()" 
+                    style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:28px;cursor:pointer;padding:0;line-height:1;">×</button>
+        `;
+        
+        modal.appendChild(modalContent);
+        modal.onclick = (e) => {
+            if (e.target === modal) modal.remove();
+        };
+        document.body.appendChild(modal);
+        
+    } catch (error) {
+        console.error('Error viewing content:', error);
+        alert(`❌ Failed to load content: ${error.message}`);
+    }
+}
+
+async function deleteMultimodalContent(contentId, title, contentType) {
+    if (!confirm(`Are you sure you want to delete "${title}"?\n\nThis will remove:\n- The content file\n- All chunks\n- ChromaDB entries\n- GCS backups\n\nThis action cannot be undone.`)) {
+        return;
+    }
+    
+    const button = event.target;
+    const originalText = button.textContent;
+    button.textContent = '⏳ Deleting...';
+    button.disabled = true;
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/content/${contentId}`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Delete failed');
+        }
+        
+        const result = await response.json();
+        
+        // Show success message
+        alert(`✅ ${result.message}`);
+        
+        // Reload library
+        await loadLibrary();
+        
+    } catch (error) {
+        console.error('Delete error:', error);
+        alert(`❌ Failed to delete: ${error.message}`);
+        button.textContent = originalText;
+        button.disabled = false;
+    }
 }
