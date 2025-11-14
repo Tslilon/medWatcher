@@ -142,12 +142,35 @@ class HierarchicalSearch:
                 tables = [t.strip() for t in tables_str.split(',') if t.strip()] if tables_str else []
                 figures = [f.strip() for f in figures_str.split(',') if f.strip()] if figures_str else []
                 
-                # Check if this is an independent PDF or Harrison's
+                # Check if this is multimodal content, independent PDF, or Harrison's
+                content_type = metadata.get('content_type', None)
                 pdf_source = metadata.get('pdf_source', 'harrisons')
-                is_independent = pdf_source == 'independent'
                 
-                # Build hierarchy string
-                if is_independent:
+                # Handle multimodal content (notes, images, drawings, audio)
+                if content_type in ['note', 'image', 'drawing', 'audio']:
+                    # Multimodal content
+                    content_icons = {
+                        'note': '📝',
+                        'image': '📷',
+                        'drawing': '✏️',
+                        'audio': '🎤'
+                    }
+                    content_labels = {
+                        'note': 'Note',
+                        'image': 'Image',
+                        'drawing': 'Drawing',
+                        'audio': 'Audio'
+                    }
+                    
+                    icon = content_icons.get(content_type, '📄')
+                    label = content_labels.get(content_type, 'Content')
+                    
+                    topic_id = metadata.get('content_id', metadata.get('chunk_id', doc_id))
+                    topic_name = metadata.get('title', f'{label}')
+                    hierarchy = f"{icon} My {label}"
+                    pdf_source = f'multimodal_{content_type}'  # Special marker for frontend
+                    
+                elif pdf_source == 'independent':
                     # For independent PDFs, use the PDF name as hierarchy
                     pdf_name = metadata.get('pdf_name', 'Independent PDF')
                     hierarchy = f"📄 {pdf_name}"

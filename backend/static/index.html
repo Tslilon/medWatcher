@@ -785,18 +785,32 @@
                     }
                 }
                 
+                // Check if this is multimodal content
+                const isMultimodal = result.pdf_source && result.pdf_source.startsWith('multimodal_');
+                const multimodalType = isMultimodal ? result.pdf_source.replace('multimodal_', '') : null;
+                
+                // Different click handler for multimodal content
+                const onclickHandler = isMultimodal 
+                    ? `viewMultimodalResultContent('${result.topic_id}', '${multimodalType}')`
+                    : `window.location.href='${viewerUrl}'`;
+                
+                // Hide pages for multimodal content
+                const pagesHtml = isMultimodal ? '' : `
+                    <div class="result-pages">
+                        📖 Pages ${result.pages}
+                    </div>
+                `;
+                
                 return `
-                    <div class="result-card" onclick="window.location.href='${viewerUrl}'">
+                    <div class="result-card" onclick="${onclickHandler}">
                         <div class="result-header">
                             <div class="result-title">${result.topic_name}</div>
                             <div class="result-score">${relevancePercent}%</div>
                         </div>
                         <div class="result-hierarchy">
-                            📂 ${result.hierarchy}
+                            ${result.hierarchy}
                         </div>
-                        <div class="result-pages">
-                            📖 Pages ${result.pages}
-                        </div>
+                        ${pagesHtml}
                         <div class="result-preview">
                             ${result.preview.substring(0, 150)}${result.preview.length > 150 ? '...' : ''}
                         </div>
@@ -808,6 +822,82 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        async function viewMultimodalResultContent(contentId, contentType) {
+            try {
+                const response = await fetch(`${API_BASE}/api/content/${contentId}`);
+                if (!response.ok) throw new Error('Failed to load content');
+                
+                const data = await response.json();
+                const metadata = data.metadata;
+                
+                // Create modal
+                const modalBody = document.getElementById('modalBody');
+                let contentHtml = '';
+                
+                if (contentType === 'note') {
+                    contentHtml = `
+                        <h2 class="modal-title">${metadata.title || 'Note'}</h2>
+                        <div style="color:#666;margin-bottom:20px;">
+                            📅 ${new Date(metadata.created_at).toLocaleDateString()} | 
+                            ${metadata.tags && metadata.tags.length > 0 ? metadata.tags.map(t => `#${t}`).join(' ') : ''}
+                        </div>
+                        <div style="white-space:pre-wrap;line-height:1.8;padding:20px;background:#f9f9f9;border-radius:10px;">
+                            ${metadata.text_content || 'No content'}
+                        </div>
+                    `;
+                } else if (contentType === 'image') {
+                    contentHtml = `
+                        <h2 class="modal-title">${metadata.caption || 'Image'}</h2>
+                        <div style="color:#666;margin-bottom:20px;">
+                            📅 ${new Date(metadata.created_at).toLocaleDateString()}
+                        </div>
+                        <img src="${data.file_path}" style="max-width:100%;border-radius:10px;margin-bottom:20px;" alt="${metadata.caption || 'Image'}">
+                        ${metadata.ocr_text ? `
+                            <div style="padding:20px;background:#e3f2fd;border-radius:10px;">
+                                <strong>📝 Extracted Text:</strong><br>
+                                ${metadata.ocr_text}
+                            </div>
+                        ` : ''}
+                    `;
+                } else if (contentType === 'drawing') {
+                    contentHtml = `
+                        <h2 class="modal-title">${metadata.caption || 'Drawing'}</h2>
+                        <div style="color:#666;margin-bottom:20px;">
+                            📅 ${new Date(metadata.created_at).toLocaleDateString()}
+                        </div>
+                        <img src="${data.file_path}" style="max-width:100%;border-radius:10px;" alt="${metadata.caption || 'Drawing'}">
+                    `;
+                } else if (contentType === 'audio') {
+                    contentHtml = `
+                        <h2 class="modal-title">${metadata.title || 'Audio Recording'}</h2>
+                        <div style="color:#666;margin-bottom:20px;">
+                            📅 ${new Date(metadata.created_at).toLocaleDateString()} | 
+                            ⏱️ ${metadata.duration ? Math.floor(metadata.duration) + 's' : 'Unknown'}
+                        </div>
+                        <audio controls style="width:100%;margin-bottom:20px;background:#f5f5f5;border-radius:10px;padding:10px;">
+                            <source src="${data.file_path}" type="audio/webm">
+                            <source src="${data.file_path}" type="audio/mpeg">
+                            Your browser does not support audio playback.
+                        </audio>
+                        ${metadata.transcription ? `
+                            <div style="padding:20px;background:#e3f2fd;border-radius:10px;">
+                                <strong>📝 Transcription:</strong><br>
+                                ${metadata.transcription}
+                            </div>
+                        ` : ''}
+                    `;
+                }
+                
+                modalBody.innerHTML = contentHtml;
+                document.getElementById('detailModal').style.display = 'flex';
+                showStatus('', '');
+                
+            } catch (error) {
+                console.error('Error viewing content:', error);
+                showStatus(`❌ Failed to load content: ${error.message}`, 'error');
+            }
         }
 
         async function showDetails(topicId) {
