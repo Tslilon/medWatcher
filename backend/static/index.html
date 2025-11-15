@@ -557,58 +557,61 @@
             }
         }
         
-        // Close modal function
+        // SIMPLE FORCEFUL CLOSE - No fancy stuff, just CLOSE IT!
         function closeModal() {
-            console.log('🔵 closeModal() called');
-            const modal = document.getElementById('detailModal');
-            console.log('🔵 Modal element:', modal);
-            console.log('🔵 Modal display before:', modal ? modal.style.display : 'N/A');
+            console.log('🔵 closeModal() called - FORCING CLOSE!');
             
+            const modal = document.getElementById('detailModal');
             if (modal) {
-                modal.style.display = 'none';
+                // Force hide with !important
+                modal.style.cssText = 'display: none !important;';
                 modal.classList.remove('active');
-                console.log('🔵 Modal display after:', modal.style.display);
-                console.log('✅ Modal should be closed now!');
-            } else {
-                console.error('❌ Modal not found!');
+                
+                // Clear the content
+                const modalBody = document.getElementById('modalBody');
+                if (modalBody) {
+                    modalBody.innerHTML = '';
+                }
+                
+                console.log('✅ Modal CLOSED and cleared!');
             }
         }
         
-        // Attach modal event listeners immediately (modal already exists in DOM above)
+        // Attach close button listener - SIMPLE AND DIRECT
         (function() {
             const closeBtn = document.getElementById('closeModal');
-            const modal = document.getElementById('detailModal');
             
             if (closeBtn) {
-                closeBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('🔵 Close button clicked!');
+                // Remove any existing listeners and add a fresh one
+                closeBtn.onclick = function(e) {
+                    console.log('🔵 X button clicked - closing now!');
                     closeModal();
-                });
-                console.log('✅ Close button listener attached');
-            } else {
-                console.error('❌ Close button not found!');
+                    return false; // Stop any propagation
+                };
+                console.log('✅ Close button listener attached (onclick)');
             }
             
-            if (modal) {
-                modal.addEventListener('click', (e) => {
-                    if (e.target.id === 'detailModal') {
-                        console.log('🔵 Clicked outside modal');
-                        closeModal();
-                    }
-                });
-            }
-            
-            // ESC key to close modal
+            // Also close on ESC key
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal) {
-                    if (modal.style.display === 'flex' || modal.classList.contains('active')) {
-                        console.log('🔵 ESC key pressed');
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('detailModal');
+                    if (modal && modal.style.display !== 'none') {
+                        console.log('🔵 ESC pressed - closing!');
                         closeModal();
                     }
                 }
             });
+            
+            // Close when clicking the dark background
+            const modal = document.getElementById('detailModal');
+            if (modal) {
+                modal.onclick = function(e) {
+                    if (e.target.id === 'detailModal') {
+                        console.log('🔵 Clicked outside - closing!');
+                        closeModal();
+                    }
+                };
+            }
         })();
 
         async function refreshRAG() {
