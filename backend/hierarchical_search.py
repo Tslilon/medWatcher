@@ -170,6 +170,10 @@ class HierarchicalSearch:
                     hierarchy = f"{icon} My {label}"
                     pdf_source = f'multimodal_{content_type}'  # Special marker for frontend
                     
+                    # Multimodal content doesn't have pages - use dummy values
+                    metadata['start_page'] = 0
+                    metadata['end_page'] = 0
+                    
                 elif pdf_source == 'independent':
                     # For independent PDFs, use the PDF name as hierarchy
                     pdf_name = metadata.get('pdf_name', 'Independent PDF')
