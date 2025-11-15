@@ -345,12 +345,37 @@ class ContentProcessor:
             file_size = len(audio_data)
             duration_seconds = 0
         
-        # Transcribe (placeholder - will implement with Whisper API later)
+        # Transcribe using OpenAI Whisper API
         transcription = ""
         if transcribe:
-            print("  🎙️ Transcription: Coming in Phase 2 (Whisper API)")
-            # TODO: Implement Whisper API transcription
-            transcription = ""
+            try:
+                print("  🎙️ Transcribing audio with Whisper API...")
+                from openai import OpenAI
+                import os
+                
+                api_key = os.getenv('OPENAI_API_KEY')
+                if not api_key:
+                    print("  ⚠️  No OpenAI API key found - skipping transcription")
+                else:
+                    client = OpenAI(api_key=api_key)
+                    
+                    # Open the audio file for transcription
+                    with open(temp_path, 'rb') as audio_file:
+                        transcript = client.audio.transcriptions.create(
+                            model="whisper-1",
+                            file=audio_file,
+                            response_format="text"
+                        )
+                        transcription = transcript.strip()
+                        
+                    if transcription:
+                        print(f"  ✅ Transcribed: {len(transcription)} characters")
+                    else:
+                        print("  ⚠️  Transcription returned empty")
+                        
+            except Exception as e:
+                print(f"  ⚠️  Transcription failed: {e}")
+                transcription = ""
         
         # Combine title + description + transcription
         full_text = ""

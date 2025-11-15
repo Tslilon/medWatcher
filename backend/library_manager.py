@@ -226,12 +226,16 @@ class LibraryManager:
                     summary = json.load(f)
                 
                 for item in summary.get('items', []):
+                    # Handle missing updated_at field
+                    created_at = item.get('created_at', item.get('created', ''))
+                    updated_at = item.get('updated_at', item.get('updated', created_at))
+                    
                     sources.append({
                         "id": item['content_id'],
                         "type": content_type,
                         "title": item.get('title', item.get('caption', f"{label} {item['content_id']}")),
-                        "created_at": item['created_at'],
-                        "updated_at": item['updated_at'],
+                        "created_at": created_at,
+                        "updated_at": updated_at,
                         "word_count": item.get('word_count', 0),
                         "is_indexed": True,
                         "filename": item['filename'],

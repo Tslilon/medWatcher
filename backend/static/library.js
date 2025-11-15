@@ -541,16 +541,29 @@ function formatBytes(bytes) {
 }
 
 function formatDate(dateString) {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diff = now - date;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    if (!dateString) return 'Unknown date';
     
-    if (days === 0) return 'Today';
-    if (days === 1) return 'Yesterday';
-    if (days < 7) return `${days} days ago`;
-    
-    return date.toLocaleDateString();
+    try {
+        const date = new Date(dateString);
+        
+        // Check if date is valid
+        if (isNaN(date.getTime())) {
+            return 'Unknown date';
+        }
+        
+        const now = new Date();
+        const diff = now - date;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        
+        if (days === 0) return 'Today';
+        if (days === 1) return 'Yesterday';
+        if (days < 7) return `${days} days ago`;
+        
+        return date.toLocaleDateString();
+    } catch (e) {
+        console.error('Date formatting error:', e);
+        return 'Unknown date';
+    }
 }
 
 function escapeHtml(text) {
@@ -573,10 +586,10 @@ async function viewMultimodalContent(contentId, contentType) {
         // Create modal to display content
         const modal = document.createElement('div');
         modal.id = 'contentViewerModal';
-        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;';
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;';
         
         const modalContent = document.createElement('div');
-        modalContent.style.cssText = 'background:white;border-radius:15px;max-width:800px;max-height:90vh;overflow:auto;padding:30px;position:relative;';
+        modalContent.style.cssText = 'background:white;border-radius:15px;width:100%;max-width:800px;max-height:90vh;overflow:auto;padding:30px;position:relative;box-sizing:border-box;';
         
         let contentHtml = '';
         
@@ -631,14 +644,39 @@ async function viewMultimodalContent(contentId, contentType) {
         }
         
         modalContent.innerHTML = contentHtml + `
-            <button onclick="document.getElementById('contentViewerModal').remove()" 
-                    style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:28px;cursor:pointer;padding:0;line-height:1;">×</button>
+            <button id="closeModalBtn" 
+                    style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:28px;cursor:pointer;padding:0;line-height:1;color:#666;transition:color 0.2s;"
+                    onmouseover="this.style.color='#000'" 
+                    onmouseout="this.style.color='#666'">×</button>
         `;
         
         modal.appendChild(modalContent);
-        modal.onclick = (e) => {
-            if (e.target === modal) modal.remove();
+        
+        // Close button event listener
+        const closeBtn = modalContent.querySelector('#closeModalBtn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                modal.remove();
+            });
+        }
+        
+        // Click outside to close
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+        
+        // ESC key to close
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                modal.remove();
+                document.removeEventListener('keydown', escHandler);
+            }
         };
+        document.addEventListener('keydown', escHandler);
+        
         document.body.appendChild(modal);
         
     } catch (error) {
