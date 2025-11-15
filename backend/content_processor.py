@@ -360,6 +360,7 @@ class ContentProcessor:
                     client = OpenAI(api_key=api_key)
                     
                     # Open the audio file for transcription
+                    # Use saved_path (guaranteed to exist) instead of temp_path
                     # Add medical context prompt for better accuracy
                     medical_prompt = (
                         "This is a medical recording made by a doctor in the hospital emergency room. "
@@ -368,7 +369,7 @@ class ContentProcessor:
                         "Common terms include medication names, anatomical terms, lab values, and medical abbreviations."
                     )
                     
-                    with open(temp_path, 'rb') as audio_file:
+                    with open(saved_path, 'rb') as audio_file:
                         transcript = client.audio.transcriptions.create(
                             model="whisper-1",
                             file=audio_file,
