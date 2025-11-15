@@ -360,11 +360,20 @@ class ContentProcessor:
                     client = OpenAI(api_key=api_key)
                     
                     # Open the audio file for transcription
+                    # Add medical context prompt for better accuracy
+                    medical_prompt = (
+                        "This is a medical recording made by a doctor in the hospital emergency room. "
+                        "The recording contains medical terminology, patient notes, clinical observations, "
+                        "diagnoses, treatment plans, and medical procedures. "
+                        "Common terms include medication names, anatomical terms, lab values, and medical abbreviations."
+                    )
+                    
                     with open(temp_path, 'rb') as audio_file:
                         transcript = client.audio.transcriptions.create(
                             model="whisper-1",
                             file=audio_file,
-                            response_format="text"
+                            response_format="text",
+                            prompt=medical_prompt  # Provide medical context
                         )
                         transcription = transcript.strip()
                         

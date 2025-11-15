@@ -64,6 +64,14 @@ def download_from_gcs():
                 f"gs://{bucket_name}/chroma_db",
                 str(data_dir)
             ], check=True)
+            
+            # Fix permissions - make ChromaDB writable
+            print("   Setting ChromaDB permissions...")
+            subprocess.run([
+                "chmod", "-R", "u+w",
+                str(chroma_path)
+            ], check=True)
+            
             print(f"   ✅ ChromaDB downloaded to {chroma_path}")
         else:
             print("   ⚠️  No chroma_db found in GCS - will initialize fresh")
