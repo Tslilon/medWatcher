@@ -609,10 +609,10 @@ async function viewMultimodalContent(contentId, contentType) {
             contentHtml = `
                 <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.title || 'Note')}</h2>
                 <div style="color:#666;margin-bottom:20px;font-size:14px;">
-                    📅 ${formatDate(metadata.created_at)} | 
-                    ${metadata.tags && metadata.tags.length > 0 ? metadata.tags.map(t => `#${t}`).join(' ') : ''}
+                    📅 ${formatDate(metadata.created_at)}
+                    ${metadata.tags && metadata.tags.length > 0 ? `<br>🏷️ ${metadata.tags.map(t => `<span style="background:#e3f2fd;padding:3px 8px;border-radius:10px;margin-right:5px;">#${t}</span>`).join('')}` : ''}
                 </div>
-                <div style="white-space:pre-wrap;line-height:1.6;">${escapeHtml(metadata.text_content || 'No content')}</div>
+                <div style="white-space:pre-wrap;line-height:1.8;padding:20px;background:#f9f9f9;border-radius:10px;">${escapeHtml(metadata.text_content || 'No content')}</div>
             `;
         } else if (contentType === 'user_image') {
             // Display image
@@ -621,9 +621,15 @@ async function viewMultimodalContent(contentId, contentType) {
                 <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.caption || 'Image')}</h2>
                 <div style="color:#666;margin-bottom:20px;font-size:14px;">
                     📅 ${formatDate(metadata.created_at)}
+                    ${metadata.tags && metadata.tags.length > 0 ? `<br>🏷️ ${metadata.tags.map(t => `<span style="background:#e3f2fd;padding:3px 8px;border-radius:10px;margin-right:5px;">#${t}</span>`).join('')}` : ''}
                 </div>
-                <img src="${data.file_path}" style="max-width:100%;border-radius:10px;" alt="${escapeHtml(metadata.caption || 'Image')}">
-                ${metadata.ocr_text ? `<div style="margin-top:20px;padding:15px;background:#f5f5f5;border-radius:10px;"><strong>Extracted Text:</strong><br>${escapeHtml(metadata.ocr_text)}</div>` : ''}
+                <img src="${data.file_path}" style="max-width:100%;border-radius:10px;margin-bottom:20px;" alt="${escapeHtml(metadata.caption || 'Image')}">
+                ${metadata.ocr_text ? `
+                    <div style="padding:20px;background:#e3f2fd;border-radius:10px;margin-bottom:15px;">
+                        <strong style="font-size:16px;">📝 Extracted Text (OCR):</strong><br><br>
+                        <div style="line-height:1.6;">${escapeHtml(metadata.ocr_text)}</div>
+                    </div>
+                ` : ''}
             `;
         } else if (contentType === 'user_drawing') {
             // Display drawing
@@ -632,6 +638,7 @@ async function viewMultimodalContent(contentId, contentType) {
                 <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.caption || 'Drawing')}</h2>
                 <div style="color:#666;margin-bottom:20px;font-size:14px;">
                     📅 ${formatDate(metadata.created_at)}
+                    ${metadata.tags && metadata.tags.length > 0 ? `<br>🏷️ ${metadata.tags.map(t => `<span style="background:#e3f2fd;padding:3px 8px;border-radius:10px;margin-right:5px;">#${t}</span>`).join('')}` : ''}
                 </div>
                 <img src="${data.file_path}" style="max-width:100%;border-radius:10px;" alt="${escapeHtml(metadata.caption || 'Drawing')}">
             `;
@@ -641,15 +648,26 @@ async function viewMultimodalContent(contentId, contentType) {
             contentHtml = `
                 <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.title || 'Audio Recording')}</h2>
                 <div style="color:#666;margin-bottom:20px;font-size:14px;">
-                    📅 ${formatDate(metadata.created_at)} | 
-                    ⏱️ ${metadata.duration ? Math.floor(metadata.duration) + 's' : 'Unknown'}
+                    📅 ${formatDate(metadata.created_at)} | ⏱️ ${metadata.duration_seconds ? Math.floor(metadata.duration_seconds) + 's' : 'Unknown'}
+                    ${metadata.description ? `<br>📝 ${escapeHtml(metadata.description)}` : ''}
+                    ${metadata.tags && metadata.tags.length > 0 ? `<br>🏷️ ${metadata.tags.map(t => `<span style="background:#e3f2fd;padding:3px 8px;border-radius:10px;margin-right:5px;">#${t}</span>`).join('')}` : ''}
                 </div>
-                <audio controls style="width:100%;margin-bottom:20px;">
+                <audio controls style="width:100%;margin-bottom:15px;background:#f5f5f5;border-radius:10px;padding:10px;">
                     <source src="${data.file_path}" type="audio/webm">
                     <source src="${data.file_path}" type="audio/mpeg">
+                    <source src="${data.file_path}" type="audio/mp3">
                     Your browser does not support audio playback.
                 </audio>
-                ${metadata.transcription ? `<div style="padding:15px;background:#f5f5f5;border-radius:10px;"><strong>Transcription:</strong><br>${escapeHtml(metadata.transcription)}</div>` : ''}
+                ${metadata.transcription ? `
+                    <div style="padding:20px;background:#e8f5e9;border-radius:10px;border-left:4px solid #4caf50;">
+                        <strong style="font-size:16px;">🎙️ Whisper AI Transcription:</strong><br><br>
+                        <div style="line-height:1.8;font-size:15px;">${escapeHtml(metadata.transcription)}</div>
+                    </div>
+                ` : `
+                    <div style="padding:15px;background:#fff3cd;border-radius:10px;color:#856404;">
+                        ⚠️ No transcription available
+                    </div>
+                `}
             `;
         }
         
