@@ -184,6 +184,26 @@ class MultimodalIndexer:
             if summary_file.exists():
                 with open(summary_file, 'r') as f:
                     summary = json.load(f)
+                    
+                # Migrate old format if needed
+                if 'items' not in summary:
+                    # Old format used different key names (e.g. 'images', 'drawings')
+                    old_keys = ['images', 'drawings', 'audio', 'notes']
+                    for old_key in old_keys:
+                        if old_key in summary:
+                            summary['items'] = summary.pop(old_key)
+                            break
+                    else:
+                        # No items found, initialize empty
+                        summary['items'] = []
+                
+                # Ensure required keys exist
+                if 'content_type' not in summary:
+                    summary['content_type'] = content_type
+                if 'total_items' not in summary:
+                    summary['total_items'] = 0
+                if 'total_chunks' not in summary:
+                    summary['total_chunks'] = 0
             else:
                 summary = {
                     'content_type': content_type,

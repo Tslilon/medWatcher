@@ -1197,7 +1197,8 @@ async def get_content(content_id: str):
         chunks_dir = data_dir / "processed" / chunks_dir_name
         
         # Find chunk files for this content_id
-        chunk_files = list(chunks_dir.glob(f"{content_id}_chunk*.json"))
+        # Note: chunks are named with double prefix e.g. "note_note_123_chunk1.json"
+        chunk_files = list(chunks_dir.glob(f"{content_type}_{content_id}_chunk*.json"))
         
         if not chunk_files:
             raise HTTPException(status_code=404, detail=f"Content not found: {content_id}")
