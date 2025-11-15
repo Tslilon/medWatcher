@@ -115,6 +115,47 @@ def download_from_gcs():
     else:
         print("   ℹ️  No independent PDF chunks found in GCS")
     
+    # Download multimodal content directories (notes, images, drawings, audio)
+    print("   Checking for multimodal content...")
+    multimodal_types = [
+        ("user_notes", "user_notes_chunks"),
+        ("user_images", "user_images_chunks"),
+        ("user_drawings", "user_drawings_chunks"),
+        ("user_audio", "user_audio_chunks")
+    ]
+    
+    for content_type, chunks_type in multimodal_types:
+        # Create local directories
+        content_dir = processed_dir / content_type
+        chunks_dir_local = processed_dir / chunks_type
+        content_dir.mkdir(parents=True, exist_ok=True)
+        chunks_dir_local.mkdir(parents=True, exist_ok=True)
+        
+        # Check if content exists in GCS
+        result = subprocess.run([
+            "gsutil", "ls",
+            f"gs://{bucket_name}/processed/{chunks_type}/"
+        ], capture_output=True, text=True)
+        
+        if result.returncode == 0:
+            print(f"   Downloading {content_type}...")
+            # Download content files
+            subprocess.run([
+                "gsutil", "-m", "cp", "-r",
+                f"gs://{bucket_name}/processed/{content_type}/*",
+                str(content_dir)
+            ], capture_output=True)  # Suppress errors if empty
+            
+            # Download chunks (including summary.json)
+            subprocess.run([
+                "gsutil", "-m", "cp", "-r",
+                f"gs://{bucket_name}/processed/{chunks_type}/*",
+                str(chunks_dir_local)
+            ], check=True)
+            print(f"   ✅ {content_type} downloaded")
+        else:
+            print(f"   ℹ️  No {content_type} found in GCS")
+    
     print("✅ All RAG data ready!")
 
 
