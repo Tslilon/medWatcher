@@ -645,6 +645,11 @@ async function viewMultimodalContent(contentId, contentType) {
         } else if (contentType === 'user_audio') {
             // Display audio player
             const metadata = data.metadata;
+            
+            // Check if Apple Watch
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isWatch = userAgent.includes('watch') || screen.width <= 250;
+            
             contentHtml = `
                 <h2 style="margin:0 0 20px 0;">${escapeHtml(metadata.title || 'Audio Recording')}</h2>
                 <div style="color:#666;margin-bottom:20px;font-size:14px;">
@@ -652,12 +657,21 @@ async function viewMultimodalContent(contentId, contentType) {
                     ${metadata.description ? `<br>📝 ${escapeHtml(metadata.description)}` : ''}
                     ${metadata.tags && metadata.tags.length > 0 ? `<br>🏷️ ${metadata.tags.map(t => `<span style="background:#e3f2fd;padding:3px 8px;border-radius:10px;margin-right:5px;">#${t}</span>`).join('')}` : ''}
                 </div>
-                <audio controls style="width:100%;margin-bottom:15px;background:#f5f5f5;border-radius:10px;padding:10px;">
-                    <source src="${data.file_path}" type="audio/webm">
-                    <source src="${data.file_path}" type="audio/mpeg">
-                    <source src="${data.file_path}" type="audio/mp3">
-                    Your browser does not support audio playback.
-                </audio>
+                ${isWatch ? `
+                    <div style="padding:20px;background:#fff3cd;border-radius:10px;color:#856404;margin-bottom:15px;">
+                        ⌚ Audio playback not supported on Apple Watch
+                    </div>
+                    <a href="${data.file_path}" download style="display:block;padding:15px;background:#667eea;color:white;text-align:center;border-radius:10px;text-decoration:none;font-weight:600;margin-bottom:15px;">
+                        📥 Download Audio File
+                    </a>
+                ` : `
+                    <audio controls style="width:100%;margin-bottom:15px;background:#f5f5f5;border-radius:10px;padding:10px;">
+                        <source src="${data.file_path}" type="audio/webm">
+                        <source src="${data.file_path}" type="audio/mpeg">
+                        <source src="${data.file_path}" type="audio/mp3">
+                        Your browser does not support audio playback.
+                    </audio>
+                `}
                 ${metadata.transcription ? `
                     <div style="padding:20px;background:#e8f5e9;border-radius:10px;border-left:4px solid #4caf50;">
                         <strong style="font-size:16px;">🎙️ Whisper AI Transcription:</strong><br><br>
