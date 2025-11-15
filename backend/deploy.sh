@@ -47,6 +47,14 @@ docker buildx build --platform linux/amd64 -t ${IMAGE_NAME}:latest --push .
 echo ""
 echo "✅ Image built and pushed to Google Container Registry"
 
+# Load API key from .env file
+if [ -f .env ]; then
+    source .env
+    echo "✓ Loaded environment variables from .env"
+else
+    echo "⚠️  Warning: .env file not found. OpenAI API key may not be set."
+fi
+
 # Deploy to Cloud Run
 echo ""
 echo "🚀 Deploying to Cloud Run..."
@@ -59,7 +67,7 @@ gcloud run deploy ${SERVICE_NAME} \
   --cpu 2 \
   --timeout 300 \
   --max-instances 10 \
-  --set-env-vars "OPENAI_API_KEY=$(grep OPENAI_API_KEY .env | cut -d '=' -f2)"
+  --set-env-vars "OPENAI_API_KEY=${OPENAI_API_KEY}"
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════════╗"
