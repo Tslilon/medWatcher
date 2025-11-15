@@ -36,52 +36,61 @@ class HierarchicalSearch:
     
     def _reload_from_gcs_if_needed(self):
         """Check GCS for updates and reload if ChromaDB is newer"""
-        # Only check if on Cloud Run (not local development)
-        if not os.getenv("K_SERVICE"):
-            return  # Skip on local development
-        
-        # Rate limit checks (every 5 seconds max)
-        if not self._should_check_gcs():
-            return
-        
-        self.last_gcs_check = time.time()
-        
+        # CRITICAL: This function must NEVER raise an exception
+        # GCS check is optional - search must always work
         try:
-            from reload_from_gcs import full_reload
+            # Only check if on Cloud Run (not local development)
+            if not os.getenv("K_SERVICE"):
+                return  # Skip on local development
             
-            # Check lightweight version.txt marker file (much faster than checking ChromaDB)
-            result = subprocess.run(
-                ["gsutil", "cat", "gs://harrisons-rag-data-flingoos/version.txt"],
-                capture_output=True,
-                text=True,
-                timeout=2
-            )
+            # Rate limit checks (every 5 seconds max)
+            if not self._should_check_gcs():
+                return
             
-            if result.returncode != 0:
-                return  # No version file or GCS check failed, continue with current data
+            self.last_gcs_check = time.time()
             
-            gcs_version = result.stdout.strip()
+            try:
+                from reload_from_gcs import full_reload
+                
+                # Check lightweight version.txt marker file (much faster than checking ChromaDB)
+                result = subprocess.run(
+                    ["gsutil", "cat", "gs://harrisons-rag-data-flingoos/version.txt"],
+                    capture_output=True,
+                    text=True,
+                    timeout=5  # Increased from 2 to 5 seconds
+                )
+                
+                if result.returncode != 0:
+                    return  # No version file or GCS check failed, continue with current data
+                
+                gcs_version = result.stdout.strip()
+                
+                # Check local version
+                local_version_file = Path("/app/data/version.txt")
+                local_version = local_version_file.read_text().strip() if local_version_file.exists() else "0"
+                
+                # If GCS version is newer, reload
+                if gcs_version != local_version:
+                    print(f"🔄 New version detected on GCS (local: {local_version}, GCS: {gcs_version})")
+                    print(f"   Reloading ChromaDB from GCS...")
+                    if full_reload():
+                        # Save new version locally
+                        local_version_file.write_text(gcs_version)
+                        print(f"   ✅ Reloaded! Now using version {gcs_version}")
+                    else:
+                        print(f"   ⚠️ Reload failed, continuing with current data")
             
-            # Check local version
-            local_version_file = Path("/app/data/version.txt")
-            local_version = local_version_file.read_text().strip() if local_version_file.exists() else "0"
-            
-            # If GCS version is newer, reload
-            if gcs_version != local_version:
-                print(f"🔄 New version detected on GCS (local: {local_version}, GCS: {gcs_version})")
-                print(f"   Reloading ChromaDB from GCS...")
-                if full_reload():
-                    # Save new version locally
-                    local_version_file.write_text(gcs_version)
-                    print(f"   ✅ Reloaded! Now using version {gcs_version}")
-                else:
-                    print(f"   ⚠️ Reload failed, continuing with current data")
+            except subprocess.TimeoutExpired:
+                # Timeout is OK - just skip this check
+                pass
+            except Exception as e:
+                # Silently fail inner try block
+                pass
         
-        except subprocess.TimeoutExpired:
-            print(f"⚠️ GCS version check timed out")
         except Exception as e:
-            # Silently fail - don't break search if GCS check fails
-            print(f"⚠️ GCS check failed: {e}")
+            # CRITICAL: Catch ALL exceptions - search must never crash
+            # GCS check is completely optional
+            pass
     
     def _load_hierarchy(self) -> Dict:
         """Load complete hierarchy for metadata"""
