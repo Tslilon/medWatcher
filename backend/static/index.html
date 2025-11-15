@@ -1144,8 +1144,12 @@
                 
                 const result = await response.json();
                 
+                if (!response.ok) {
+                    throw new Error(result.detail || result.message || 'Upload failed');
+                }
+                
                 statusEl.className = 'status success';
-                statusEl.textContent = `✅ ${result.message}`;
+                statusEl.textContent = `✅ ${result.message || 'Image uploaded successfully!'}`;
                 
                 setTimeout(() => {
                     document.getElementById('addContentModal').style.display = 'none';
@@ -1160,7 +1164,7 @@
             } catch (error) {
                 console.error('Save error:', error);
                 statusEl.className = 'status error';
-                statusEl.textContent = '❌ Failed to upload image';
+                statusEl.textContent = `❌ ${error.message || 'Failed to upload image'}`;
             } finally {
                 document.getElementById('saveImage').disabled = false;
             }
@@ -1252,8 +1256,12 @@
                 
                 const result = await response.json();
                 
+                if (!response.ok) {
+                    throw new Error(result.detail || result.message || 'Upload failed');
+                }
+                
                 statusEl.className = 'status success';
-                statusEl.textContent = `✅ ${result.message}`;
+                statusEl.textContent = `✅ ${result.message || 'Audio uploaded successfully!'}`;
                 
                 setTimeout(() => {
                     document.getElementById('addContentModal').style.display = 'none';
@@ -1270,7 +1278,7 @@
             } catch (error) {
                 console.error('Save error:', error);
                 statusEl.className = 'status error';
-                statusEl.textContent = '❌ Failed to upload audio';
+                statusEl.textContent = `❌ ${error.message || 'Failed to upload audio'}`;
             } finally {
                 document.getElementById('saveAudio').disabled = false;
             }
