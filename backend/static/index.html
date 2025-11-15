@@ -559,10 +559,18 @@
         
         // Close modal function
         function closeModal() {
+            console.log('🔵 closeModal() called');
             const modal = document.getElementById('detailModal');
+            console.log('🔵 Modal element:', modal);
+            console.log('🔵 Modal display before:', modal ? modal.style.display : 'N/A');
+            
             if (modal) {
                 modal.style.display = 'none';
                 modal.classList.remove('active');
+                console.log('🔵 Modal display after:', modal.style.display);
+                console.log('✅ Modal should be closed now!');
+            } else {
+                console.error('❌ Modal not found!');
             }
         }
         
