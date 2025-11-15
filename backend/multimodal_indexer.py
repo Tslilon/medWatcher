@@ -436,10 +436,11 @@ class MultimodalIndexer:
             content_gcs_path, chunks_gcs_path = self._get_gcs_paths(content_type)
             
             # Step 1: Find and delete chunk files
-            chunk_files = list(chunks_dir.glob(f"{content_id}_chunk*.json"))
+            # Note: chunks are named with double prefix e.g. "note_note_123_chunk1.json"
+            chunk_files = list(chunks_dir.glob(f"{content_type}_{content_id}_chunk*.json"))
             
             if not chunk_files:
-                print(f"   ⚠️ No chunks found for {content_id}")
+                print(f"   ⚠️ No chunks found for {content_type}_{content_id}")
                 return False
             
             # Load first chunk to get filename

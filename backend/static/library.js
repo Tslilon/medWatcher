@@ -211,7 +211,17 @@ function filterLibrary() {
     
     // Filter by type
     if (filterType !== 'all') {
-        filtered = filtered.filter(s => s.type === filterType);
+        if (filterType === 'multimodal_notes') {
+            filtered = filtered.filter(s => s.type === 'user_note' || s.type === 'personal_note');
+        } else if (filterType === 'multimodal_images') {
+            filtered = filtered.filter(s => s.type === 'user_image');
+        } else if (filterType === 'multimodal_drawings') {
+            filtered = filtered.filter(s => s.type === 'user_drawing');
+        } else if (filterType === 'multimodal_audio') {
+            filtered = filtered.filter(s => s.type === 'user_audio');
+        } else {
+            filtered = filtered.filter(s => s.type === filterType);
+        }
     }
     
     // Filter by search query
